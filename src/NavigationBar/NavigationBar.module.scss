@@ -1,0 +1,26 @@
+.header {
+    width: 100%;
+    position: sticky;
+    background-color: purple;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    .logo {
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    }
+    .menu {
+        span {
+            padding: 8px;
+            color: white;
+            a {
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
+}
