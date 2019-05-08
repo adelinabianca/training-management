@@ -7,14 +7,14 @@ class NavigationBar extends Component {
         return (
             <div className={styles.header}>
                 <div className={styles.logo}><Link to='/'>LOGO</Link></div>
-                <div className={styles.menu}>
+                {/* <div className={styles.menu}>
                     <span className={styles.menuItem}><Link to='/arii'>Arii</Link></span>
                     <span>Program</span>
                     <span>Evenimente</span>
                     <span>Cum aplic</span>
                     <span>Despre</span>
-                </div>
-                <div className={styles.userAccount}>USERNAME</div>
+                </div> */}
+                <div className={styles.logo}><Link to='/login'>Login</Link></div>
             </div>
         )
     }

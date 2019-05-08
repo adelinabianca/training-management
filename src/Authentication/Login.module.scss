@@ -1,0 +1,110 @@
+@import '../styles/mixins';
+@import '../styles/variables';
+
+.container {
+    @include container-center;
+    display: flex;
+    flex-direction: row;
+    max-width: 650px;
+    height: 70%;
+    div.cardContent {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+}
+
+.authOptions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 50%;
+    height: 100%;
+    align-self: flex-start;
+}
+
+.option {
+    border: 1px solid $faded-font-color;
+    border-radius: 4px;
+    margin: 8px;
+    padding: 16px 2px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    svg {
+        width: 50px;
+        height: 50px;
+    }
+    h4 {
+        margin-bottom: 4px;
+        margin-top: 16px;
+    }
+    div.subtitle {
+        text-align: center;
+    }
+    &.isActive::before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: $secondary-bg-color;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        transform: translate(50%, -50%)
+    }
+    &:hover {
+        background-color: $default-bg-color;
+    }
+}
+
+.isActive {
+    border-color: $border-color;
+}
+
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 40px 48px;
+    h1 {
+        margin-bottom: 0;
+        color: #2E384D;
+        font-weight: 500;
+    }
+}
+
+.subtitle {
+    margin-bottom: 40px;
+    font-size: 10px;
+    color: $faded-font-color;
+}
+
+.inputContainer {
+    max-width: 300px;
+    margin-bottom: 16px;
+    input {
+        height: 6px;
+        font-size: 12px;
+    }
+}
+
+label.formLabel {
+    font-size: 10px;
+}
+
+button.loginBtn {
+    background-color: $secondary-bg-color;
+    color: white;
+    margin-top: 24px;
+    &:hover {
+        background-color: #123edd;
+    }
+}

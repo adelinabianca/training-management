@@ -1,7 +1,9 @@
+@import '../styles/variables';
+
 .header {
     width: 100%;
     position: sticky;
-    background-color: purple;
+    background-color: $primary-bg-color;
     height: 70px;
     display: flex;
     flex-direction: row;
@@ -9,16 +11,16 @@
     justify-content: space-around;
     .logo {
         a {
-            color: white;
+            color: $primary-font-color;
             text-decoration: none;
         }
     }
     .menu {
         span {
             padding: 8px;
-            color: white;
+            color: $primary-font-color;
             a {
-                color: white;
+                color: $primary-font-color;
                 text-decoration: none;
             }
         }
