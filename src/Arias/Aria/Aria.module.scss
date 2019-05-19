@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+div.ariaCard {
+    width: 80%;
+    margin: 16px auto;
+    min-height: 600px;
+    div.cardContent {
+        display: flex;
+        flex-direction: row;
+        div.coursesButtons {
+            display: flex;
+            flex-direction: column;
+            width: 25%;
+        }
+        div.courseContent {
+            width: 75%;
+        }
+    }
+}

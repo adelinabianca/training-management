@@ -25,6 +25,10 @@ class Firebase {
         return this.auth.signInWithEmailAndPassword(email, password);
     }
 
+    getCurrentUser = () => {
+        return this.auth.currentUser;
+    }
+
     logout = () => this.auth.signOut();
 }
 

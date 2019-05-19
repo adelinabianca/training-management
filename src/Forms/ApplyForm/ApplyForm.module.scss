@@ -1,0 +1,11 @@
+form.formWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    min-width: 600px;
+    div.questionWrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 8px;
+    }
+}

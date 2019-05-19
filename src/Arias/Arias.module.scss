@@ -1,0 +1,16 @@
+@import '../styles/variables';
+
+.mainWrapper {
+    width: 70%;
+    margin: 4px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    div.card {
+        width: 30%;
+        margin: 8px;
+        .media {
+            object-fit: cover;
+        }
+    }
+}

@@ -4,10 +4,12 @@ import {
 } from '@material-ui/core';
 import { AccountCircleOutlined } from '@material-ui/icons';
 // import PropTypes from 'prop-types';
-// import app from '../Firebase/firebaseConfig';
+import { observer, inject } from 'mobx-react';
 import styles from './Login.module.scss';
 import OptionButton from '../core/components/OptionButton/OptionButton';
 
+@inject('userStore')
+@observer
 class Login extends Component {
 //   static defaultProps = {
 //     history: {}
@@ -30,11 +32,12 @@ class Login extends Component {
   };
 
   handleOnLogin = () => {
-    const { firebase, history } = this.props;
+    const { firebase, history, userStore: { setAuthenticatedUser } } = this.props;
     const { username, password, confirmPassword } = this.state;
     firebase.loginUserWithEmailAndPassword(username, password)
     .then(authUser => {
-      console.log(authUser);
+      // console.log(authUser);
+      setAuthenticatedUser(authUser)
       history.push('/dashboard');
     })
     .catch(error => console.log(error))
@@ -45,7 +48,7 @@ class Login extends Component {
     const { firebase, history } = this.props;
     firebase.createUserWithEmailAndPassword(username, password)
     .then(authUser => {
-      console.log(authUser);
+      // console.log(authUser);
       history.push('/dashboard');
     })
     .catch(error => console.log(error))

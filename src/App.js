@@ -11,11 +11,14 @@ import Dashboard from './Dashboard/Dashboard';
 import EditArias from './Dashboard/admin/EditArias/EditArias';
 import { withFirebase } from './Firebase';
 import userStore from './core/stores/userStore';
+import ariasStore from './core/stores/ariasStore';
+import Aria from './Arias/Aria/Aria';
 
 const Authentication = withFirebase(Login);
 
 const stores = {
-  userStore
+  userStore,
+  ariasStore
 }
 
 const App = observer(() => {
@@ -28,9 +31,9 @@ const App = observer(() => {
               <Switch>
                 <Redirect exact from="/" to="/main" />
                 <Route exact path="/main" component={MainPage} />
-                <Route exact path="/arii" component={Arias} />
                 <Route exact path="/login" component={Authentication} />
                 <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/aria/:ariaName" component={Aria} />
                 {/* <Route exact path="/dashboard/edit" component={EditArias} /> */}
               </Switch>
           </div>

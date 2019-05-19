@@ -3,15 +3,15 @@ import { observable, action } from 'mobx';
 
 class UserStore {
 
-    // @observable
+    @observable
     authenticatedUser = null;
 
-    // @action.bound 
+    @action 
     setAuthenticatedUser = (authUser) => {
         this.authenticatedUser = authUser;
     }
 
-    // @action.bound 
+    @action 
     logout = () => {
         this.authenticatedUser = null;
     }
