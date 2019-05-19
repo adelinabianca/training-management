@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
   Card, InputLabel, Button, TextField, CardContent
 } from '@material-ui/core';
-import { CheckCircle, AccountCircleOutlined } from '@material-ui/icons';
+import { AccountCircleOutlined } from '@material-ui/icons';
 // import PropTypes from 'prop-types';
-
+// import app from '../Firebase/firebaseConfig';
 import styles from './Login.module.scss';
+import OptionButton from '../core/components/OptionButton/OptionButton';
 
 class Login extends Component {
 //   static defaultProps = {
@@ -19,6 +20,8 @@ class Login extends Component {
   state = {
     username: '',
     password: '',
+    confirmPassword: '',
+    fullname: '',
     selectedAuthOption: 0
   };
 
@@ -27,20 +30,37 @@ class Login extends Component {
   };
 
   handleOnLogin = () => {
-    // const { history } = this.props;
-    // history.push('/scopes');
+    const { firebase, history } = this.props;
+    const { username, password, confirmPassword } = this.state;
+    firebase.loginUserWithEmailAndPassword(username, password)
+    .then(authUser => {
+      console.log(authUser);
+      history.push('/dashboard');
+    })
+    .catch(error => console.log(error))
   };
+
+  handleCreateAccount = () => {
+    const { username, password, confirmPassword } = this.state;
+    const { firebase, history } = this.props;
+    firebase.createUserWithEmailAndPassword(username, password)
+    .then(authUser => {
+      console.log(authUser);
+      history.push('/dashboard');
+    })
+    .catch(error => console.log(error))
+  }
 
   handleOptionClick = (value) => {
     this.setState({ selectedAuthOption: value });
   }
 
   renderContent = () => {
-    const { username, password, selectedAuthOption } = this.state;
+    const { username, password, fullname, selectedAuthOption, confirmPassword } = this.state;
     if (selectedAuthOption === 0) {
       return (
         <>
-          <h1>Enter your credentials</h1>
+          <h1>Login</h1>
           <div className={styles.subtitle}>Find out details and apply on trainings.</div>
           <InputLabel className={styles.formLabel}>EMAIL ADRESS</InputLabel>
           <TextField
@@ -59,14 +79,22 @@ class Login extends Component {
               value={password}
               onChange={this.handleInputChange}
               className={styles.inputContainer} />
-          <Button className={styles.loginBtn}>Login</Button>
+          <Button className={styles.loginBtn} onClick={this.handleOnLogin}>Login</Button>
         </>
       )
     }
     return (
       <>
-        <h1>Get started for free</h1>
-        <div className={styles.subtitle}>Free forever. No credit card needed.</div>
+        <h1>Create an account</h1>
+        <div className={styles.subtitle}>And start learning</div>
+        <InputLabel className={styles.formLabel}>FULL NAME</InputLabel>
+        <TextField
+              name="fullname"
+              margin="dense"
+              variant="outlined"
+              value={fullname}
+              onChange={this.handleInputChange}
+              className={styles.inputContainer} />
         <InputLabel className={styles.formLabel}>EMAIL ADRESS</InputLabel>
         <TextField
               name="username"
@@ -84,7 +112,16 @@ class Login extends Component {
             value={password}
             onChange={this.handleInputChange}
             className={styles.inputContainer} />
-        <Button className={styles.loginBtn}>Login</Button>
+            <InputLabel className={styles.formLabel}>CONFIRM PASSWORD</InputLabel>
+        <TextField
+            name="confirmPassword"
+            margin="dense"
+            variant="outlined"
+            type="password"
+            value={confirmPassword}
+            onChange={this.handleInputChange}
+            className={styles.inputContainer} />
+        <Button className={styles.loginBtn} onClick={this.handleCreateAccount}>Sign up</Button>
       </>
     )
   }
@@ -95,16 +132,20 @@ class Login extends Component {
       <Card className={styles.container}>
         <CardContent className={styles.cardContent}>
           <div className={styles.authOptions}>
-            <div className={[styles.option, selectedAuthOption===0 ? styles.isActive : ''].join(' ')} onClick={() => this.handleOptionClick(0)}>
-              <AccountCircleOutlined size="large" variant="outlined" />
-              <h4>Login</h4>
-              <div className={styles.subtitle}>Login to start learning</div>
-            </div>
-            <div className={[styles.option, selectedAuthOption===1 ? styles.isActive: ''].join(' ')} onClick={() => this.handleOptionClick(1)}>
-              <AccountCircleOutlined size="large" variant="outlined" />
-              <h4>Sign up</h4>
-              <div className={styles.subtitle}>Create an account to explore all features</div>
-            </div>
+            <OptionButton 
+              title="Login" 
+              subtitle="Login to start learning"
+              isSelected={selectedAuthOption === 0}
+              onSelect={() => this.handleOptionClick(0)}
+              icon={<AccountCircleOutlined size="large" variant="outlined" />}
+              />
+            <OptionButton 
+              title="Sign up" 
+              subtitle="Create an account to explore all features"
+              isSelected={selectedAuthOption === 1}
+              onSelect={() => this.handleOptionClick(1)}
+              icon={<AccountCircleOutlined size="large" variant="outlined" />}
+              />
           </div>
           <div className={styles.content}>
             {this.renderContent()}

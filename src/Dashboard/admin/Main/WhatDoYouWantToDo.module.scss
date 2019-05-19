@@ -1,0 +1,16 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+div.card {
+    @include container-center;
+    padding: 24px 40px;
+    &>div {
+        display: flex;
+    }
+}
+
+.headerTitle {
+    span {
+        color: $dark-font-color;
+    }
+}

@@ -4,6 +4,8 @@ import styles from './NavigationBar.module.scss';
 
 class NavigationBar extends Component {
     render() {
+        // const { userStore: { authenticatedUser } } = this.props;
+        // console.log(authenticatedUser)
         return (
             <div className={styles.header}>
                 <div className={styles.logo}><Link to='/'>LOGO</Link></div>

@@ -5,8 +5,9 @@
     @include container-center;
     display: flex;
     flex-direction: row;
-    max-width: 650px;
-    height: 70%;
+    // width: 580px;
+    min-width: 580px;
+    padding: 40px 8px;
     div.cardContent {
         display: flex;
         flex-direction: row;
@@ -24,49 +25,7 @@
     align-self: flex-start;
 }
 
-.option {
-    border: 1px solid $faded-font-color;
-    border-radius: 4px;
-    margin: 8px;
-    padding: 16px 2px;
-    height: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    svg {
-        width: 50px;
-        height: 50px;
-    }
-    h4 {
-        margin-bottom: 4px;
-        margin-top: 16px;
-    }
-    div.subtitle {
-        text-align: center;
-    }
-    &.isActive::before {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: $secondary-bg-color;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        transform: translate(50%, -50%)
-    }
-    &:hover {
-        background-color: $default-bg-color;
-    }
-}
 
-.isActive {
-    border-color: $border-color;
-}
 
 
 .content {
@@ -76,7 +35,8 @@
     margin: 40px 48px;
     h1 {
         margin-bottom: 0;
-        color: #2E384D;
+        margin-top: 0;
+        color: $dark-font-color;
         font-weight: 500;
     }
 }

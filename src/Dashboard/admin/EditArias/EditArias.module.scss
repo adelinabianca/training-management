@@ -1,0 +1,37 @@
+@import '../../../styles/variables';
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto 8px;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: center;
+    div.ariaCard {
+        max-width: 290px;
+        min-height: 450px;
+        margin: 8px;
+        h2 {
+            color: $primary-font-color;
+            font-weight: normal;
+        }
+        .description {
+            color: $secondary-faded-font;
+            font-size: 16px;
+        }
+    }
+    div.cardContent {
+        height: 80%;
+    }
+    div.cardActions {
+        justify-content: center;
+        button.editBtn {
+            width: 100%;
+            background: $secondary-bg-color;
+            color: white;
+            &:hover {
+                background: $hover-button-color;
+            }
+        }
+    }
+}
