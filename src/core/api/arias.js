@@ -13,3 +13,7 @@ export const getAria = async (ariaId) => {
 export const addAria = async (ariaInfo) => {
   return axios.post(`${baseURL}.json`, ariaInfo);
 };
+
+export const updateAria = async (updatedAria) => {
+  return axios.put(`${baseURL}/${updatedAria.id}.json`, updatedAria);
+}

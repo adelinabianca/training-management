@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Card, CardContent, CardHeader, Button, Dialog } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 import styles from './Aria.module.scss';
 import { getAria } from '../../core/api/arias';
@@ -65,14 +65,18 @@ class Aria extends Component {
     handleApply = () => {
         const { questions } = this.state;
         const values = [...questions];
-        const formValues = [];
+        const formValues = {};
         values.map(question => formValues[question] = '');
-        // console.log(questions)
         this.setState({ open: true, formValues: formValues })
     }
 
     handleDialogClose = () => {
         this.setState({ open: false });
+    }
+
+    handleFormSubmit = (newValues) => {
+        console.log(newValues)
+        this.setState({ open: false })
     }
 
     render() {
@@ -83,12 +87,12 @@ class Aria extends Component {
                 <CardContent className={styles.cardContent}>
                     <div className={styles.coursesButtons}>
                         {selectedAria && selectedAria.courses.map(course => (
-                            <Button key={course.name} onClick={() => this.handleCourseClick(course)}>{course.name}</Button>
+                            <Button className={course === selectedCourse ? styles.selectedCourse : ''} key={course.name} onClick={() => this.handleCourseClick(course)}>{course.name}</Button>
                         ))}
                     </div>
                     <div className={styles.courseContent}>
                         {selectedCourse && (
-                            <div>
+                            <div className={styles.contentHeader}>
                                 <span>Logo firma</span>
                                 <Button onClick={this.handleApply}>Aplica</Button>
                             </div>
@@ -101,8 +105,10 @@ class Aria extends Component {
                     onClose={this.handleDialogClose}
                     onBackdropClick={this.handleDialogClose}
                     fullWidth
-                    maxWidth="lg" >
-                    <ApplyForm formValues={formValues} />
+                    maxWidth="md" >
+                    <DialogTitle className={styles.formTitle}>{selectedCourse && selectedCourse.name}</DialogTitle>
+                    <DialogContent><ApplyForm formValues={formValues} onSubmit={this.handleFormSubmit} /></DialogContent>
+                    {/* <DialogActions><Button>Submit</Button></DialogActions> */}
                 </Dialog>
             </Card>
         )

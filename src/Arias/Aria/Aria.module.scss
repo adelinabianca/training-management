@@ -11,9 +11,33 @@ div.ariaCard {
             display: flex;
             flex-direction: column;
             width: 25%;
+            button.selectedCourse {
+                background-color: $secondary-bg-color;
+                color: $secondary-font-color;
+            }
         }
         div.courseContent {
             width: 75%;
         }
     }
+}
+
+.contentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    button {
+        min-width: 90px;
+        font-size: 16px;
+        background-color: $secondary-bg-color;
+        color: $secondary-font-color;
+        &:hover {
+            background-color: $hover-button-color;
+        }
+    }
+}
+
+.formTitle {
+    color: $primary-font-color;
 }
