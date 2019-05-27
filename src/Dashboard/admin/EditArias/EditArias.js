@@ -17,7 +17,7 @@ class EditArias extends Component {
 
     componentDidMount() {
         getArias().then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             const arias = Object.values(response.data).map((aria, index) => ({ ...aria, id: index}))
             this.setState({ arias });
         })
@@ -32,7 +32,7 @@ class EditArias extends Component {
     }
 
     handleSubmitEditAria = (newValues) => {
-        console.log(newValues);
+        // console.log(newValues);
         updateAria(newValues).then(response => this.handleClose());
         
     }

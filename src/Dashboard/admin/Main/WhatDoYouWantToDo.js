@@ -18,14 +18,14 @@ class WhatDoYouWantToDo extends Component {
                            subtitle="Create, edit and delete arias"
                         //    isSelected
                            icon={<AccountCircleOutlined size="large" variant="outlined" />}
-                           onSelect={() => {history.push('/dashboard/edit')}}
+                           onSelect={() => {history.push('/admin-dashboard/edit')}}
                         />
                         <OptionButton 
                            title="Courses"
                            subtitle="Add courses, trainers and details"
                         //    isSelected={false}
                            icon={<AccountCircleOutlined size="large" variant="outlined" />}
-                           onSelect={() => {}}
+                           onSelect={() => {history.push('/admin-dashboard/users')}}
                         />
                         <OptionButton 
                            title="Roles"

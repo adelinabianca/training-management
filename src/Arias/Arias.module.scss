@@ -9,6 +9,9 @@
     div.card {
         width: 30%;
         margin: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         .media {
             object-fit: cover;
         }

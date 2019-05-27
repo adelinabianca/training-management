@@ -1,14 +1,17 @@
 @import '../styles/variables';
 
-.header {
+div.header {
     width: 100%;
-    position: sticky;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
     background-color: $primary-bg-color;
-    height: 70px;
+    height: $navbar-height;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    z-index: 1;
     .logo {
         a {
             color: $primary-font-color;

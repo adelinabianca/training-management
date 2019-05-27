@@ -75,7 +75,7 @@ class Aria extends Component {
     }
 
     handleFormSubmit = (newValues) => {
-        console.log(newValues)
+        // console.log(newValues)
         this.setState({ open: false })
     }
 

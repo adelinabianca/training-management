@@ -2,8 +2,7 @@
 @import './styles/variables';
 
 .content {
-  position: relative;
   background-color: $default-bg-color;
+  margin-top: $navbar-height;
   // @include flex-center;
-  // margin: 8px;
 }

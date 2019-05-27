@@ -7,7 +7,17 @@ import { AccountCircleOutlined } from '@material-ui/icons';
 import { observer, inject } from 'mobx-react';
 import styles from './Login.module.scss';
 import OptionButton from '../core/components/OptionButton/OptionButton';
+import { withFirebase } from '../Firebase';
 
+const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
+
+const ERROR_MSG_ACCOUNT_EXISTS = `
+  An account with this E-Mail address already exists.
+  Try to login with this account instead. If you think the
+  account is already used from one of the social logins, try
+  to sign in with one of them. Afterward, associate your accounts
+  on your personal account page.
+`;
 @inject('userStore')
 @observer
 class Login extends Component {
@@ -32,24 +42,36 @@ class Login extends Component {
   };
 
   handleOnLogin = () => {
-    const { firebase, history, userStore: { setAuthenticatedUser } } = this.props;
-    const { username, password, confirmPassword } = this.state;
+    const { firebase, history } = this.props;
+    const { username, password } = this.state;
     firebase.loginUserWithEmailAndPassword(username, password)
     .then(authUser => {
       // console.log(authUser);
-      setAuthenticatedUser(authUser)
-      history.push('/dashboard');
+      // setAuthenticatedUser(authUser)
+      history.push('/main');
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+        error.message = ERROR_MSG_ACCOUNT_EXISTS;
+      }
+    })
   };
 
   handleCreateAccount = () => {
-    const { username, password, confirmPassword } = this.state;
+    const { username, password, fullname } = this.state;
     const { firebase, history } = this.props;
+    const roles = [];
     firebase.createUserWithEmailAndPassword(username, password)
     .then(authUser => {
+      return firebase.user(authUser.user.uid).set({
+        username: fullname,
+        email: username,
+        roles: ['admin']
+      })
+    })
+    .then(authUser => {
       // console.log(authUser);
-      history.push('/dashboard');
+      history.push('/main');
     })
     .catch(error => console.log(error))
   }
@@ -159,4 +181,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withFirebase(Login);
