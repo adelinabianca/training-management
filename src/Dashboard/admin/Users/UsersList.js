@@ -35,11 +35,11 @@ class UsersList extends Component {
 
     promoteToTrainer = (user) => {
       const { firebase } = this.props;
-
+      const existingRoles = user.roles ? [...user.roles] : [];
       firebase.user(user.uid).set({
         email: user.email,
         username: user.username,
-        roles: [...user.roles, 'trainer']
+        roles: [...existingRoles, 'trainer']
       })
     }
 
@@ -80,11 +80,11 @@ class UsersList extends Component {
                     <Grid item xs={4}><span>{user.uid}</span></Grid>
                     <Grid item xs={2}><span>{user.email}</span></Grid>
                     <Grid item xs={2}><span>{user.username}</span></Grid>
-                    <Grid item xs={2}><span>{user.roles.join(' ')}</span></Grid>
+                    <Grid item xs={2}><span>{user.roles && user.roles.join(' ')}</span></Grid>
                     <Grid item xs={2}>
                       <span>
-                        {!user.roles.includes('trainer') && (<Button onClick={() => this.promoteToTrainer(user)}>Promote to trainer</Button>)}
-                        {!user.roles.includes('admin') && (<Button onClick={() => this.promoteToAdmin(user)}>Promote to admin</Button>)}
+                        {(!user.roles || !user.roles.includes('trainer')) && (<Button onClick={() => this.promoteToTrainer(user)}>Promote to trainer</Button>)}
+                        {(!user.roles || !user.roles.includes('admin')) && (<Button onClick={() => this.promoteToAdmin(user)}>Promote to admin</Button>)}
                       </span>
                     </Grid>
                   </Grid>

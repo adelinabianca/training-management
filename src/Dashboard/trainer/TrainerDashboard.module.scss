@@ -3,13 +3,18 @@
 
 div.sidebar {
     position: fixed;
-    width: 80px;
+    width: 230px;
     height: 100%;
     min-height: 100%;
     background-color: $secondary-bg-color;
-    color: $secondary-font-color;
+    span, svg {
+        color: $secondary-font-color;
+    }
+    div.nested {
+        padding-left: 36px;
+    }
 }
 
 .content {
-    margin-left: 80px;
+    margin-left: 230px;
 }

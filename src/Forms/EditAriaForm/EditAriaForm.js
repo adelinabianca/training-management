@@ -5,6 +5,7 @@ import { InputLabel, TextField, Button, Card } from '@material-ui/core';
 import { withFirebase } from '../../Firebase';
 import { inject, observer } from 'mobx-react';
 import EditCourseForm from '../EditCourseForm/EditCourseForm';
+import { updateUser } from '../../core/api/users';
 
 @inject('userStore')
 @observer
@@ -22,8 +23,24 @@ class EditAriaForm extends Component {
         if (isNewCourse) {
             newValues.id = allCourses.length;
         }
+        console.log(newValues)
         const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.id - b.id);
-        console.log(updatedCourses)
+        // console.log(updatedCourses)
+
+        //connect user to course
+        if (newValues.trainers) {
+            const { formValues } = this.props;
+            const users = [...newValues.trainers];
+            users.map(trainer => {
+                const asignedCourse = { courseId: newValues.id, fromAriaId: formValues.id }
+                if (trainer.asignedCourses) {
+                    trainer.asignedCourses = [...trainer.asignedCourses, asignedCourse ]
+                } else {
+                    trainer.asignedCourses = [ asignedCourse]
+                }
+                updateUser(trainer).then(response => console.log(response))
+            })
+        }
 
         setFieldValue('courses', updatedCourses);
         this.setState({ addNewCourse: false });
@@ -36,6 +53,11 @@ class EditAriaForm extends Component {
     render() {
         const { formValues, onSubmit } = this.props;
         const {  addNewCourse } = this.state;
+        const defaultCourseValues = {
+            name: '',
+            description: '',
+            trainers: []
+        }
 
         return formValues && (
             <Formik
@@ -79,7 +101,7 @@ class EditAriaForm extends Component {
                                 <div className={styles.coursesWrapper}>
                                     {addNewCourse && (
                                         <EditCourseForm 
-                                            formValues={{ name: '', description: '', trainers: [] }} 
+                                            formValues={defaultCourseValues} 
                                             onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses, true)}
                                         />
                                     )}
@@ -87,7 +109,7 @@ class EditAriaForm extends Component {
                                         return (
                                             <EditCourseForm 
                                                 key={course.id || course.name} 
-                                                formValues={course} 
+                                                formValues={{ ...defaultCourseValues, ...course }} 
                                                 onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses)}
                                             />
                                         )

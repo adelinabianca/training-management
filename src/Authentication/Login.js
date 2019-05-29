@@ -66,7 +66,7 @@ class Login extends Component {
       return firebase.user(authUser.user.uid).set({
         username: fullname,
         email: username,
-        roles: ['admin']
+        roles: []
       })
     })
     .then(authUser => {

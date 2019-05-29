@@ -25,7 +25,7 @@ class EditCourseForm extends Component {
     render() {
         const { formValues, onSubmit, userStore: { userList } } = this.props;
 
-        const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')).map(user => user.username) : [];
+        const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
 
         return formValues && (
             <Formik
@@ -77,7 +77,7 @@ class EditCourseForm extends Component {
                                 renderValue={selected => (
                                     <div className={styles.chips}>
                                     {selected.map(value => (
-                                        <Chip key={value} label={value} className={styles.chip} />
+                                        <Chip key={value.uid} label={value.username} className={styles.chip} />
                                     ))}
                                     </div>
                                 )}
@@ -91,9 +91,9 @@ class EditCourseForm extends Component {
                                 //     },
                                 //   }}
                                 >
-                                {[...trainers, ...formValues.trainers].map(trainer => (
-                                    <MenuItem key={trainer} value={trainer} >
-                                        {trainer}
+                                {[...trainers].map(trainer => (
+                                    <MenuItem key={trainer.uid} value={trainer} >
+                                        {trainer.username}
                                     </MenuItem>
                                 ))}
                                 </Select>

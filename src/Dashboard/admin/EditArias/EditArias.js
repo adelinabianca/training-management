@@ -53,7 +53,7 @@ class EditArias extends Component {
                     </Card>
                 ))}
                 <Dialog open={open} onBackdropClick={this.handleClose} fullWidth maxWidth="md">
-                    <DialogTitle>Edit aria</DialogTitle>
+                    <DialogTitle>Edit aria {selectedAria && selectedAria.name}</DialogTitle>
                     <DialogContent><EditAriaForm formValues={selectedAria} onSubmit={this.handleSubmitEditAria}/></DialogContent>
                 </Dialog>
             </div>

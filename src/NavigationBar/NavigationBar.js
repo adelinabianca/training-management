@@ -38,7 +38,7 @@ class NavigationBar extends Component {
 
     handleLogout = () => {
         const { firebase, history } = this.props;
-        firebase.logout().then(response => console.log(response));
+        firebase.logout().then(response => {});
         this.handleCloseMenu();
         history.push('/main');
     }
