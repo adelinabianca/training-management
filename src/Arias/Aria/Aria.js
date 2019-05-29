@@ -98,6 +98,7 @@ class Aria extends Component {
                             </div>
                         )}
                         {!selectedCourse ? selectedAria && selectedAria.description : selectedCourse.description}
+                        {selectedCourse && selectedCourse.trainers.map(trainer => <div key={trainer}>{trainer}</div>)}
                     </div>
                 </CardContent>
                 <Dialog 

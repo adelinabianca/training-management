@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardContent, CardHeader, Button, Grid } from '@material-ui/core';
-// import { AccountCircleOutlined } from '@material-ui/icons';
-// import { Link } from "react-router-dom";
-// import OptionButton from '../../../core/components/OptionButton/OptionButton';
+import { Button, Grid } from '@material-ui/core';
 
 import styles from './UsersList.module.scss';
 import { withFirebase } from '../../../Firebase';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 
-// @inject('userStore')
-// @observer
 class UsersList extends Component {
     constructor(props) {
         super(props);

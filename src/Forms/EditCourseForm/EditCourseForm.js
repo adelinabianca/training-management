@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
 import styles from './EditCourseForm.module.scss';
-import { InputLabel, TextField, Button, Card } from '@material-ui/core';
+import { InputLabel, TextField, Button, Card, Input, MenuItem, FormControl } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
 import { withFirebase } from '../../Firebase';
 import { inject, observer } from 'mobx-react';
 
@@ -22,9 +24,9 @@ class EditCourseForm extends Component {
 
     render() {
         const { formValues, onSubmit, userStore: { userList } } = this.props;
-        // console.log(formValues)
-        const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
-        // console.log(trainers)
+
+        const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')).map(user => user.username) : [];
+
         return formValues && (
             <Formik
                 initialValues={formValues}
@@ -32,38 +34,75 @@ class EditCourseForm extends Component {
                 onSubmit={onSubmit}
                 render={({ handleSubmit, handleChange, handleBlur, values, setFieldValue, errors, touched }) => {
                     return (
-                        // <form autoComplete="off" className={styles.formWrapper}>
-                            <Card className={styles.courseCard} key={values.name}>
-                                <InputLabel>Course name</InputLabel>
+                        <Card className={styles.courseCard} key={values.id}>
+                            {/* course name */}
+                            <InputLabel>Course name</InputLabel>
+                            <FormControl>
                                 <TextField
                                     id='name'
                                     className={styles.formControl}
                                     value={values.name}
                                     onChange={handleChange}
-                                    // onBlur={handleBlur}
+                                    onBlur={handleBlur}
                                     margin="normal"
                                     variant="outlined"
                                     name='name'
                                 />
+                            </FormControl>
 
-                                <InputLabel>Course description</InputLabel>
+                            {/* course description */}
+                            <InputLabel>Course description</InputLabel>
+                            <FormControl>
                                 <TextField
                                     id='description'
                                     className={styles.formControl}
                                     value={values.description}
                                     onChange={handleChange}
-                                    // onBlur={handleBlur}
+                                    onBlur={handleBlur}
                                     margin="normal"
                                     multiline
                                     variant="outlined"
                                     name='description'
                                 />
-                                
-                                <div className={styles.buttonsContainer}>
-                                    <Button onClick={handleSubmit}>Save changes</Button>
-                                </div>
-                            </Card>
-                        // </form>
+                            </FormControl>
+
+                            {/* trainers */}
+                            <InputLabel>Trainers</InputLabel>
+                            <FormControl className={styles.formControl}>
+                                <Select
+                                multiple
+                                value={values.trainers}
+                                onChange={handleChange}
+                                input={<Input id="select-multiple-chip" />}
+                                renderValue={selected => (
+                                    <div className={styles.chips}>
+                                    {selected.map(value => (
+                                        <Chip key={value} label={value} className={styles.chip} />
+                                    ))}
+                                    </div>
+                                )}
+                                name='trainers'
+                                // MenuProps={{
+                                //     PaperProps: {
+                                //       style: {
+                                //         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                                //         width: 250,
+                                //       },
+                                //     },
+                                //   }}
+                                >
+                                {[...trainers, ...formValues.trainers].map(trainer => (
+                                    <MenuItem key={trainer} value={trainer} >
+                                        {trainer}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+                            
+                            <div className={styles.buttonsContainer}>
+                                <Button onClick={handleSubmit}>Save changes</Button>
+                            </div>
+                        </Card>
                     )}
                 }
             />

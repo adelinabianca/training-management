@@ -9,32 +9,34 @@ import EditCourseForm from '../EditCourseForm/EditCourseForm';
 @inject('userStore')
 @observer
 class EditAriaForm extends Component {
-    // componentDidMount() {
-    //     const { firebase, userStore: { userList, setUsers } } = this.props;
-    //     if(!userList.length) {
-    //         this.setState({ isLoading: true });
-    //     }
+    constructor(props){
+        super(props);
 
-    //     firebase.users().on('value', snapshot => {
-    //         setUsers(snapshot.val());
-    //         this.setState({ isLoading: false });
-    //     });
-    // }
+        this.state = {
+            addNewCourse: false
+        }
+    }
 
-    onSubmitCourseForm = (newValues, setFieldValue, allCourses) => {
-        // console.log(newValues)
-        // console.log(allCourses)
+    onSubmitCourseForm = (newValues, setFieldValue, allCourses, isNewCourse = false) => {
         const filteredCourses = allCourses.filter(course => course.id !== newValues.id);
-        const updatedCourses = [...filteredCourses, newValues];
+        if (isNewCourse) {
+            newValues.id = allCourses.length;
+        }
+        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.id - b.id);
         console.log(updatedCourses)
+
         setFieldValue('courses', updatedCourses);
+        this.setState({ addNewCourse: false });
+    }
+
+    addNewCourse = () => {
+        this.setState({ addNewCourse: true })
     }
 
     render() {
         const { formValues, onSubmit } = this.props;
-        // console.log(formValues)
-        // const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
-        // // console.log(trainers)
+        const {  addNewCourse } = this.state;
+
         return formValues && (
             <Formik
                 initialValues={formValues}
@@ -73,41 +75,24 @@ class EditAriaForm extends Component {
                             </div>
                             <div className={styles.fieldWrapper}>
                                 <InputLabel className={styles.ariaLabel}>Courses</InputLabel>
+                                <Button onClick={this.addNewCourse}>Add new course</Button>
                                 <div className={styles.coursesWrapper}>
+                                    {addNewCourse && (
+                                        <EditCourseForm 
+                                            formValues={{ name: '', description: '', trainers: [] }} 
+                                            onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses, true)}
+                                        />
+                                    )}
                                     {values.courses.map(course => {
                                         return (
                                             <EditCourseForm 
                                                 key={course.id || course.name} 
                                                 formValues={course} 
-                                                onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses)} />
-                                            // <Card className={styles.courseCard} key={course.name}>
-                                            //     <InputLabel>Course name</InputLabel>
-                                            //     <TextField
-                                            //         id='course-name'
-                                            //         className={styles.formControl}
-                                            //         value={course.name}
-                                            //         // onChange={handleChange}
-                                            //         onBlur={handleBlur}
-                                            //         margin="normal"
-                                            //         variant="outlined"
-                                            //         name={course.name}
-                                            //     />
-
-                                            //     <InputLabel>Course description</InputLabel>
-                                            //     <TextField
-                                            //         id='course-description'
-                                            //         className={styles.formControl}
-                                            //         value={course.description}
-                                            //         // onChange={handleChange}
-                                            //         onBlur={handleBlur}
-                                            //         margin="normal"
-                                            //         multiline
-                                            //         variant="outlined"
-                                            //         name={course.description}
-                                            //     />
-                                            // </Card>
+                                                onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses)}
+                                            />
                                         )
                                     })}
+
                                 </div>
                             </div>
                             <div className={styles.buttonsContainer}>
