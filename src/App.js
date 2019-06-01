@@ -10,6 +10,7 @@ import userStore from './core/stores/userStore';
 import sessionStore from './core/stores/sessionStore';
 import messagesStore from './core/stores/messagesStore';
 import ariasStore from './core/stores/ariasStore';
+import coursesStore from './core/stores/coursesStore';
 import Aria from './Arias/Aria/Aria';
 import { withAuthentication } from './Firebase/Session';
 import AdminDashboard from './Dashboard/admin/AdminDashboard';
@@ -19,7 +20,8 @@ const stores = {
   userStore,
   sessionStore,
   messagesStore,
-  ariasStore
+  ariasStore,
+  coursesStore
 }
 
 const PrivateAdminRoute = ({ component: Component, ...rest }) => (
@@ -69,7 +71,7 @@ class App extends Component {
                   <Route exact path="/main" component={MainPage} />
                   <Route exact path="/login" component={Login} />
                   <PrivateAdminRoute path="/admin-dashboard" component={AdminDashboard} />
-                  <PrivateTrainerRoute exact path="/trainer-dashboard" component={TrainerDashboard} />
+                  <PrivateTrainerRoute path="/trainer-dashboard" component={TrainerDashboard} />
                   <Route exact path="/aria/:ariaName" component={Aria} />
                 </Switch>
             </div>

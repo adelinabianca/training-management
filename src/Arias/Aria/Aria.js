@@ -6,8 +6,9 @@ import styles from './Aria.module.scss';
 import { getAria } from '../../core/api/arias';
 import { Breadcrumbs } from '../../core/components/Breadcrumbs/Breadcrumbs';
 import ApplyForm from '../../Forms/ApplyForm/ApplyForm';
+import { getCourses } from '../../core/api/courses';
 
-@inject('ariasStore')
+@inject('ariasStore', 'coursesStore')
 @observer
 class Aria extends Component {
     constructor(props) {
@@ -15,9 +16,10 @@ class Aria extends Component {
         this.state = {
             selectedAria: null,
             selectedCourse: null,
+            ariaCourses: [],
             crumbs: {},
             open: false,
-            questions: ['Ce stii despre luna?', 'Ce zici de soare?', 'Cum e vremea?', 'Ce stii de luna?', 'Ce zici de tine?', 'Cum e css?', 'Ce stii despre html?', 'Ce zici de css?', 'Cum e javascript?', 'Ce stii despre react?', 'Ce zici de angular?', 'Cum e vue js?']
+            questions: []
         }
     }
 
@@ -26,29 +28,46 @@ class Aria extends Component {
     }
 
     init = async () => {
+        const { ariasStore: { setSelectedAria } } = this.props;
+        
         const { location: { pathname } } =  this.props;
         const ariaId = pathname.substr(6);
-        await getAria(ariaId).then(response => {
+        await getAria(ariaId).then(async response => {
+            const responseAria = response.data;
+            setSelectedAria(responseAria);
             const crumbs = {
                 value: 'main',
                 displayName: 'Home',
                 child: {
-                    value: ariaId,
-                    displayName: response.data.name
+                    value: responseAria.ariaId,
+                    displayName: responseAria.name
                 }
             }
-            this.setState({ selectedAria: response.data, crumbs, selectedCourse: null });
+            await getCourses().then(res => {
+                const ariaCourses = this.filterCourses(res.data, responseAria);
+        
+                this.setState({ ariaCourses })
+            })
+            this.setState({ selectedAria: responseAria, crumbs, selectedCourse: null });
         });
+        
+        
+        
+    }
+
+    filterCourses = (allCourses, selectedAria) => {
+        return allCourses.filter(course => selectedAria.coursesIds.includes(course.courseId));
     }
 
 
     handleCourseClick = course => {
         const { crumbs } = this.state;
         crumbs.child.child = {
-            value: course.name,
+            value: course.courseId,
             displayName: course.name
         }
-        this.setState({ crumbs, selectedCourse: course });
+        const applyFormQuestions = course.applyFormQuestions || {};
+        this.setState({ crumbs, selectedCourse: course, questions: Object.values(applyFormQuestions) });
     }
 
     handleCrumbClick = (value) => {
@@ -57,7 +76,7 @@ class Aria extends Component {
             history.push('/');
             return;
         }
-        if (value.length < 2) {
+        if (typeof value !== 'string') {
             this.init();
         }
     }
@@ -80,14 +99,17 @@ class Aria extends Component {
     }
 
     render() {
-        const { selectedAria, crumbs, selectedCourse, open, formValues } = this.state;
+        const { selectedAria, crumbs, selectedCourse, open, formValues, ariaCourses } = this.state;
         return (
             <Card className={styles.ariaCard}>
                 <CardHeader title={selectedAria && (<Breadcrumbs crumbs={crumbs} handleClick={this.handleCrumbClick} />)}/>
                 <CardContent className={styles.cardContent}>
                     <div className={styles.coursesButtons}>
-                        {selectedAria && selectedAria.courses.map(course => (
-                            <Button className={course === selectedCourse ? styles.selectedCourse : ''} key={course.name} onClick={() => this.handleCourseClick(course)}>{course.name}</Button>
+                        {selectedAria && ariaCourses.map(course => (
+                            <Button 
+                                className={selectedCourse && course.courseId === selectedCourse.courseId ? styles.selectedCourse : ''} 
+                                key={course.courseId} 
+                                onClick={() => this.handleCourseClick(course)}>{course.name}</Button>
                         ))}
                     </div>
                     <div className={styles.courseContent}>
@@ -98,7 +120,7 @@ class Aria extends Component {
                             </div>
                         )}
                         {!selectedCourse ? selectedAria && selectedAria.description : selectedCourse.description}
-                        {selectedCourse && selectedCourse.trainers && selectedCourse.trainers.map(trainer => <div key={trainer.uid}>{trainer.username}</div>)}
+                        {/* {selectedCourse && selectedCourse.trainers && selectedCourse.trainers.map(trainer => <div key={trainer.uid}>{trainer.username}</div>)} */}
                     </div>
                 </CardContent>
                 <Dialog 

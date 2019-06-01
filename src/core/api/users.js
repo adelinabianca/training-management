@@ -11,6 +11,5 @@ export const getUser = async (uid) => {
 };
 
 export const updateUser = async (updatedUser) => {
- console.log(updatedUser);
  return axios.put(`${baseURL}/${updatedUser.uid}.json`, updatedUser);
 }

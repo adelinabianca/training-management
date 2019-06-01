@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import { withRouter } from 'react-router';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,7 +8,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
-import { AccountCircleOutlined } from '@material-ui/icons';
 import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -20,13 +20,42 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 
 import styles from './TrainerDashboard.module.scss';
+import { inject, observer } from 'mobx-react';
+import { getCourses } from '../../core/api/courses';
+import WhatDoYouWantToDo from '../admin/Main/WhatDoYouWantToDo';
+import Course from './Course/Course';
 // import WhatDoYouWantToDo from './admin/Main/WhatDoYouWantToDo';
 // import EditArias from './admin/EditArias/EditArias';
 // import UsersList from './admin/Users/UsersList';
-
+@inject('sessionStore')
+@observer
 class TrainerDashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            asignedCourses: []
+        }
+    }
+
+    async componentDidMount() {
+        const { sessionStore: { authUser } } = this.props;
+        console.log(authUser)
+        if (authUser.asignedCoursesIds) {
+            await getCourses().then(response => {
+                const asignedCourses = Object.values(response.data).filter(course => authUser.asignedCoursesIds.includes(course.courseId));
+                this.setState({ asignedCourses });
+            })
+        }
+    }
+
+    goOnCoursePage = (course) => {
+        const { history } = this.props;
+        history.push(`/trainer-dashboard/${course.courseId}`)
+    }
+
     render() {
         const open = true;
+        const { asignedCourses } = this.state;
         return (
             <div className={styles.dashboardWrapper}>
                <div className={styles.sidebar}>
@@ -50,12 +79,14 @@ class TrainerDashboard extends Component {
                     </ListItem>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <ListItem button className={styles.nested}>
-                                <ListItemIcon>
-                                    <SendIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Course 1" />
-                            </ListItem>
+                            {asignedCourses.length && asignedCourses.map(course => (
+                                <ListItem key={course.courseId} button onClick={() => this.goOnCoursePage(course)} className={styles.nested}>
+                                    <ListItemIcon>
+                                        <SendIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={course.name} />
+                                </ListItem>
+                            ))}
                         </List>
                     </Collapse>
                     {/* <ListItem button>
@@ -73,60 +104,14 @@ class TrainerDashboard extends Component {
                 </List>
                </div>
                <div className={styles.content}>
-                  trainer Dashboard content
-                  {/* <Switch>
+                  <Switch>
                         <Route exact path="/trainer-dashboard" component={WhatDoYouWantToDo} />
-                        <Route exact path="/trainer-dashboard/edit" component={EditArias} />
-                        <Route exact path="/trainer-dashboard/users" component={UsersList} />
-                    </Switch> */}
+                        <Route exact path="/trainer-dashboard/:courseId" component={Course} />
+                    </Switch>
                </div>
             </div>
         )
     }
 }
 
-export default TrainerDashboard;
-
-
-
-{/* <div className={styles.dashboardWrapper}>
-<div className={styles.sidebar}>
- <List
-     component="nav"
-     // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
-     className={styles.root}
-     >
-         <ListItem button onClick={this.goOnMainPage}>
-             <ListItemIcon>
-             <SendIcon />
-             </ListItemIcon>
-             <ListItemText primary="Home" />
-         </ListItem>
-         <ListItem button onClick={this.handleEditArias}>
-             <ListItemIcon>
-             <SendIcon />
-             </ListItemIcon>
-             <ListItemText primary="Arias" />
-         </ListItem>
-         <ListItem button>
-             <ListItemIcon>
-             <DraftsIcon />
-             </ListItemIcon>
-             <ListItemText primary="Events" />
-         </ListItem>
-         <ListItem button onClick={this.handleEditUsers}>
-             <ListItemIcon>
-             <AccountCircleOutlined />
-             </ListItemIcon>
-             <ListItemText primary="Users" />
-         </ListItem>
-     </List>
-</div>
-<div className={styles.content}>
-     <Switch>
-         <Route exact path="/admin-dashboard" component={WhatDoYouWantToDo} />
-         <Route exact path="/admin-dashboard/edit" component={EditArias} />
-         <Route exact path="/admin-dashboard/users" component={UsersList} />
-     </Switch>
-</div>
-</div> */}
+export default withRouter(TrainerDashboard);

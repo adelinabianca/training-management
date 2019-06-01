@@ -27,7 +27,7 @@ class Arias extends Component {
     handleClick = (aria, index) => {
         const { history, ariasStore: { setSelectedAria } } = this.props;
         setSelectedAria(aria)
-        history.push(`/aria/${index}`);
+        history.push(`/aria/${aria.ariaId}`);
     }
     render() {
         const { ariasStore: { allArias } } = this.props;

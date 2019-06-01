@@ -15,5 +15,5 @@ export const addAria = async (ariaInfo) => {
 };
 
 export const updateAria = async (updatedAria) => {
-  return axios.put(`${baseURL}/${updatedAria.id}.json`, { ...updatedAria, id: updatedAria.id});
+  return axios.put(`${baseURL}/${updatedAria.ariaId}.json`, { ...updatedAria, ariaId: updatedAria.ariaId});
 }

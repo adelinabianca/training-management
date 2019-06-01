@@ -1,0 +1,20 @@
+@import '../../../../styles/variables';
+div.questionWrapper {
+    display: flex;
+    align-items: center;
+}
+button.numberIcon {
+    width: 24px;
+    height: 24px;
+    min-height: 0;
+    color: white;
+    background-color: $secondary-bg-color;
+    cursor: default;
+    pointer-events: none;
+    margin: 0 8px;
+}
+
+div.inputContainer {
+    width: 80%;
+    margin-right: 8px;
+}

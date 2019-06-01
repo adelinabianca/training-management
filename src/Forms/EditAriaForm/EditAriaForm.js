@@ -21,24 +21,24 @@ class EditAriaForm extends Component {
     onSubmitCourseForm = (newValues, setFieldValue, allCourses, isNewCourse = false) => {
         const filteredCourses = allCourses.filter(course => course.id !== newValues.id);
         if (isNewCourse) {
-            newValues.id = allCourses.length;
+            newValues.courseid = allCourses.length;
         }
-        console.log(newValues)
-        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.id - b.id);
-        // console.log(updatedCourses)
+        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.courseid - b.courseid);
 
         //connect user to course
         if (newValues.trainers) {
-            const { formValues } = this.props;
+            // const { formValues } = this.props;
             const users = [...newValues.trainers];
-            users.map(trainer => {
-                const asignedCourse = { courseId: newValues.id, fromAriaId: formValues.id }
-                if (trainer.asignedCourses) {
-                    trainer.asignedCourses = [...trainer.asignedCourses, asignedCourse ]
+            newValues.trainersIds = users.map(user => user.uid);
+            users.forEach(trainer => {
+                if (trainer.asignedCoursesIds) {
+                    if (!trainer.asignedCoursesIds.includes(newValues.courseId)) {
+                        trainer.asignedCoursesIds = [...trainer.asignedCoursesIds, newValues.courseId ]
+                    }
                 } else {
-                    trainer.asignedCourses = [ asignedCourse]
+                    trainer.asignedCoursesIds = [ newValues.courseId ]
                 }
-                updateUser(trainer).then(response => console.log(response))
+                updateUser(trainer).then(response => {})
             })
         }
 
@@ -108,7 +108,7 @@ class EditAriaForm extends Component {
                                     {values.courses.map(course => {
                                         return (
                                             <EditCourseForm 
-                                                key={course.id || course.name} 
+                                                key={course.courseId} 
                                                 formValues={{ ...defaultCourseValues, ...course }} 
                                                 onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses)}
                                             />

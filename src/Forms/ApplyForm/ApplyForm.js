@@ -7,6 +7,9 @@ class ApplyForm extends Component {
     render() {
         const { formValues, onSubmit } = this.props;
         const questions = Object.keys(formValues);
+        if (!questions.length) {
+            return (<div>Perioada de inscriere inca nu a inceput. Urmariti pagina noastra pentru a fi la curent cu toate detaliile.</div>)
+        }
         return (
             <Formik
                 initialValues={formValues}

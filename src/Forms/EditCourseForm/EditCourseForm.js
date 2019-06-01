@@ -6,27 +6,49 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import { withFirebase } from '../../Firebase';
 import { inject, observer } from 'mobx-react';
+import { getAllUsers } from '../../core/api/users';
 
 @inject('userStore')
 @observer
 class EditCourseForm extends Component {
-    componentDidMount() {
-        const { firebase, userStore: { userList, setUsers } } = this.props;
-        if(!userList.length) {
+    constructor(props) {
+        super(props);
+        this.state = {
+            allTrainers: [],
+            formValues: null,
+            isLoading: false
+        }
+    }
+    async componentDidMount() {
+        const { formValues, userStore: { userList, setUsers } } = this.props;
+        if(!formValues || !userList.length) {
             this.setState({ isLoading: true });
         }
 
-        firebase.users().on('value', snapshot => {
-            setUsers(snapshot.val());
-            this.setState({ isLoading: false });
-        });
+        await getAllUsers().then(response => {
+            setUsers(response.data);
+            const allTrainers = Object.values(response.data).filter(user => user.roles.includes('trainer'));
+            let selectedTrainers = []
+            if (formValues.trainersIds) {
+                selectedTrainers = allTrainers.filter(trainer => formValues.trainersIds.includes(trainer.uid));
+            }
+            formValues.trainers = selectedTrainers;
+
+            this.setState({ allTrainers, formValues, isLoading: false })
+        })
+
+        // firebase.users().on('value', snapshot => {
+        //     setUsers(snapshot.val());
+        //     this.setState({ isLoading: false });
+        // });
     }
 
     render() {
-        const { formValues, onSubmit, userStore: { userList } } = this.props;
+        const { onSubmit } = this.props;
+        const { allTrainers, formValues } = this.state;
 
-        const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
-
+        // const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
+        // const selectedTrainers = userList.length && formValues ? userList.filter(user => formValues.trainersIds.includes(user.uid)) : []
         return formValues && (
             <Formik
                 initialValues={formValues}
@@ -91,7 +113,7 @@ class EditCourseForm extends Component {
                                 //     },
                                 //   }}
                                 >
-                                {[...trainers].map(trainer => (
+                                {[...allTrainers].map(trainer => (
                                     <MenuItem key={trainer.uid} value={trainer} >
                                         {trainer.username}
                                     </MenuItem>
