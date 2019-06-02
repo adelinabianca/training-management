@@ -5,6 +5,7 @@ import styles from './UsersList.module.scss';
 import { withFirebase } from '../../../Firebase';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+import { updateUser } from '../../../core/api/users';
 
 class UsersList extends Component {
     constructor(props) {
@@ -33,24 +34,28 @@ class UsersList extends Component {
         firebase.users().off();
     }
 
-    promoteToTrainer = (user) => {
-      const { firebase } = this.props;
-      const existingRoles = user.roles ? [...user.roles] : [];
-      firebase.user(user.uid).set({
-        email: user.email,
-        username: user.username,
-        roles: [...existingRoles, 'trainer']
-      })
+    promoteToTrainer = async (user) => {
+      const newRoles = [...user.roles, 'trainer']
+
+      await updateUser({...user, roles: newRoles }).then(() => {});
     }
 
-    promoteToAdmin = (user) => {
-      const { firebase } = this.props;
-      
-      firebase.user(user.uid).set({
-        email: user.email,
-        username: user.username,
-        roles: [...user.roles, 'admin']
-      })
+    promoteToAdmin = async (user) => {
+      const newRoles = [...user.roles, 'admin']
+
+      await updateUser({...user, roles: newRoles }).then(() => {});
+    }
+
+    removeTrainer = async (user) => { 
+      const newRoles = user.roles.filter(role => role !== 'trainer');
+
+      await updateUser({...user, roles: newRoles }).then(() => {});
+    }
+
+    removeAdmin = async (user) => { 
+      const newRoles = user.roles.filter(role => role !== 'admin');
+
+      await updateUser({...user, roles: newRoles }).then(() => {});
     }
 
     render() {
@@ -58,39 +63,49 @@ class UsersList extends Component {
         const { isLoading } = this.state;
 
         const users = userList;
+        if (isLoading) {
+          return <div>Loading... </div>
+        }
 
         return (
-          <div>
-            <h2>Users</h2>
-            {isLoading && <div>Loading ...</div>}
-            <ul>
-              <li>
-                <Grid container>
-                  <Grid item xs={4}><span><strong>ID</strong></span></Grid>
-                  <Grid item xs={2}><span><strong>E-mail</strong></span></Grid>
-                  <Grid item xs={2}><span><strong>Username</strong></span></Grid>
-                  <Grid item xs={2}><span><strong>Roles</strong></span></Grid>
-                  <Grid item xs={2}><span><strong>Actions</strong></span></Grid>
-                </Grid>
-              </li>
-              {users && users.map(user => {
-                return (
-                <li key={user.uid}>
-                  <Grid container>
-                    <Grid item xs={4}><span>{user.uid}</span></Grid>
-                    <Grid item xs={2}><span>{user.email}</span></Grid>
-                    <Grid item xs={2}><span>{user.username}</span></Grid>
-                    <Grid item xs={2}><span>{user.roles && user.roles.join(' ')}</span></Grid>
-                    <Grid item xs={2}>
-                      <span>
-                        {(!user.roles || !user.roles.includes('trainer')) && (<Button onClick={() => this.promoteToTrainer(user)}>Promote to trainer</Button>)}
-                        {(!user.roles || !user.roles.includes('admin')) && (<Button onClick={() => this.promoteToAdmin(user)}>Promote to admin</Button>)}
-                      </span>
+          <div className={styles.mainWrapper}>
+            <div className={styles.card}>
+              <div className={[styles.cardHeader, styles.cardHeaderPrimary].join(' ')}>
+                <h2>Users</h2>
+              </div>
+              <div className={styles.cardBody}>
+                <ul>
+                  <li>
+                    <Grid container>
+                      <Grid item xs={2}><span><strong>ID</strong></span></Grid>
+                      <Grid item xs={2}><span><strong>E-mail</strong></span></Grid>
+                      <Grid item xs={2}><span><strong>Username</strong></span></Grid>
+                      <Grid item xs={2}><span><strong>Roles</strong></span></Grid>
+                      <Grid item xs={4}><span><strong>Actions</strong></span></Grid>
                     </Grid>
-                  </Grid>
-                </li>
-              )})}
-            </ul>
+                  </li>
+                  {users && users.map(user => {
+                    return (
+                    <li key={user.uid} className={styles.listItem}>
+                      <Grid container>
+                        <Grid item xs={2}><span>{user.uid}</span></Grid>
+                        <Grid item xs={2}><span>{user.email}</span></Grid>
+                        <Grid item xs={2}><span>{user.username}</span></Grid>
+                        <Grid item xs={2}><span>{user.roles && user.roles.join(' ')}</span></Grid>
+                        <Grid item xs={4}>
+                          <span>
+                            {(!user.roles || !user.roles.includes('trainer')) && (<Button onClick={() => this.promoteToTrainer(user)}>Promote to trainer</Button>)}
+                            {(!user.roles || !user.roles.includes('admin')) && (<Button onClick={() => this.promoteToAdmin(user)}>Promote to admin</Button>)}
+                            {(user.roles && user.roles.includes('trainer')) && (<Button onClick={() => this.removeTrainer(user)}>Remove trainer</Button>)}
+                            {(user.roles && user.roles.includes('admin')) && (<Button onClick={() => this.removeAdmin(user)}>Remove admin</Button>)}
+                          </span>
+                        </Grid>
+                      </Grid>
+                    </li>
+                  )})}
+                </ul>
+              </div>
+            </div>
           </div>
         )
     }

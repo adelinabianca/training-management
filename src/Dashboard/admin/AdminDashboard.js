@@ -16,23 +16,38 @@ import UsersList from './Users/UsersList';
 import WhatDoYouWantToDo from './Main/WhatDoYouWantToDo';
 
 class AdminDashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedItem: 0
+        }
+    }
 
     handleEditArias = () => {
         const { history } = this.props;
-        history.push('/admin-dashboard/edit')
+        this.setState({ selectedItem: 1 });
+        history.push('/admin-dashboard/edit');
     }
 
     handleEditUsers = () => {
         const { history } = this.props;
-        history.push('/admin-dashboard/users')
+        
+        this.setState({ selectedItem: 3 });
+        history.push('/admin-dashboard/users');
     }
 
     goOnMainPage = () => {
         const { history } = this.props;
+        this.setState({ selectedItem: 0 })
         history.push('/admin-dashboard')
     }
 
+    handleEditEvents = () => {
+        this.setState({ selectedItem: 2})
+    }
+
     render() {
+        const { selectedItem } = this.state;
         return (
             <div className={styles.dashboardWrapper}>
                <div className={styles.sidebar}>
@@ -41,25 +56,25 @@ class AdminDashboard extends Component {
                     // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
                     className={styles.root}
                     >
-                        <ListItem button onClick={this.goOnMainPage}>
+                        <ListItem button onClick={this.goOnMainPage} selected={selectedItem === 0}>
                             <ListItemIcon>
                             <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Home" />
                         </ListItem>
-                        <ListItem button onClick={this.handleEditArias}>
+                        <ListItem button onClick={this.handleEditArias} selected={selectedItem === 1}>
                             <ListItemIcon>
                             <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Arias" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem button onClick={this.handleEditEvents} selected={selectedItem === 2}>
                             <ListItemIcon>
                             <DraftsIcon />
                             </ListItemIcon>
                             <ListItemText primary="Events" />
                         </ListItem>
-                        <ListItem button onClick={this.handleEditUsers}>
+                        <ListItem button onClick={this.handleEditUsers} selected={selectedItem === 3}>
                             <ListItemIcon>
                             <AccountCircleOutlined />
                             </ListItemIcon>

@@ -6,9 +6,10 @@ import styles from './Aria.module.scss';
 import { getAria } from '../../core/api/arias';
 import { Breadcrumbs } from '../../core/components/Breadcrumbs/Breadcrumbs';
 import ApplyForm from '../../Forms/ApplyForm/ApplyForm';
-import { getCourses } from '../../core/api/courses';
+import { getCourses, updateCourse } from '../../core/api/courses';
+import { updateUser } from '../../core/api/users';
 
-@inject('ariasStore', 'coursesStore')
+@inject('ariasStore', 'coursesStore', 'sessionStore')
 @observer
 class Aria extends Component {
     constructor(props) {
@@ -93,9 +94,25 @@ class Aria extends Component {
         this.setState({ open: false });
     }
 
-    handleFormSubmit = (newValues) => {
-        // console.log(newValues)
-        this.setState({ open: false })
+    handleFormSubmit = async (newValues) => {
+        const { sessionStore: { authUser } } = this.props;
+        const { selectedCourse } = this.state;
+        
+        if (!authUser.applications) {
+            authUser.applications = [{ courseId: selectedCourse.courseId, answers: newValues }]
+        } else {
+            authUser.applications = [...authUser.applications, { courseId: selectedCourse.courseId, answers: newValues }]
+        }
+        await updateUser(authUser).then(resp => {})
+
+        if (!selectedCourse.applicants) {
+            selectedCourse.applicants = [authUser.uid]
+        } else {
+            selectedCourse.applicants = [...selectedCourse.applicants, authUser.uid]
+        }
+        await updateCourse(selectedCourse).then(res => {})
+
+        this.setState({ open: false, selectedCourse })
     }
 
     render() {

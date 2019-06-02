@@ -1,5 +1,9 @@
 @import '../../../styles/variables';
 
+div.mainWrapper {
+    padding: 8px;
+}
+
 form.formWrapper {
     display: flex;
     flex-direction: column;
@@ -21,6 +25,55 @@ form.formWrapper {
             padding: 8px 16px;
             &:hover {
                 background-color: $hover-button-color;
+            }
+        }
+    }
+}
+
+div.card {
+    position: relative;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
+    border: 0;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 6px;
+    color: #333;
+    background: #FFF;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    font-size: .875rem;
+    div.cardHeaderPrimary {
+        border-radius: 3px;
+        padding: 4px 15px;
+        background: linear-gradient(60deg, #ab47bc, #8e24aa);
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
+        margin: -20px 15px 0;
+        color: #FFF;
+    }
+    div.cardHeader {
+        z-index: 3;
+        border-bottom: none;
+    }
+}
+
+li.listItem {
+    border-bottom: 1px solid #ccc;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    div {
+        align-items: center;
+        button {
+            font-size: 10px;
+            color:white;
+            background:  #ab47bc;
+            margin-right: 4px;
+            padding: 4px;
+            &:hover {
+                background: #831f9e;
             }
         }
     }

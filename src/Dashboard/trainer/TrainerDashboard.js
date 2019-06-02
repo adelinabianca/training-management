@@ -33,13 +33,13 @@ class TrainerDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            asignedCourses: []
+            asignedCourses: [],
+            open: false
         }
     }
 
     async componentDidMount() {
         const { sessionStore: { authUser } } = this.props;
-        console.log(authUser)
         if (authUser.asignedCoursesIds) {
             await getCourses().then(response => {
                 const asignedCourses = Object.values(response.data).filter(course => authUser.asignedCoursesIds.includes(course.courseId));
@@ -53,9 +53,13 @@ class TrainerDashboard extends Component {
         history.push(`/trainer-dashboard/${course.courseId}`)
     }
 
+    handleCollapseClick = () => {
+        const { open } = this.state;
+        this.setState({ open: !open });
+    }
+
     render() {
-        const open = true;
-        const { asignedCourses } = this.state;
+        const { asignedCourses, open } = this.state;
         return (
             <div className={styles.dashboardWrapper}>
                <div className={styles.sidebar}>
@@ -70,7 +74,7 @@ class TrainerDashboard extends Component {
                         </ListItemIcon>
                         <ListItemText primary="Home" />
                     </ListItem>
-                    <ListItem button onClick={this.handleEditArias}>
+                    <ListItem button onClick={this.handleCollapseClick}>
                         <ListItemIcon>
                         <SendIcon />
                         </ListItemIcon>
@@ -79,7 +83,7 @@ class TrainerDashboard extends Component {
                     </ListItem>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            {asignedCourses.length && asignedCourses.map(course => (
+                            {asignedCourses.map(course => (
                                 <ListItem key={course.courseId} button onClick={() => this.goOnCoursePage(course)} className={styles.nested}>
                                     <ListItemIcon>
                                         <SendIcon />
