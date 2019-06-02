@@ -48,7 +48,7 @@ div.card {
     div.cardHeaderPrimary {
         border-radius: 3px;
         padding: 4px 15px;
-        background: linear-gradient(60deg, #ab47bc, #8e24aa);
+        background: $background-gradient;
         box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
         margin: -20px 15px 0;
         color: #FFF;

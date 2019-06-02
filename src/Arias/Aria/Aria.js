@@ -117,10 +117,13 @@ class Aria extends Component {
 
     render() {
         const { selectedAria, crumbs, selectedCourse, open, formValues, ariaCourses } = this.state;
+        
         return (
-            <Card className={styles.ariaCard}>
-                <CardHeader title={selectedAria && (<Breadcrumbs crumbs={crumbs} handleClick={this.handleCrumbClick} />)}/>
-                <CardContent className={styles.cardContent}>
+            <div className={styles.card}>
+                <div className={[styles.cardHeader, styles.cardHeaderPrimary].join(' ')}>
+                    {selectedAria && (<Breadcrumbs crumbs={crumbs} handleClick={this.handleCrumbClick} />)}
+                </div>
+                <div className={styles.cardBody}>
                     <div className={styles.coursesButtons}>
                         {selectedAria && ariaCourses.map(course => (
                             <Button 
@@ -139,7 +142,7 @@ class Aria extends Component {
                         {!selectedCourse ? selectedAria && selectedAria.description : selectedCourse.description}
                         {/* {selectedCourse && selectedCourse.trainers && selectedCourse.trainers.map(trainer => <div key={trainer.uid}>{trainer.username}</div>)} */}
                     </div>
-                </CardContent>
+                </div>
                 <Dialog 
                     open={open} 
                     onClose={this.handleDialogClose}
@@ -150,7 +153,7 @@ class Aria extends Component {
                     <DialogContent><ApplyForm formValues={formValues} onSubmit={this.handleFormSubmit} /></DialogContent>
                     {/* <DialogActions><Button>Submit</Button></DialogActions> */}
                 </Dialog>
-            </Card>
+            </div>
         )
     }
 };
