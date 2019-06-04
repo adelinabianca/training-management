@@ -34,7 +34,7 @@ class Arias extends Component {
         return (
             <div className={styles.mainWrapper}>
                 {allArias.map((aria, index) => (
-                    <div className={styles.card}>
+                    <div key={aria.ariaId} className={styles.card}>
                         <div className={[styles.cardHeader, styles.cardHeaderPrimary].join(' ')}>
                             <h3>
                                 {aria.name}
@@ -50,31 +50,6 @@ class Arias extends Component {
                         </div>
 
                     </div>
-                    // <Card key={aria.name} className={styles.card}>
-                    //     <CardActionArea>
-                    //         <CardMedia
-                    //             component="img"
-                    //             alt="Contemplative Reptile"
-                    //             className={styles.media}
-                    //             height="140"
-                    //             image={image}
-                    //             title={aria.name}
-                    //         />
-                    //         <CardContent>
-                                // <Typography gutterBottom variant="h5" component="h2">
-                                //     {aria.name}
-                                // </Typography>
-                    //             <Typography component="p">
-                    //                 {aria.description}
-                    //             </Typography>
-                    //         </CardContent>
-                    //     </CardActionArea>
-                    //     <CardActions>
-                    //         <Button onClick={() => this.handleClick(aria, index)} size="small" color="primary">
-                    //             See details and apply
-                    //         </Button>
-                    //     </CardActions>
-                    // </Card>
                 ))}
             </div>
         )

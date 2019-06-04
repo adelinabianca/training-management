@@ -25,8 +25,8 @@ class AdminDashboard extends Component {
 
     handleEditArias = () => {
         const { history } = this.props;
-        this.setState({ selectedItem: 1 });
         history.push('/admin-dashboard/edit');
+        this.setState({ selectedItem: 1 });
     }
 
     handleEditUsers = () => {
@@ -47,7 +47,6 @@ class AdminDashboard extends Component {
     }
 
     render() {
-        const { selectedItem } = this.state;
         return (
             <div className={styles.dashboardWrapper}>
                <div className={styles.sidebar}>
@@ -56,25 +55,25 @@ class AdminDashboard extends Component {
                     // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
                     className={styles.root}
                     >
-                        <ListItem button onClick={this.goOnMainPage} selected={selectedItem === 0}>
+                        <ListItem button onClick={this.goOnMainPage}>
                             <ListItemIcon>
                             <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Home" />
                         </ListItem>
-                        <ListItem button onClick={this.handleEditArias} selected={selectedItem === 1}>
+                        <ListItem button onClick={this.handleEditArias}>
                             <ListItemIcon>
                             <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Arias" />
                         </ListItem>
-                        <ListItem button onClick={this.handleEditEvents} selected={selectedItem === 2}>
+                        <ListItem button onClick={this.handleEditEvents}>
                             <ListItemIcon>
                             <DraftsIcon />
                             </ListItemIcon>
                             <ListItemText primary="Events" />
                         </ListItem>
-                        <ListItem button onClick={this.handleEditUsers} selected={selectedItem === 3}>
+                        <ListItem button onClick={this.handleEditUsers}>
                             <ListItemIcon>
                             <AccountCircleOutlined />
                             </ListItemIcon>

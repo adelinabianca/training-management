@@ -42,6 +42,8 @@ div.card {
         justify-content: space-between;
         p {
             color: gray;
+            max-height: 140px;
+            overflow: hidden;
         }
         button {
             margin-top: 8px;

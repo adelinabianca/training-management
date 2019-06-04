@@ -7,11 +7,10 @@ import {  withStyles } from '@material-ui/core/styles';
 
 import styles from './Course.module.scss';
 import { getCourse, updateCourse } from '../../../core/api/courses';
+import { getUser, updateUser } from '../../../core/api/users';
 import EditApplyForm from './EditApplyForm/EditApplyForm';
 import Applicants from './Applicants/Applicants';
-// import { getArias, updateAria } from '../../../core/api/arias';
-// import EditAriaForm from '../../../Forms/EditAriaForm/EditAriaForm';
-// import { getCourses, updateCourse } from '../../../core/api/courses';
+import Members from './Members/Members';
 
 const CustomTabs = withStyles({
     root: {
@@ -75,6 +74,37 @@ class Course extends Component {
         await updateCourse(course).then(response => {})
     }
 
+    acceptApplicant = async (acceptedUser) => {
+        const { course } = this.state;
+
+        await getUser(acceptedUser.uid).then(async response => {
+            const user = response.data;
+            const participantCourses = user.participantCoursesIds ? [...user.participantCoursesIds, course.courseId] : [course.courseId];
+            const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
+            await updateUser(updatedUser).then(res => {})
+        });
+
+        const members = course.members ? [...course.members, acceptedUser.uid] : [acceptedUser.uid];
+        const updatedCourse = {...course, members};
+        this.setState({ course: updatedCourse });
+        await updateCourse(updatedCourse).then(() => {});
+    }
+
+    removeMember = async (removedUser) => {
+        const { course } = this.state;
+
+        course.members = [...course.members].filter(userUid => userUid !== removedUser.uid)
+        this.setState({ course: {...course}});
+        await updateCourse(course).then(() => {});
+
+        await getUser(removedUser.uid).then(async response => {
+            const user = response.data;
+            const participantCourses =[...user.participantCoursesIds].filter(courseID => courseID !== course.courseId);
+            const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
+            await updateUser(updatedUser).then(res => {})
+        });
+    }
+
     render() {
         const { course, tabValue } = this.state;
         return (
@@ -100,9 +130,23 @@ class Course extends Component {
                         </AppBar>
                     </div>
                     <div className={styles.cardBody}>
-                        {tabValue === 0 && <EditApplyForm questions={course && course.applyFormQuestions ? course.applyFormQuestions : ['']} handleFormSave={this.saveApplyFormQuestions} />}
-                        {tabValue === 1 && <Applicants applicants={course && course.applicants ? course.applicants : []} courseId={course.courseId}/>}
-                        {tabValue === 2 && <div>Item Three</div>}
+                        {tabValue === 0 && (
+                            <EditApplyForm 
+                                questions={course && course.applyFormQuestions ? course.applyFormQuestions : ['']} 
+                                handleFormSave={this.saveApplyFormQuestions} />
+                        )}
+                        {tabValue === 1 && (
+                            <Applicants 
+                                applicants={course && course.applicants ? course.applicants : []} 
+                                course={course}
+                                onAcceptUser={this.acceptApplicant}
+                                onRemoveUser={this.removeMember} />
+                        )}
+                        {tabValue === 2 && (
+                            <Members 
+                                members={course && course.members ? course.members : []} 
+                                courseId={course.courseId} />
+                        )}
                         {tabValue === 3 && <div>Item Four</div>}
                         {tabValue === 4 && <div>Item Five</div>}
                     </div>

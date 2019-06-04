@@ -18,16 +18,15 @@ class EditAriaForm extends Component {
         }
     }
 
-    onSubmitCourseForm = (newValues, setFieldValue, allCourses, isNewCourse = false) => {
-        const filteredCourses = allCourses.filter(course => course.id !== newValues.id);
+    onSubmitCourseForm = (newValues, setFieldValue, allAriaCourses, isNewCourse = false) => {
+        const filteredCourses = allAriaCourses.filter(course => course.courseId !== newValues.courseId);
         if (isNewCourse) {
-            newValues.courseid = allCourses.length;
+            const { allCoursesLength } = this.props;
+            newValues.courseId = allCoursesLength;
         }
-        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.courseid - b.courseid);
-
+        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.courseId - b.courseId);
         //connect user to course
         if (newValues.trainers) {
-            // const { formValues } = this.props;
             const users = [...newValues.trainers];
             newValues.trainersIds = users.map(user => user.uid);
             users.forEach(trainer => {
@@ -65,6 +64,7 @@ class EditAriaForm extends Component {
                 enableReinitialize
                 onSubmit={onSubmit}
                 render={({ handleSubmit, handleChange, handleBlur, values, setFieldValue, errors, touched }) => {
+                    console.log(values.courses)
                     return (
                          <form autoComplete="off" className={styles.formWrapper}>
                             <div className={styles.fieldWrapper}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, CardContent, CardActions, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+import { Card, Button, CardContent, CardActions, Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
 
 import styles from './EditArias.module.scss';
 import { getArias, updateAria } from '../../../core/api/arias';
@@ -12,7 +12,8 @@ class EditArias extends Component {
         this.state = {
             arias: [],
             open: false,
-            selectedAria: null
+            selectedAria: null,
+            allCoursesLength: 0
         }
     }
 
@@ -26,9 +27,9 @@ class EditArias extends Component {
 
     handleEditAria = async (aria) => {
         await getCourses().then(response => {
-            const ariaCourses = response.data.filter(course => aria.coursesIds.includes(course.courseId));
+            const ariaCourses = aria.coursesIds ? response.data.filter(course => aria.coursesIds.includes(course.courseId)) : [];
             aria.courses = ariaCourses;
-            this.setState({ selectedAria: aria, open: true });
+            this.setState({ selectedAria: aria, open: true, allCoursesLength: response.data.length });
         })
     }
 
@@ -41,29 +42,31 @@ class EditArias extends Component {
             delete course.trainers;
             await updateCourse(course).then(respones => {});
         })
+        newValues.coursesIds = newValues.courses.map(course => course.courseId);
         delete newValues.courses;
         updateAria(newValues).then(response => this.handleClose());
         
     }
 
     render() {
-        const { arias, open, selectedAria } = this.state;
+        const { arias, open, selectedAria, allCoursesLength } = this.state;
         return (
             <div className={styles.wrapper}>
                 {arias.map(aria => (
-                    <Card key={aria.ariaId} className={styles.ariaCard}>
-                        <CardContent className={styles.cardContent}>
-                            <h2>{aria.name}</h2>
+                    <div key={aria.ariaId} className={styles.card}>
+                        <div className={[styles.cardHeader, styles.cardHeaderPrimary].join(' ')}>
+                            <h3>{aria.name}</h3>
+                        </div>
+                        
+                        <div className={styles.cardBody}>
                             <div className={styles.description}>{aria.description}</div>
-                        </CardContent>
-                        <CardActions className={styles.cardActions}>
                             <Button className={styles.editBtn} onClick={() => this.handleEditAria(aria)}>Edit Aria</Button>
-                        </CardActions>
-                    </Card>
+                        </div>
+                    </div>
                 ))}
                 <Dialog open={open} onBackdropClick={this.handleClose} fullWidth maxWidth="md">
                     <DialogTitle>Edit aria {selectedAria && selectedAria.name}</DialogTitle>
-                    <DialogContent><EditAriaForm formValues={selectedAria} onSubmit={this.handleSubmitEditAria}/></DialogContent>
+                    <DialogContent><EditAriaForm formValues={selectedAria} onSubmit={this.handleSubmitEditAria} allCoursesLength={allCoursesLength}/></DialogContent>
                 </Dialog>
             </div>
         );
