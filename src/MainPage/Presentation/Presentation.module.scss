@@ -1,0 +1,59 @@
+@import '../../styles/variables';
+
+.container {
+    height: 400px;
+    position: relative;
+  }
+  
+  .presentation {
+    top: 0;
+    background: $presentation-bg;
+    width: 130%;
+    height: 400px;
+    overflow: hidden;
+    position: absolute;
+  
+    div {
+      border: 1px solid rgba(255, 255, 255, 1);
+      width: 10em;
+      height: 10em;
+      transform: rotate(45deg);
+      margin: 2em;
+      float: left;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+  }
+  
+  .content {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    padding: 30px 200px;
+    width: 100%;
+  }
+  
+  .h2 {
+    margin-bottom: 15px;
+    font-size: 48px;
+    font-weight: bold;
+    color: #00329e;
+    font-family: 'Josefin Sans', sans-serif;
+  }
+  
+  .h3 {
+    font-size: 38px;
+    padding-left: 15px;
+    color: #555;
+    margin-top: 0;
+  }
+  
+  .h4 {
+    font-style: italic;
+    font-size: 22px;
+    padding-left: 15px;
+    color: #555;
+  }

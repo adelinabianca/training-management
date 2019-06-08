@@ -71,7 +71,7 @@ class EditAriaForm extends Component {
                     return (
                          <form autoComplete="off" className={styles.formWrapper}>
                             <div className={styles.fieldWrapper}>
-                                <InputLabel className={styles.ariaLabel}>Name</InputLabel>
+                                <InputLabel className={styles.ariaLabel}>Nume</InputLabel>
                                 <TextField
                                     id="name"
                                     className={styles.formControl}
@@ -85,7 +85,7 @@ class EditAriaForm extends Component {
                                 />
                             </div>
                             <div className={styles.fieldWrapper}>
-                                <InputLabel className={styles.ariaLabel}>Description</InputLabel>
+                                <InputLabel className={styles.ariaLabel}>Descrierea ariei</InputLabel>
                                 <TextField
                                     id='description'
                                     className={styles.formControl}
@@ -99,16 +99,8 @@ class EditAriaForm extends Component {
                                 />
                             </div>
                             <div className={styles.fieldWrapper}>
-                                <InputLabel className={styles.ariaLabel}>Courses</InputLabel>
-                                <Button onClick={this.addNewCourse}>Add new course</Button>
+                                <InputLabel className={styles.ariaLabel}>Cursuri</InputLabel>
                                 <div className={styles.coursesWrapper}>
-                                    {addNewCourse && (
-                                        <EditCourseForm 
-                                            formValues={defaultCourseValues} 
-                                            onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses, true)}
-                                            isSubmiting={isCourseSubmitting}
-                                        />
-                                    )}
                                     {values.courses ? values.courses.map(course => {
                                         return (
                                             <EditCourseForm 
@@ -119,11 +111,18 @@ class EditAriaForm extends Component {
                                             />
                                         )
                                     }) : null}
-
+                                    {addNewCourse && (
+                                        <EditCourseForm 
+                                            formValues={defaultCourseValues} 
+                                            onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses, true)}
+                                            isSubmiting={isCourseSubmitting}
+                                        />
+                                    )}
                                 </div>
+                                <CustomButton onClick={this.addNewCourse}>Adauga curs</CustomButton>
                             </div>
                             <div className={styles.buttonsContainer}>
-                                <CustomButton isLoading={isSubmiting} onClick={handleSubmit}>Submit</CustomButton>
+                                <CustomButton isLoading={isSubmiting} onClick={handleSubmit}>Salveaza</CustomButton>
                             </div>
                         </form>
                     )}

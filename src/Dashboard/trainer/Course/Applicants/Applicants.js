@@ -69,13 +69,14 @@ class Applicants extends Component {
     render() {
         const { applicants, seeAnswersDialog, selectedApplication } = this.state;
         const { course: { members } } = this.props;
+        const courseMembers = members || [];
         return (
             <div className={styles.wrapper}>
                 {applicants.map((user, index) => {
                     return (
                         <Grid key={index} container>
                             <Grid item xs={2}>
-                                aplicant#{index} {user.username}
+                                aplicant#{index}
                             </Grid>
                             <Grid item xs={3}>
                                 <div role="button" onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</div>
@@ -87,8 +88,8 @@ class Applicants extends Component {
                                 <TextField placeholder="Observatii" />
                             </Grid>
                             <Grid item xs={2}>
-                                {!members.includes(user.uid) && (<Button onClick={() => this.handleAcceptUser(user)}>Accepta</Button>)}
-                                {members.includes(user.uid) && (<Button onClick={() => this.handleRemoveUser(user)}>Sterge</Button>)}
+                                {!courseMembers.includes(user.uid) && (<Button onClick={() => this.handleAcceptUser(user)}>Accepta</Button>)}
+                                {courseMembers.includes(user.uid) && (<Button onClick={() => this.handleRemoveUser(user)}>Sterge</Button>)}
                             </Grid>
                         </Grid>
                     )

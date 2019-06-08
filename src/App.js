@@ -16,6 +16,7 @@ import Aria from './Arias/Aria/Aria';
 import { withAuthentication } from './Firebase/Session';
 import AdminDashboard from './Dashboard/admin/AdminDashboard';
 import TrainerDashboard from './Dashboard/trainer/TrainerDashboard';
+import ParticipantDashboard from './Dashboard/participant/ParticipantDashboard';
 
 const stores = {
   userStore,
@@ -74,6 +75,7 @@ class App extends Component {
                   <Route exact path="/login" component={Login} />
                   <PrivateAdminRoute path="/admin-dashboard" component={AdminDashboard} />
                   <PrivateTrainerRoute path="/trainer-dashboard" component={TrainerDashboard} />
+                  <Route path="/participant-dashboard" component={ParticipantDashboard} />
                   <Route exact path="/aria/:ariaName" component={Aria} />
                 </Switch>
             </div>

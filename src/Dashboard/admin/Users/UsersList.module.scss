@@ -36,9 +36,8 @@ div.card {
     border: 0;
     margin-bottom: 30px;
     margin-top: 30px;
-    border-radius: 6px;
     color: #333;
-    background: #FFF;
+    background: $primary-bg-color;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,15 +46,25 @@ div.card {
     font-size: .875rem;
     div.cardHeaderPrimary {
         border-radius: 3px;
-        padding: 4px 15px;
-        background: $background-gradient;
+        padding: 15px;
+        background: $card-header-bg;
         box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
         margin: -20px 15px 0;
-        color: #FFF;
+        color: $secondary-font-color;
     }
     div.cardHeader {
         z-index: 3;
         border-bottom: none;
+        font-size: 16px;
+        text-shadow: 0px 1px 10px #555;
+    }
+    div.usersTitle {
+        display: flex;
+        align-items: center;
+        svg {
+            padding-bottom: 5px;
+            padding-right: 5px;
+        }
     }
 }
 

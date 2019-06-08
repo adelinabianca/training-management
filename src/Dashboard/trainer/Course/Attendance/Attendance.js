@@ -75,7 +75,9 @@ class Attendance extends Component {
                   value={uniqueCode}
                   onChange={this.handleInputChange}
                   margin="dense"
-                  variant="outlined" />
+                  variant="outlined"
+                //   type="password" 
+                  />
                 <CustomButton onClick={this.generateQrCode}>Save and generate QR code</CustomButton>
                 <div>
                     <QRCode 
@@ -85,7 +87,7 @@ class Attendance extends Component {
                     <DialogContent>
                     <QRCode 
                         value={uniqueCode}
-                        size={450} />
+                        size={500} />
                     </DialogContent>
                 </Dialog>
             </div>

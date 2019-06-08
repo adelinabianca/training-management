@@ -45,6 +45,12 @@ class NavigationBar extends Component {
         history.push('/main');
     }
 
+    goOnUserPanel = () => {
+        const { history } = this.props;
+        this.handleCloseMenu();
+        history.push('/participant-dashboard');
+    }
+
     handleDrawerToggle = () => {
         const { drawerStore: { setAllDrawers } } = this.props;
         setAllDrawers(true)
@@ -68,10 +74,10 @@ class NavigationBar extends Component {
                 <nav className={styles.menu}>
                     <Hidden smDown>
                         <span className={styles.menuItem}><Link to='/main'>Arii</Link></span>
-                        <span>Program</span>
-                        <span>Evenimente</span>
-                        <span>Cum aplic</span>
-                        <span>Despre</span>
+                        <span><Link to='/main'>Program</Link></span>
+                        <span><Link to='/main'>Evenimente</Link></span>
+                        <span><Link to='/main'>Cum aplic</Link></span>
+                        <span><Link to='/main'>Despre</Link></span>
                     </Hidden>
                     <div className={styles.account}>
                         {authUser ? (
@@ -102,6 +108,7 @@ class NavigationBar extends Component {
                                         authUser.roles.includes('admin') && (<MenuItem onClick={this.goToAdminDashboard}>Admin dashboard</MenuItem>)}
                                     {authUser && authUser.roles && 
                                         authUser.roles.includes('trainer') && (<MenuItem onClick={this.goToTrainerDashboard}>Trainer dashboard</MenuItem>)}
+                                    <MenuItem onClick={this.goOnUserPanel}>Cursuri</MenuItem>
                                     <MenuItem onClick={this.goToMyAccount}>Contul meu</MenuItem>
                                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                                 </Menu>

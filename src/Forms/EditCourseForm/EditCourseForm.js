@@ -59,7 +59,7 @@ class EditCourseForm extends Component {
                     return (
                         <Card className={styles.courseCard} key={values.id}>
                             {/* course name */}
-                            <InputLabel>Course name</InputLabel>
+                            <InputLabel>Nume curs</InputLabel>
                             <FormControl>
                                 <TextField
                                     id='name'
@@ -74,7 +74,7 @@ class EditCourseForm extends Component {
                             </FormControl>
 
                             {/* course description */}
-                            <InputLabel>Course description</InputLabel>
+                            <InputLabel>Descrierea cursului</InputLabel>
                             <FormControl>
                                 <TextField
                                     id='description'
@@ -90,7 +90,7 @@ class EditCourseForm extends Component {
                             </FormControl>
 
                             {/* trainers */}
-                            <InputLabel>Trainers</InputLabel>
+                            <InputLabel>Traineri</InputLabel>
                             <FormControl className={styles.formControl}>
                                 <Select
                                 multiple

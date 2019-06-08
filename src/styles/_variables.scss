@@ -1,21 +1,24 @@
 $primary-bg-color: #FFF;
-$secondary-bg-color: #ed786a; //#8e24aa;
+$secondary-bg-color: #00b0ff; //#8e24aa;
 $default-bg-color: #F4F6FC;
+$dark-background-color: #001658;
+$presentation-bg: linear-gradient(to bottom, #7fcdff 0%, #d97b7b00 100%);
+$card-header-bg: linear-gradient(to right, #00375c 0%, #000f47 -2%, #77d0ffb5 100%);
 
-$primary-font-color: #ed786a;// #8e24aa;
+$primary-font-color: #00b0ff;
 $secondary-font-color: #FFF;
 $faded-font-color: #777;//#b6b6b6;
 $secondary-faded-font: #8A9BAF;
-$dark-font-color: #2E384D;
+$dark-font-color: #00375c;
 
 $icon-color: #ed786a;// #8e24aa;
 $disabled-icon-color: rgba(0, 0, 0, 0.26);
 
-$hover-button-color: #fd887a;// #831f9e;
-$hover-light-color: #efe0f5;
+$hover-button-color: #001658;// #831f9e;
+$hover-light-color: #dce7fabd;
 $border-color: #ed786a; // #8e24aa;
 
-$navbar-height: 50px;
+$navbar-height: 70px;
 
 $background-gradient: #ed786a; // linear-gradient(60deg, #ab47bc, #8e24aa);
 

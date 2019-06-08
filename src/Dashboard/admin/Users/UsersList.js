@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
+import GroupIcon from '@material-ui/icons/GroupTwoTone'
 
 import styles from './UsersList.module.scss';
 import { withFirebase } from '../../../Firebase';
@@ -72,15 +73,15 @@ class UsersList extends Component {
           <div className={styles.mainWrapper}>
             <div className={styles.card}>
               <div className={[styles.cardHeader, styles.cardHeaderPrimary].join(' ')}>
-                <h2>Users</h2>
+                <div className={styles.usersTitle}><GroupIcon /> {users.length} users</div>
               </div>
               <div className={styles.cardBody}>
                 <ul>
                   <li>
                     <Grid container>
-                      <Grid item xs={2}><span><strong>ID</strong></span></Grid>
-                      <Grid item xs={2}><span><strong>E-mail</strong></span></Grid>
-                      <Grid item xs={2}><span><strong>Username</strong></span></Grid>
+                      {/* <Grid item xs={2}><span><strong>ID</strong></span></Grid> */}
+                      <Grid item xs={3}><span><strong>Username</strong></span></Grid>
+                      <Grid item xs={3}><span><strong>E-mail</strong></span></Grid>
                       <Grid item xs={2}><span><strong>Roles</strong></span></Grid>
                       <Grid item xs={4}><span><strong>Actions</strong></span></Grid>
                     </Grid>
@@ -89,9 +90,9 @@ class UsersList extends Component {
                     return (
                     <li key={user.uid} className={styles.listItem}>
                       <Grid container>
-                        <Grid item xs={2}><span>{user.uid}</span></Grid>
-                        <Grid item xs={2}><span>{user.email}</span></Grid>
-                        <Grid item xs={2}><span>{user.username}</span></Grid>
+                        {/* <Grid item xs={2}><span>{user.uid}</span></Grid> */}
+                        <Grid item xs={3}><span>{user.username}</span></Grid>
+                        <Grid item xs={3}><span>{user.email}</span></Grid>
                         <Grid item xs={2}><span>{user.roles && user.roles.join(' ')}</span></Grid>
                         <Grid item xs={4}>
                           <span>
