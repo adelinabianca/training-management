@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Fab from '@material-ui/core/Fab';
 
 import styles from './EditApplyForm.module.scss';
-import { TextField, Button, Tooltip } from '@material-ui/core';
+import { TextField, Tooltip } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 
 class EditApplyForm extends Component {
     constructor(props) {
@@ -60,14 +61,14 @@ class EditApplyForm extends Component {
                             placeholder="Add new question..."
                             onChange={(e) => this.handleInputChange(e, index)}
                             className={styles.inputContainer} />
-                        {questions.length === index + 1 && (
-                            <Tooltip title="Adauga o noua intrebare">
-                                <Fab onClick={this.addNewQuestion}><Add /></Fab>
-                            </Tooltip>
-                        )}
                     </div>
                 ))}
-                <Button onClick={this.handleSave}>Salveaza</Button>
+                <div className={styles.buttonsContainer}>
+                    <Tooltip title="Adauga o noua intrebare" placement="bottom">
+                        <CustomButton onClick={this.addNewQuestion}><Add /></CustomButton>
+                    </Tooltip>
+                    <CustomButton onClick={this.handleSave}>Salveaza</CustomButton>
+                </div>
             </div>
         )
     }

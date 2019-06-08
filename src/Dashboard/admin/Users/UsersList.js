@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import styles from './UsersList.module.scss';
 import { withFirebase } from '../../../Firebase';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { updateUser } from '../../../core/api/users';
+import CustomButton from '../../../core/components/CustomButton/CustomButton';
 
 class UsersList extends Component {
     constructor(props) {
@@ -94,10 +95,10 @@ class UsersList extends Component {
                         <Grid item xs={2}><span>{user.roles && user.roles.join(' ')}</span></Grid>
                         <Grid item xs={4}>
                           <span>
-                            {(!user.roles || !user.roles.includes('trainer')) && (<Button onClick={() => this.promoteToTrainer(user)}>Promote to trainer</Button>)}
-                            {(!user.roles || !user.roles.includes('admin')) && (<Button onClick={() => this.promoteToAdmin(user)}>Promote to admin</Button>)}
-                            {(user.roles && user.roles.includes('trainer')) && (<Button onClick={() => this.removeTrainer(user)}>Remove trainer</Button>)}
-                            {(user.roles && user.roles.includes('admin')) && (<Button onClick={() => this.removeAdmin(user)}>Remove admin</Button>)}
+                            {(!user.roles || !user.roles.includes('trainer')) && (<CustomButton onClick={() => this.promoteToTrainer(user)}>Promote to trainer</CustomButton>)}
+                            {(!user.roles || !user.roles.includes('admin')) && (<CustomButton onClick={() => this.promoteToAdmin(user)}>Promote to admin</CustomButton>)}
+                            {(user.roles && user.roles.includes('trainer')) && (<CustomButton onClick={() => this.removeTrainer(user)}>Remove trainer</CustomButton>)}
+                            {(user.roles && user.roles.includes('admin')) && (<CustomButton onClick={() => this.removeAdmin(user)}>Remove admin</CustomButton>)}
                           </span>
                         </Grid>
                       </Grid>

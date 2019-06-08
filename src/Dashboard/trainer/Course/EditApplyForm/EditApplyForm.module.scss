@@ -3,6 +3,11 @@ div.questionWrapper {
     display: flex;
     align-items: center;
 }
+div.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 40px;
+}
 button.numberIcon {
     width: 24px;
     height: 24px;

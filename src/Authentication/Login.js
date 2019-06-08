@@ -60,7 +60,6 @@ class Login extends Component {
   handleCreateAccount = () => {
     const { username, password, fullname } = this.state;
     const { firebase, history } = this.props;
-    const roles = [];
     firebase.createUserWithEmailAndPassword(username, password)
     .then(authUser => {
       return firebase.user(authUser.user.uid).set({

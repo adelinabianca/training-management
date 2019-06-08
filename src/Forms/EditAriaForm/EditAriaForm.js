@@ -6,6 +6,7 @@ import { withFirebase } from '../../Firebase';
 import { inject, observer } from 'mobx-react';
 import EditCourseForm from '../EditCourseForm/EditCourseForm';
 import { updateUser } from '../../core/api/users';
+import CustomButton from '../../core/components/CustomButton/CustomButton';
 
 @inject('userStore')
 @observer
@@ -14,17 +15,18 @@ class EditAriaForm extends Component {
         super(props);
 
         this.state = {
-            addNewCourse: false
+            addNewCourse: false,
+            isCourseSubmitting: false
         }
     }
 
     onSubmitCourseForm = (newValues, setFieldValue, allAriaCourses, isNewCourse = false) => {
+        this.setState({ isCourseSubmitting: true });
         const filteredCourses = allAriaCourses.filter(course => course.courseId !== newValues.courseId);
         if (isNewCourse) {
             const { allCoursesLength } = this.props;
             newValues.courseId = allCoursesLength;
         }
-        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.courseId - b.courseId);
         //connect user to course
         if (newValues.trainers) {
             const users = [...newValues.trainers];
@@ -40,9 +42,11 @@ class EditAriaForm extends Component {
                 updateUser(trainer).then(response => {})
             })
         }
+        
+        const updatedCourses = [...filteredCourses, newValues].sort((a, b) => a.courseId - b.courseId);
 
         setFieldValue('courses', updatedCourses);
-        this.setState({ addNewCourse: false });
+        this.setState({ addNewCourse: false, isCourseSubmitting: false });
     }
 
     addNewCourse = () => {
@@ -50,8 +54,8 @@ class EditAriaForm extends Component {
     }
 
     render() {
-        const { formValues, onSubmit } = this.props;
-        const {  addNewCourse } = this.state;
+        const { formValues, onSubmit, isSubmiting } = this.props;
+        const {  addNewCourse, isCourseSubmitting } = this.state;
         const defaultCourseValues = {
             name: '',
             description: '',
@@ -64,7 +68,6 @@ class EditAriaForm extends Component {
                 enableReinitialize
                 onSubmit={onSubmit}
                 render={({ handleSubmit, handleChange, handleBlur, values, setFieldValue, errors, touched }) => {
-                    console.log(values.courses)
                     return (
                          <form autoComplete="off" className={styles.formWrapper}>
                             <div className={styles.fieldWrapper}>
@@ -103,22 +106,24 @@ class EditAriaForm extends Component {
                                         <EditCourseForm 
                                             formValues={defaultCourseValues} 
                                             onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses, true)}
+                                            isSubmiting={isCourseSubmitting}
                                         />
                                     )}
-                                    {values.courses.map(course => {
+                                    {values.courses ? values.courses.map(course => {
                                         return (
                                             <EditCourseForm 
                                                 key={course.courseId} 
                                                 formValues={{ ...defaultCourseValues, ...course }} 
                                                 onSubmit={(newValues) => this.onSubmitCourseForm(newValues, setFieldValue, values.courses)}
+                                                isSubmitting={isCourseSubmitting}
                                             />
                                         )
-                                    })}
+                                    }) : null}
 
                                 </div>
                             </div>
                             <div className={styles.buttonsContainer}>
-                                <Button onClick={handleSubmit}>Submit</Button>
+                                <CustomButton isLoading={isSubmiting} onClick={handleSubmit}>Submit</CustomButton>
                             </div>
                         </form>
                     )}

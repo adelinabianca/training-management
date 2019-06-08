@@ -7,6 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import { withFirebase } from '../../Firebase';
 import { inject, observer } from 'mobx-react';
 import { getAllUsers } from '../../core/api/users';
+import CustomButton from '../../core/components/CustomButton/CustomButton';
 
 @inject('userStore')
 @observer
@@ -44,7 +45,7 @@ class EditCourseForm extends Component {
     }
 
     render() {
-        const { onSubmit } = this.props;
+        const { onSubmit, isSubmitting } = this.props;
         const { allTrainers, formValues } = this.state;
 
         // const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
@@ -122,7 +123,7 @@ class EditCourseForm extends Component {
                             </FormControl>
                             
                             <div className={styles.buttonsContainer}>
-                                <Button onClick={handleSubmit}>Save changes</Button>
+                                <CustomButton isLoading={isSubmitting} onClick={handleSubmit}>Save changes</CustomButton>
                             </div>
                         </Card>
                     )}

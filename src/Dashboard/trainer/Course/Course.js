@@ -3,7 +3,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {  withStyles } from '@material-ui/core/styles';
-// import { Card, Button, CardContent, CardActions, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 
 import styles from './Course.module.scss';
 import { getCourse, updateCourse } from '../../../core/api/courses';
@@ -11,6 +10,7 @@ import { getUser, updateUser } from '../../../core/api/users';
 import EditApplyForm from './EditApplyForm/EditApplyForm';
 import Applicants from './Applicants/Applicants';
 import Members from './Members/Members';
+import Attendance from './Attendance/Attendance';
 
 const CustomTabs = withStyles({
     root: {
@@ -117,7 +117,6 @@ class Course extends Component {
                                 value={tabValue}
                                 onChange={this.handleTabChange}
                                 indicatorColor="primary"
-                                // textColor="primary"
                                 variant="scrollable"
                                 scrollButtons="auto"
                             >
@@ -147,7 +146,11 @@ class Course extends Component {
                                 members={course && course.members ? course.members : []} 
                                 courseId={course.courseId} />
                         )}
-                        {tabValue === 3 && <div>Item Four</div>}
+                        {tabValue === 3 && (
+                            <Attendance
+                                members={course && course.members ? course.members : []} 
+                                courseId={course.courseId}/>
+                        )}
                         {tabValue === 4 && <div>Item Five</div>}
                     </div>
                 </div>

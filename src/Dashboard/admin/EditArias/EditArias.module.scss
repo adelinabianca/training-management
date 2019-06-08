@@ -1,4 +1,5 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .wrapper {
     display: flex;
@@ -7,29 +8,15 @@
     width: 90%;
     flex-wrap: wrap;
     justify-content: center;
-    div.ariaCard {
-        max-width: 290px;
-        min-height: 450px;
-        margin: 8px;
-        h2 {
-            color: $primary-font-color;
-            font-weight: normal;
-        }
-        
-    }
-    div.cardContent {
-        height: 80%;
-    }
-    div.cardActions {
-        justify-content: center;
-        button.editBtn {
-            width: 100%;
-            background: $secondary-bg-color;
-            color: white;
-            &:hover {
-                background: $hover-button-color;
-            }
-        }
+}
+
+div.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    button {
+        // height: 30px;
     }
 }
 
@@ -41,11 +28,12 @@ div.card {
     border-radius: 6px;
     color: #333;
     background: #FFF;
-    width: 30%;
+    width: 100%;
     margin: 30px auto;
     display: flex;
     flex-direction: column;
     min-width: 0;
+    max-width: 300px;
     word-wrap: break-word;
     font-size: .875rem;
     div.cardHeaderPrimary {
@@ -80,5 +68,11 @@ div.card {
                 background-color: $hover-light-color;
             }
         }
+    }
+}
+
+@include for-desktop() {
+    div.card {
+        width: 30%;
     }
 }

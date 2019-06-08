@@ -1,20 +1,22 @@
 $primary-bg-color: #FFF;
-$secondary-bg-color: #8e24aa;
+$secondary-bg-color: #ed786a; //#8e24aa;
 $default-bg-color: #F4F6FC;
 
-$primary-font-color: #8e24aa;
+$primary-font-color: #ed786a;// #8e24aa;
 $secondary-font-color: #FFF;
-$faded-font-color: #b6b6b6;
+$faded-font-color: #777;//#b6b6b6;
 $secondary-faded-font: #8A9BAF;
 $dark-font-color: #2E384D;
 
-$icon-color: #8e24aa;
+$icon-color: #ed786a;// #8e24aa;
 $disabled-icon-color: rgba(0, 0, 0, 0.26);
 
-$hover-button-color: #831f9e;
+$hover-button-color: #fd887a;// #831f9e;
 $hover-light-color: #efe0f5;
-$border-color: #8e24aa;
+$border-color: #ed786a; // #8e24aa;
 
-$navbar-height: 70px;
+$navbar-height: 50px;
 
-$background-gradient: linear-gradient(60deg, #ab47bc, #8e24aa);
+$background-gradient: #ed786a; // linear-gradient(60deg, #ab47bc, #8e24aa);
+
+$button-box-shaddow: 0.125em 0.175em 0 0 rgba(0, 0, 0, 0.125);

@@ -11,6 +11,7 @@ import sessionStore from './core/stores/sessionStore';
 import messagesStore from './core/stores/messagesStore';
 import ariasStore from './core/stores/ariasStore';
 import coursesStore from './core/stores/coursesStore';
+import drawerStore from './core/stores/drawerStore';
 import Aria from './Arias/Aria/Aria';
 import { withAuthentication } from './Firebase/Session';
 import AdminDashboard from './Dashboard/admin/AdminDashboard';
@@ -21,7 +22,8 @@ const stores = {
   sessionStore,
   messagesStore,
   ariasStore,
-  coursesStore
+  coursesStore,
+  drawerStore
 }
 
 const PrivateAdminRoute = ({ component: Component, ...rest }) => (

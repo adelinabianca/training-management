@@ -13,13 +13,16 @@ import { AccountCircleOutlined } from '@material-ui/icons';
 import styles from './AdminDashboard.module.scss';
 import EditArias from './EditArias/EditArias';
 import UsersList from './Users/UsersList';
-import WhatDoYouWantToDo from './Main/WhatDoYouWantToDo';
+import { Hidden, Drawer } from '@material-ui/core';
+import { observer, inject } from 'mobx-react';
 
+@inject('drawerStore')
+@observer
 class AdminDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedItem: 0
+            selectedItem: 0,
         }
     }
 
@@ -27,6 +30,7 @@ class AdminDashboard extends Component {
         const { history } = this.props;
         history.push('/admin-dashboard/edit');
         this.setState({ selectedItem: 1 });
+        this.handleDrawerToggle();
     }
 
     handleEditUsers = () => {
@@ -34,56 +38,80 @@ class AdminDashboard extends Component {
         
         this.setState({ selectedItem: 3 });
         history.push('/admin-dashboard/users');
+        this.handleDrawerToggle();
     }
 
     goOnMainPage = () => {
         const { history } = this.props;
         this.setState({ selectedItem: 0 })
-        history.push('/admin-dashboard')
+        history.push('/admin-dashboard');
+        this.handleDrawerToggle();
     }
 
     handleEditEvents = () => {
         this.setState({ selectedItem: 2})
+        this.handleDrawerToggle();
+    }
+
+    handleDrawerToggle = () => {
+        const { drawerStore: {  adminDrawerOpen, setAdminDrawerOpen} } = this.props;
+        setAdminDrawerOpen(!adminDrawerOpen);
+    }
+
+    drawerItems = () => {
+        return (
+            <List
+              component="nav"
+              // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
+              className={styles.listRoot}>
+                <ListItem button onClick={this.goOnMainPage}>
+                    <ListItemIcon>
+                    <SendIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Home" />
+                </ListItem>
+                <ListItem button onClick={this.handleEditArias}>
+                    <ListItemIcon>
+                    <SendIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Arias" />
+                </ListItem>
+                <ListItem button onClick={this.handleEditEvents}>
+                    <ListItemIcon>
+                    <DraftsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Events" />
+                </ListItem>
+                <ListItem button onClick={this.handleEditUsers}>
+                    <ListItemIcon>
+                    <AccountCircleOutlined />
+                    </ListItemIcon>
+                    <ListItemText primary="Users" />
+                </ListItem>
+            </List>
+       )
     }
 
     render() {
+        const { drawerStore: { adminDrawerOpen } } = this.props;
         return (
             <div className={styles.dashboardWrapper}>
-               <div className={styles.sidebar}>
-                <List
-                    component="nav"
-                    // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
-                    className={styles.root}
-                    >
-                        <ListItem button onClick={this.goOnMainPage}>
-                            <ListItemIcon>
-                            <SendIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Home" />
-                        </ListItem>
-                        <ListItem button onClick={this.handleEditArias}>
-                            <ListItemIcon>
-                            <SendIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Arias" />
-                        </ListItem>
-                        <ListItem button onClick={this.handleEditEvents}>
-                            <ListItemIcon>
-                            <DraftsIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Events" />
-                        </ListItem>
-                        <ListItem button onClick={this.handleEditUsers}>
-                            <ListItemIcon>
-                            <AccountCircleOutlined />
-                            </ListItemIcon>
-                            <ListItemText primary="Users" />
-                        </ListItem>
-                    </List>
-               </div>
+               <Hidden smDown>
+                    <div className={styles.sidebar}>
+                        {this.drawerItems()}
+                    </div>
+               </Hidden>
+               <Hidden mdUp>
+                   <Drawer
+                    variant="temporary"
+                    open={adminDrawerOpen}
+                    onClose={this.handleDrawerToggle}>
+                        {this.drawerItems()}
+                    </Drawer>
+               </Hidden>
                <div className={styles.content}>
                     <Switch>
-                        <Route exact path="/admin-dashboard" component={WhatDoYouWantToDo} />
+                        <Route exact path="/admin-dashboard" />
                         <Route exact path="/admin-dashboard/edit" component={EditArias} />
                         <Route exact path="/admin-dashboard/users" component={UsersList} />
                     </Switch>

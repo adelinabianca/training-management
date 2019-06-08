@@ -6,6 +6,8 @@ import { Card, CardActionArea, CardMedia, CardActions, Button, Typography, CardC
 import styles from './Arias.module.scss';
 import image from '../assets/images/2llamas.jpg';
 import { getArias } from '../core/api/arias';
+import CustomButton from '../core/components/CustomButton/CustomButton';
+import ariaImage from '../assets/images/aria1.jpg';
 
 @inject('ariasStore')
 @observer
@@ -44,12 +46,23 @@ class Arias extends Component {
                             <Typography component="p">
                                 {aria.description}
                             </Typography>
-                            <Button onClick={() => this.handleClick(aria, index)} size="small" color="primary">
+                            <Button onClick={() => this.handleClick(aria, index)}>
                                 See details and apply
                             </Button>
                         </div>
 
                     </div>
+                    // <article key={aria.ariaId} className={styles.ariaWrapper}>
+                    //     <span className={styles.image}>
+                    //         <img src={ariaImage} alt=""/>
+                    //     </span>
+                    //     <a href={`/aria/${aria.ariaId}`} className={styles.link} onClick={() => this.handleClick(aria, index)}>
+                    //         <h2>{aria.name}</h2>
+                    //         <div className={styles.content}>
+                    //             <p>{aria.name}</p>
+                    //         </div>
+                    //     </a>
+                    // </article>
                 ))}
             </div>
         )

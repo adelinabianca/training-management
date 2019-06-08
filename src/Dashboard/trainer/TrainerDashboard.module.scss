@@ -1,9 +1,13 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+div.dashboardWrapper {
+    display: flex;
+}
+
+
 div.sidebar {
-    position: fixed;
-    width: 230px;
+    width: 15%;
     height: 100%;
     min-height: 100%;
     background-color: #F4F6FC;
@@ -16,5 +20,14 @@ div.sidebar {
 }
 
 .content {
-    margin-left: 230px;
+    width: 100%;
+}
+
+@include for-desktop() {
+    .content {
+        width: 85%;
+    }
+    nav.listRoot {
+        min-width: 200px;
+    }
 }
