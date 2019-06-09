@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { Card, CardContent, CardHeader, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import { withStyles } from '@material-ui/core/styles';
 
 import styles from './Aria.module.scss';
 import { getAria } from '../../core/api/arias';
@@ -8,6 +11,7 @@ import { Breadcrumbs } from '../../core/components/Breadcrumbs/Breadcrumbs';
 import ApplyForm from '../../Forms/ApplyForm/ApplyForm';
 import { getCourses, updateCourse } from '../../core/api/courses';
 import { updateUser } from '../../core/api/users';
+import CustomButton from '../../core/components/CustomButton/CustomButton';
 
 @inject('ariasStore', 'coursesStore', 'sessionStore')
 @observer
@@ -37,12 +41,8 @@ class Aria extends Component {
             const responseAria = response.data;
             setSelectedAria(responseAria);
             const crumbs = {
-                value: 'main',
-                displayName: 'Home',
-                child: {
-                    value: responseAria.ariaId,
-                    displayName: responseAria.name
-                }
+                value: responseAria.ariaId,
+                displayName: responseAria.name
             }
             await getCourses().then(res => {
                 const ariaCourses = this.filterCourses(res.data, responseAria);
@@ -63,8 +63,8 @@ class Aria extends Component {
 
     handleCourseClick = course => {
         const { crumbs } = this.state;
-        crumbs.child.child = {
-            value: course.courseId,
+        crumbs.child = {
+            value: course.name,
             displayName: course.name
         }
         const applyFormQuestions = course.applyFormQuestions || {};
@@ -72,11 +72,6 @@ class Aria extends Component {
     }
 
     handleCrumbClick = (value) => {
-        const { history } = this.props;
-        if (value === 'main') {
-            history.push('/');
-            return;
-        }
         if (typeof value !== 'string') {
             this.init();
         }
@@ -119,24 +114,22 @@ class Aria extends Component {
         const { selectedAria, crumbs, selectedCourse, open, formValues, ariaCourses } = this.state;
         
         return (
-            <div className={styles.card}>
-                <div className={[styles.cardHeader, styles.cardHeaderPrimary].join(' ')}>
-                    {selectedAria && (<Breadcrumbs crumbs={crumbs} handleClick={this.handleCrumbClick} />)}
+            <div className={styles.cardWrapper}>
+                <div className={styles.tabsContainer}>
+                    {selectedAria && ariaCourses.map(course => (
+                        <Button 
+                            className={selectedCourse && course.courseId === selectedCourse.courseId ? styles.selectedCourse : ''} 
+                            key={course.courseId} 
+                            onClick={() => this.handleCourseClick(course)}>{course.name}</Button>
+                    ))}
                 </div>
-                <div className={styles.cardBody}>
-                    <div className={styles.coursesButtons}>
-                        {selectedAria && ariaCourses.map(course => (
-                            <Button 
-                                className={selectedCourse && course.courseId === selectedCourse.courseId ? styles.selectedCourse : ''} 
-                                key={course.courseId} 
-                                onClick={() => this.handleCourseClick(course)}>{course.name}</Button>
-                        ))}
-                    </div>
+                <div className={styles.content}>
+                    <div>{selectedAria && (<Breadcrumbs crumbs={crumbs} handleClick={this.handleCrumbClick} />)}</div>
                     <div className={styles.courseContent}>
                         {selectedCourse && (
                             <div className={styles.contentHeader}>
                                 <span>Logo firma</span>
-                                <Button onClick={this.handleApply}>Aplica</Button>
+                                <CustomButton onClick={this.handleApply}>Aplica</CustomButton>
                             </div>
                         )}
                         {!selectedCourse ? selectedAria && selectedAria.description : selectedCourse.description}
@@ -157,5 +150,21 @@ class Aria extends Component {
         )
     }
 };
+
+const VerticalTabs = withStyles(theme => ({
+    flexContainer: {
+      flexDirection: 'column'
+    },
+    indicator: {
+      display: 'none',
+    }
+  }))(Tabs)
+  
+  const MyTab = withStyles(theme => ({
+    selected: {
+      color: 'tomato',
+      borderLeft: '2px solid tomato'
+    }
+  }))(Tab);
 
 export default Aria;
