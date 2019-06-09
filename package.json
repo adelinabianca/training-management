@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@svgr/webpack": "4.1.0",
@@ -147,8 +148,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.4.4"
   }
 }
