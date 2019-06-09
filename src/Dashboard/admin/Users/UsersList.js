@@ -66,7 +66,7 @@ class UsersList extends Component {
 
         const users = userList;
         if (isLoading) {
-          return <div>Loading... </div>
+          return <div className={styles.loading}>Loading... </div>
         }
 
         return (
@@ -77,29 +77,27 @@ class UsersList extends Component {
               </div>
               <div className={styles.cardBody}>
                 <ul>
-                  <li>
+                  <li className={styles.listHeader}>
                     <Grid container>
-                      {/* <Grid item xs={2}><span><strong>ID</strong></span></Grid> */}
-                      <Grid item xs={3}><span><strong>Username</strong></span></Grid>
+                      <Grid item xs={3}><span><strong>Nume</strong></span></Grid>
                       <Grid item xs={3}><span><strong>E-mail</strong></span></Grid>
-                      <Grid item xs={2}><span><strong>Roles</strong></span></Grid>
-                      <Grid item xs={4}><span><strong>Actions</strong></span></Grid>
+                      <Grid item xs={2}><span><strong>Roluri</strong></span></Grid>
+                      <Grid item xs={4}><span><strong>Actiuni</strong></span></Grid>
                     </Grid>
                   </li>
                   {users && users.map(user => {
                     return (
                     <li key={user.uid} className={styles.listItem}>
                       <Grid container>
-                        {/* <Grid item xs={2}><span>{user.uid}</span></Grid> */}
                         <Grid item xs={3}><span>{user.username}</span></Grid>
                         <Grid item xs={3}><span>{user.email}</span></Grid>
-                        <Grid item xs={2}><span>{user.roles && user.roles.join(' ')}</span></Grid>
+                        <Grid item xs={2}><span className={styles.roles}>{user.roles && user.roles.join(' | ')}</span></Grid>
                         <Grid item xs={4}>
                           <span>
-                            {(!user.roles || !user.roles.includes('trainer')) && (<CustomButton onClick={() => this.promoteToTrainer(user)}>Promote to trainer</CustomButton>)}
-                            {(!user.roles || !user.roles.includes('admin')) && (<CustomButton onClick={() => this.promoteToAdmin(user)}>Promote to admin</CustomButton>)}
-                            {(user.roles && user.roles.includes('trainer')) && (<CustomButton onClick={() => this.removeTrainer(user)}>Remove trainer</CustomButton>)}
-                            {(user.roles && user.roles.includes('admin')) && (<CustomButton onClick={() => this.removeAdmin(user)}>Remove admin</CustomButton>)}
+                            {(!user.roles || !user.roles.includes('trainer')) && (<CustomButton onClick={() => this.promoteToTrainer(user)}>Promoveaza la trainer</CustomButton>)}
+                            {(!user.roles || !user.roles.includes('admin')) && (<CustomButton onClick={() => this.promoteToAdmin(user)}>Promoveaza la admin</CustomButton>)}
+                            {(user.roles && user.roles.includes('trainer')) && (<CustomButton onClick={() => this.removeTrainer(user)}>Sterge trainer</CustomButton>)}
+                            {(user.roles && user.roles.includes('admin')) && (<CustomButton onClick={() => this.removeAdmin(user)}>Sterge admin</CustomButton>)}
                           </span>
                         </Grid>
                       </Grid>

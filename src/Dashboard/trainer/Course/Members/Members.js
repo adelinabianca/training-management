@@ -5,6 +5,7 @@ import styles from './Members.module.scss';
 import { getUser, updateUser } from '../../../../core/api/users';
 import { Grid, Button, TextField, Dialog, DialogContent } from '@material-ui/core';
 import { getCourse, updateCourse } from '../../../../core/api/courses';
+import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 // import { TextField, Button, Tooltip } from '@material-ui/core';
 // import { Add } from '@material-ui/icons';
 
@@ -54,6 +55,11 @@ class Members extends Component {
         this.setState({ seeAnswersDialog: false });
     }
 
+    handleRemoveUser = async (user) => {
+        const { onRemoveUser } = this.props;
+        await onRemoveUser(user);
+    }
+
     // handleAcceptUser = async (acceptedUser) => {
     //     const { courseId } = this.props;
     //     console.log(acceptedUser);
@@ -76,27 +82,40 @@ class Members extends Component {
         const { members, seeAnswersDialog, selectedApplication } = this.state;
         return (
             <div className={styles.wrapper}>
-                {members.map((user, index) => {
-                    return (
-                        <Grid key={index} container>
-                            <Grid item xs={2}>
-                                {user.username}
-                            </Grid>
-                            <Grid item xs={3}>
-                                <div role="button" onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</div>
-                            </Grid>
-                            <Grid item xs={2}>
-                                azi
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TextField placeholder="Observatii" />
-                            </Grid>
-                            <Grid item xs={2}>
-                                {/* <Button onClick={() => this.handleAcceptUser(user)}>Accepta</Button> */}
-                            </Grid>
+                <ul>
+                    <li className={styles.listHeader}>
+                        <Grid container>
+                            <Grid item xs={2}><span><strong>Nume</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Formular de aplicare</strong></span></Grid>
+                            <Grid item xs={2}><span><strong>Data</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Observatii</strong></span></Grid>
+                            <Grid item xs={2}><span><strong>Actiuni</strong></span></Grid>
                         </Grid>
-                    )
-                })}
+                    </li>
+                    {members.map((user, index) => {
+                        return (
+                        <li key={index} className={styles.listItem}>
+                            <Grid container>
+                                <Grid item xs={2}>
+                                    {user.username}
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button className={styles.seeAnswersBtn} onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</Button>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    azi
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField placeholder="Observatii" />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <CustomButton onClick={() => this.handleRemoveUser(user)}>Accepta</CustomButton>
+                                </Grid>
+                            </Grid>
+                        </li>
+                        )
+                    })}
+                </ul>
                 <Dialog open={seeAnswersDialog} onClose={this.handleCloseDialog}>
                     <DialogContent>
                         {selectedApplication && Object.keys(selectedApplication).map(question => (

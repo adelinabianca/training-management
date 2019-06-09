@@ -144,7 +144,8 @@ class Course extends Component {
                         {tabValue === 2 && (
                             <Members 
                                 members={course && course.members ? course.members : []} 
-                                courseId={course.courseId} />
+                                courseId={course.courseId}
+                                onRemoveUser={this.removeMember} />
                         )}
                         {tabValue === 3 && (
                             <Attendance

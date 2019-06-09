@@ -22,6 +22,7 @@ div.card {
     position: relative;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
     border: 0;
+    border-bottom: 2px solid #b3e3ff;
     color: #333;
     background: $primary-bg-color;
     width: 100%;
@@ -49,6 +50,7 @@ div.card {
     }
     div.cardBody {
         margin: 20px;
+        margin-bottom: 10px;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -61,7 +63,7 @@ div.card {
             text-overflow: ellipsis;
         }
         button {
-            margin-top: 8px;
+            margin-top: 15px;
             font-weight: bold;
             color: $dark-font-color;
             &:hover {

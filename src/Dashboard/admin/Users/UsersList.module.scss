@@ -4,6 +4,11 @@ div.mainWrapper {
     padding: 8px;
 }
 
+div.loading {
+    margin: 20px;
+    font-size: 18px;
+}
+
 form.formWrapper {
     display: flex;
     flex-direction: column;
@@ -66,19 +71,36 @@ div.card {
             padding-right: 5px;
         }
     }
-}
-
-li.listItem {
-    border-bottom: 1px solid #ccc;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    div {
-        align-items: center;
-        button {
-            font-size: 10px;
-            margin-right: 4px;
-            padding: 4px;
+    div.cardBody {
+        ul {
+            list-style: none;
+            padding: 8px 30px;
+            li.listHeader {
+                color: $dark-font-color;
+                font-size: 16px;
+                border-bottom: 1px solid #efefef;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+            }
+            li.listItem {
+                border-bottom: 1px solid #efefef;
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                div {
+                    align-items: center;
+                    button {
+                        font-size: 10px;
+                        margin-right: 4px;
+                        padding: 4px;
+                    }
+                }
+                span.roles {
+                    color: #2161d8;
+                    text-transform: uppercase;
+                }
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import styles from './Applicants.module.scss';
 import { getUser, updateUser } from '../../../../core/api/users';
 import { Grid, Button, TextField, Dialog, DialogContent } from '@material-ui/core';
 import { getCourse, updateCourse } from '../../../../core/api/courses';
+import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 // import { TextField, Button, Tooltip } from '@material-ui/core';
 // import { Add } from '@material-ui/icons';
 
@@ -72,28 +73,41 @@ class Applicants extends Component {
         const courseMembers = members || [];
         return (
             <div className={styles.wrapper}>
-                {applicants.map((user, index) => {
-                    return (
-                        <Grid key={index} container>
-                            <Grid item xs={2}>
-                                aplicant#{index}
-                            </Grid>
-                            <Grid item xs={3}>
-                                <div role="button" onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</div>
-                            </Grid>
-                            <Grid item xs={2}>
-                                azi
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TextField placeholder="Observatii" />
-                            </Grid>
-                            <Grid item xs={2}>
-                                {!courseMembers.includes(user.uid) && (<Button onClick={() => this.handleAcceptUser(user)}>Accepta</Button>)}
-                                {courseMembers.includes(user.uid) && (<Button onClick={() => this.handleRemoveUser(user)}>Sterge</Button>)}
-                            </Grid>
+                <ul>
+                    <li className={styles.listHeader}>
+                        <Grid container>
+                            <Grid item xs={2}><span><strong>Aplicant</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Formular de aplicare</strong></span></Grid>
+                            <Grid item xs={2}><span><strong>Data</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Observatii</strong></span></Grid>
+                            <Grid item xs={2}><span><strong>Actiuni</strong></span></Grid>
                         </Grid>
-                    )
-                })}
+                    </li>
+                    {applicants.map((user, index) => {
+                        return (
+                            <li key={index} className={styles.listItem}>
+                                <Grid container>
+                                    <Grid item xs={2}>
+                                        aplicant#{index}
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <Button className={styles.seeAnswersBtn} onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</Button>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        azi
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <TextField placeholder="Observatii" />
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        {!courseMembers.includes(user.uid) && (<CustomButton onClick={() => this.handleAcceptUser(user)}>Accepta</CustomButton>)}
+                                        {courseMembers.includes(user.uid) && (<CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>)}
+                                    </Grid>
+                                </Grid>
+                            </li>
+                        )
+                    })}
+                </ul>
                 <Dialog open={seeAnswersDialog} onClose={this.handleCloseDialog}>
                     <DialogContent>
                         {selectedApplication && Object.keys(selectedApplication).map(question => (
