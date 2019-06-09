@@ -1,102 +1,85 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
-// div.ariaCard {
-//     width: 80%;
-//     margin: 16px auto;
-//     min-height: 600px;
-//     div.cardContent {
-//         display: flex;
-//         flex-direction: row;
-// div.coursesButtons {
-//     display: flex;
-//     flex-direction: column;
-//     width: 25%;
-//     button.selectedCourse {
-//         background-color: $background-gradient;
-//         color: $secondary-font-color;
-//     }
-// }
-// div.courseContent {
-//     width: 75%;
-// }
-//     }
-// }
-
-.contentHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    button {
-        min-width: 90px;
-        font-size: 16px;
-        background-color: $background-gradient;
-        color: $secondary-font-color;
-        &:hover {
-            background-color: $hover-button-color;
-        }
-    }
-}
-
-.formTitle {
-    color: $primary-font-color;
-}
-
-
-div.card {
-    position: relative;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
-    border: 0;
-    border-radius: 6px;
-    color: #333;
-    background: #FFF;
-    width: 90%;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    font-size: .875rem;
-    div.cardHeaderPrimary {
-        border-radius: 3px;
-        padding: 15px;
-        background: $background-gradient;
-        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
-        margin: -20px 15px 0;
-        color: #FFF;
-    }
-    div.cardHeader {
-        z-index: 3;
-        border-bottom: none;
-    }
-    div.cardBody {
-        margin: 20px;
-        height: 100%;
+.cardWrapper {
+    width: 100%;
+    background-color: $primary-bg-color;
+    margin: 10px auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    .tabsContainer {
         display: flex;
-        flex-direction: row;
-        // justify-content: space-between;
-        p {
-            color: gray;
-        }
+        background: rgba(0, 0, 0, 0.03);
+        position: relative;
+
+        flex-wrap: nowrap;
+        overflow-x: scroll;
         button {
-            margin-top: 8px;
-            color: #8e24aa;
-            &:hover {
-                background-color: $hover-light-color;
+            min-width: auto;
+            padding: 10px;
+            border-radius: 0;
+            background: transparent;
+            // min-height: 100%;
+            &.selectedCourse {
+                background: $primary-bg-color;
+                border-top: 3px solid $dark-font-color;
             }
         }
-    }
-
-    div.coursesButtons {
-        display: flex;
-        flex-direction: column;
-        width: 25%;
-        button.selectedCourse {
-            background: $background-gradient;
-            color: $secondary-font-color;
+    }   
+    .content {
+        padding: 20px;
+        .courseContent {
+            margin: 10px 4px;
         }
     }
-    div.courseContent {
-        width: 75%;
+}
+
+// div.selectedFiltersContainer {
+//     background: $primary-background-color;
+//     flex-wrap: nowrap;
+//     overflow-x: scroll;
+//     padding: $default-padding/2;
+//     div.filterChip {
+//       min-width: auto;
+//       height: 30px;
+//       display: flex;
+//       justify-content: space-between;
+//       margin: 0 $default-margin;
+//       font-size: $default-font-size;
+//       font-weight: $secondary-font-weight;
+//       background: $secondary-fg-color;
+//     }
+//   }
+
+@include for-desktop() {
+    .cardWrapper {
+        width: 85%;
+        margin: 50px auto;
+        display: flex;
+        .tabsContainer {
+            width: 20%;
+            min-height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            overflow-x: auto;
+            button {
+                // padding: 30px;
+                min-height: 100px;
+                height: 100%;
+                &.selectedCourse {
+                    border-left: 3px solid $dark-font-color;
+                    border-top: 0;
+                    &:hover {
+                        background-color: $primary-bg-color;
+                    }
+                }
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.08);
+                }
+            }
+        }
+        .content {
+            width: 80%;
+            padding: 30px;
+        }
     }
 }

@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
 import styles from './Breadcrumbs.module.scss';
 
 export const Breadcrumbs = (props) => {
@@ -28,15 +27,5 @@ export const Breadcrumbs = (props) => {
     </span>
   );
 };
-
-// Breadcrumbs.propTypes = {
-//   crumbs: PropTypes.object,
-//   handleClick: PropTypes.func
-// };
-
-// Breadcrumbs.defaultProps = {
-//   crumbs: null,
-//   handleClick: () => {}
-// };
 
 export default memo(Breadcrumbs);
