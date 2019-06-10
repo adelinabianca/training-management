@@ -1,0 +1,51 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    // padding: 10px;
+    .sessions {
+        display: flex;
+        width: 10%;
+        // background: rgba(0, 0, 0, 0.03);
+        button {
+            min-width: auto;
+            padding: 10px;
+            border-radius: 0;
+            background-color: #a1c0d7;
+            border: 1px solid #89a8c0;
+            &:hover {
+                background-color: #89a8c0;
+            }
+            &.selectedSession {
+                background-color: #fff;
+                border-bottom: 0;
+            }
+        }
+    }
+    .content {
+        width: 80%;
+        padding: 16px;
+    }
+}
+
+@include for-desktop() {
+    .wrapper {
+        flex-direction: row;
+        margin: 30px;
+        // border: 1px solid #ccc;
+        .sessions {
+            flex-direction: column;
+            // margin-top: -30px;
+            // margin-bottom: -30px;
+            button {
+              height: 70px;
+              &.selectedSession {
+                border-bottom: 1px solid #89a8c0;
+                border-right: 0;
+              }
+            }
+        }
+    }
+}

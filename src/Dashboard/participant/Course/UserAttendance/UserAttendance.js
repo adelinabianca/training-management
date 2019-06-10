@@ -2,15 +2,31 @@ import React, { Component } from 'react';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 import { TextField } from '@material-ui/core';
 import QrReader from "react-qr-reader";
+import { inject, observer } from 'mobx-react';
 
+@inject('sessionStore')
+@observer
 class UserAttendance extends Component {
     constructor(props) {
         super(props);
         this.state = {
             code: '',
-            scan: false
+            scan: false,
+            activeSession: null
         }
     }
+
+    // componentDidMount() {
+    //     // this.init()
+    // }
+
+    // init = () => {
+    //     const { course: { attendance } } = this.props;
+    //     if (attendance) {
+    //         const activeSession = attendance.find(session => session.active);
+    //         this.setState({ activeSession })
+    //     }
+    // }
 
     handleInputChange = ({ target }) => {
         const { value } = target;
@@ -19,7 +35,12 @@ class UserAttendance extends Component {
 
     handleScan = (data) => {
         if(data) {
+            const { activeSession } = this.props;
+            const { handleAttendance, sessionStore: { authUser } } = this.props;
             console.log(data)
+            if (activeSession.uniqueCode === data) {
+                handleAttendance(authUser);
+            }
             this.setState({ scan: false });
         }
     }
@@ -34,6 +55,16 @@ class UserAttendance extends Component {
 
     render() {
         const { code, scan } = this.state;
+        const { activeSession, sessionStore: { authUser } } = this.props;
+
+        if (!activeSession) {
+            return <div>Nu este nicio sesiune activa! Revino mai tarziu.</div>
+        }
+
+        if(activeSession.attendees && activeSession.attendees.includes(authUser.uid)) {
+            return <div>Sunteti deja trecut ca prezent la aceasta sesiune</div>
+        }
+
         return (
             <div>
                 <CustomButton onClick={this.scanQrCode}>Scan QRCode</CustomButton>

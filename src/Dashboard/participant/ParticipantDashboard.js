@@ -58,8 +58,8 @@ class ParticipantDashboard extends Component {
     }
 
     handleDrawerToggle = () => {
-        const { drawerStore: {  trainerDrawerOpen, setTrainerDrawerOpen} } = this.props;
-        setTrainerDrawerOpen(!trainerDrawerOpen);
+        const { drawerStore: {  participantDrawerOpen, setParticipantDrawerOpen} } = this.props;
+        setParticipantDrawerOpen(!participantDrawerOpen);
     }
 
     drawerItems = () => {
@@ -100,7 +100,7 @@ class ParticipantDashboard extends Component {
     }
 
     render() {
-        const { drawerStore: { trainerDrawerOpen } } = this.props;
+        const { drawerStore: { participantDrawerOpen } } = this.props;
         return (
             <div className={styles.dashboardWrapper}>
                 <Hidden smDown>
@@ -111,7 +111,7 @@ class ParticipantDashboard extends Component {
                 <Hidden mdUp>
                     <Drawer
                       variant='temporary'
-                      open={trainerDrawerOpen}
+                      open={participantDrawerOpen}
                       onClose={this.handleDrawerToggle}>
                         {this.drawerItems()}
                     </Drawer>

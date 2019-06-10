@@ -105,6 +105,17 @@ class Course extends Component {
         });
     }
 
+    createAttendanceSession = async (newSession) => {
+        const { course } = this.state;
+        const attendance = course.attendance ? [...course.attendance, newSession] : [newSession];
+        const updatedCourse = {
+            ...course,
+            attendance
+        }
+        this.setState({ course: {...updatedCourse}});
+        await updateCourse(updatedCourse).then(() => {});
+    }
+
     render() {
         const { course, tabValue } = this.state;
         return (
@@ -149,8 +160,8 @@ class Course extends Component {
                         )}
                         {tabValue === 3 && (
                             <Attendance
-                                members={course && course.members ? course.members : []} 
-                                courseId={course.courseId}/>
+                                createNewSession={this.createAttendanceSession} 
+                                course={course}/>
                         )}
                         {tabValue === 4 && <div>Item Five</div>}
                     </div>

@@ -109,7 +109,7 @@ class Members extends Component {
                                     <TextField placeholder="Observatii" />
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <CustomButton onClick={() => this.handleRemoveUser(user)}>Accepta</CustomButton>
+                                    <CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>
                                 </Grid>
                             </Grid>
                         </li>
