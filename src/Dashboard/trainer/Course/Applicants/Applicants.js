@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-// import Fab from '@material-ui/core/Fab';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import Clear from '@material-ui/icons/Clear';
 
 import styles from './Applicants.module.scss';
-import { getUser, updateUser } from '../../../../core/api/users';
-import { Grid, Button, TextField, Dialog, DialogContent } from '@material-ui/core';
-import { getCourse, updateCourse } from '../../../../core/api/courses';
+import { getUser } from '../../../../core/api/users';
+import { Grid, Button, TextField, Dialog, DialogContent, DialogActions } from '@material-ui/core';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
-// import { TextField, Button, Tooltip } from '@material-ui/core';
-// import { Add } from '@material-ui/icons';
 
 class Applicants extends Component {
     constructor(props) {
@@ -69,7 +67,7 @@ class Applicants extends Component {
 
     render() {
         const { applicants, seeAnswersDialog, selectedApplication } = this.state;
-        const { course: { members } } = this.props;
+        const { course: { members }, fullScreen } = this.props;
         const courseMembers = members || [];
         return (
             <div className={styles.wrapper}>
@@ -94,7 +92,7 @@ class Applicants extends Component {
                                         <Button className={styles.seeAnswersBtn} onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</Button>
                                     </Grid>
                                     <Grid item xs={2}>
-                                        azi
+                                        {user.applications[0].applicationDate || '-'}
                                     </Grid>
                                     <Grid item xs={3}>
                                         <TextField placeholder="Observatii" />
@@ -108,12 +106,17 @@ class Applicants extends Component {
                         )
                     })}
                 </ul>
-                <Dialog open={seeAnswersDialog} onClose={this.handleCloseDialog}>
-                    <DialogContent>
+                <Dialog open={seeAnswersDialog} onClose={this.handleCloseDialog} fullScreen={fullScreen}>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseDialog} color="primary">
+                            <Clear />
+                        </Button>
+                    </DialogActions>
+                    <DialogContent className={styles.dialogContent}>
                         {selectedApplication && Object.keys(selectedApplication).map(question => (
                             <div key={question}>
-                                <div>{question}</div>
-                                <div>{selectedApplication[question]}</div>
+                                <div className={styles.question}>{question}</div>
+                                <div className={styles.answer}>{selectedApplication[question]}</div>
                             </div>
                         ))}
                     </DialogContent>
@@ -123,4 +126,4 @@ class Applicants extends Component {
     }
 }
 
-export default Applicants;
+export default withMobileDialog()(Applicants);

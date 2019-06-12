@@ -35,7 +35,7 @@ div.headerWrapper {
                 height: 100%;
                 display: flex;
                 align-items: center;
-                color: white;
+                color: $secondary-font-color;
                 font-family: 'Josefin Sans', sans-serif;
                 text-transform: uppercase;
                 font-size: 16px;
@@ -62,6 +62,11 @@ div.headerWrapper {
                 height: 32px;
                 font-size: 16px;
                 background-color: transparent;
+                &:hover {
+                    color: $primary-font-color;
+                    border: 1px solid $primary-font-color;
+                    text-shadow: 0px 0px 4px #555;
+                    }
             }
         }
     }

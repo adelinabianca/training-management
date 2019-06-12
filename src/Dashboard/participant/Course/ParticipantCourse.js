@@ -7,10 +7,6 @@ import {  withStyles } from '@material-ui/core/styles';
 import styles from './ParticipantCourse.module.scss';
 import { getCourse, updateCourse } from '../../../core/api/courses';
 import UserAttendance from './UserAttendance/UserAttendance';
-// import EditApplyForm from './EditApplyForm/EditApplyForm';
-// import Applicants from './Applicants/Applicants';
-// import Members from './Members/Members';
-// import Attendance from './Attendance/Attendance';
 
 const CustomTabs = withStyles({
     root: {
@@ -79,8 +75,9 @@ class ParticipantCourse extends Component {
         const updatedCourse = {...course};
         if (activeSession) {
             const index = updatedCourse.attendance.findIndex(session => session.active)
-            const updatedAttendees = activeSession.attendees ? [...activeSession.attendees, user.uid] : [user.uid];
+            const updatedAttendees = activeSession.attendees ? [...activeSession.attendees, { uid: user.uid, username: user.username}] : [{ uid: user.uid, username: user.username}];
             updatedCourse.attendance[index] = {...activeSession, attendees: updatedAttendees }
+            this.setState({ activeSession: {...activeSession, attendees: updatedAttendees }});
         }
         this.setState({ course: {...updatedCourse} });
         await updateCourse(updatedCourse);

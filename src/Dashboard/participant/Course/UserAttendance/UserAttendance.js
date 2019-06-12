@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
-import { TextField } from '@material-ui/core';
+import { TextField, Dialog, DialogContent } from '@material-ui/core';
 import QrReader from "react-qr-reader";
 import { inject, observer } from 'mobx-react';
 
@@ -12,36 +12,35 @@ class UserAttendance extends Component {
         this.state = {
             code: '',
             scan: false,
-            activeSession: null
+            errorCode: false
         }
     }
 
-    // componentDidMount() {
-    //     // this.init()
-    // }
-
-    // init = () => {
-    //     const { course: { attendance } } = this.props;
-    //     if (attendance) {
-    //         const activeSession = attendance.find(session => session.active);
-    //         this.setState({ activeSession })
-    //     }
-    // }
-
     handleInputChange = ({ target }) => {
         const { value } = target;
-        this.setState({ code: value });
+        this.setState({ code: value, errorCode: false });
     }
 
     handleScan = (data) => {
         if(data) {
-            const { activeSession } = this.props;
-            const { handleAttendance, sessionStore: { authUser } } = this.props;
-            console.log(data)
+            const { handleAttendance, activeSession, sessionStore: { authUser } } = this.props;
             if (activeSession.uniqueCode === data) {
                 handleAttendance(authUser);
+            } else {
+                
+            console.log('user not from hereeeeeeeeee')
             }
             this.setState({ scan: false });
+        }
+    }
+
+    attendSession = () => {
+        const { code } = this.state;
+        const { handleAttendance, activeSession, sessionStore: { authUser } } = this.props;
+        if (activeSession.uniqueCode === code) {
+            handleAttendance(authUser);
+        } else {
+            this.setState({ errorCode: true, code: '' })
         }
     }
 
@@ -54,26 +53,31 @@ class UserAttendance extends Component {
     } 
 
     render() {
-        const { code, scan } = this.state;
+        const { code, scan, errorCode } = this.state;
         const { activeSession, sessionStore: { authUser } } = this.props;
 
         if (!activeSession) {
             return <div>Nu este nicio sesiune activa! Revino mai tarziu.</div>
         }
 
-        if(activeSession.attendees && activeSession.attendees.includes(authUser.uid)) {
+        if(activeSession.attendees && activeSession.attendees.map(user => user.uid).includes(authUser.uid)) {
             return <div>Sunteti deja trecut ca prezent la aceasta sesiune</div>
         }
 
         return (
             <div>
                 <CustomButton onClick={this.scanQrCode}>Scan QRCode</CustomButton>
-                {scan && (<QrReader
-                    delay={300}
-                    onError={this.handleError}
-                    onScan={this.handleScan}
-                    style={{ width: "50%" }}
-                     />)}
+                <Dialog open={scan} fullWidth onClose={() => this.setState({scan: false})}>
+                    <DialogContent>
+                        <QrReader
+                            delay={300}
+                            onError={this.handleError}
+                            onScan={this.handleScan}
+                            style={{ width: "80%", margin: '0 auto' }}
+                        />
+                    </DialogContent>
+
+                </Dialog>
                 <div>OR</div>
                 <div>Add unique code for session</div>
                 <TextField 
@@ -81,7 +85,8 @@ class UserAttendance extends Component {
                   value={code}
                   onChange={this.handleInputChange}
                   variant="outlined" />
-                <CustomButton>Attend session</CustomButton>
+                <CustomButton onClick={this.attendSession}>Attend session</CustomButton>
+                {errorCode && <div>Codul este gresit. Incearca din nou.</div>}
             </div>
         )
     }

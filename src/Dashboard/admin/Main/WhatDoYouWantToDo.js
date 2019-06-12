@@ -10,39 +10,9 @@ class WhatDoYouWantToDo extends Component {
     render() {
         const { history } = this.props;
         return (
-            <Card className={styles.card}>
-                    <CardHeader title="What do you want to do?" className={styles.headerTitle} />
-                     <CardContent>
-                        <OptionButton 
-                           title="Arias"
-                           subtitle="Create, edit and delete arias"
-                        //    isSelected
-                           icon={<AccountCircleOutlined size="large" variant="outlined" />}
-                           onSelect={() => {history.push('/admin-dashboard/edit')}}
-                        />
-                        <OptionButton 
-                           title="Courses"
-                           subtitle="Add courses, trainers and details"
-                        //    isSelected={false}
-                           icon={<AccountCircleOutlined size="large" variant="outlined" />}
-                           onSelect={() => {history.push('/admin-dashboard/users')}}
-                        />
-                        <OptionButton 
-                           title="Roles"
-                           subtitle="Promote users to allow access to different features"
-                           isSelected={false}
-                           icon={<AccountCircleOutlined size="large" variant="outlined" />}
-                           onSelect={() => {}}
-                        />
-                        <OptionButton 
-                           title="Events"
-                           subtitle="Add new events and details about them"
-                           isSelected={false}
-                           icon={<AccountCircleOutlined size="large" variant="outlined" />}
-                           onSelect={() => {}}
-                        />
-                     </CardContent>
-                 </Card>
+            <div>
+               Welcome 
+            </div>
         )
     }
 }

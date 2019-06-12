@@ -55,11 +55,14 @@ class Course extends Component {
     }
 
     init = async () => {
-        const { location: { pathname } } =  this.props;
-        const startIndex = pathname.lastIndexOf('/');
-        const courseId = pathname.substr(startIndex + 1);
+        const { match: { params: { courseId } } } =  this.props;
         await getCourse(courseId).then(response => {
-            this.setState({ course: response.data, tabValue: 0 });
+            const course = response.data;
+            let activeSession = null;
+            if (course.attendance) {
+                activeSession = course.attendance.find(session => session.active);
+            }
+            this.setState({ course, tabValue: 0, activeSession });
         })
     }
 
@@ -116,8 +119,19 @@ class Course extends Component {
         await updateCourse(updatedCourse).then(() => {});
     }
 
+    closeAttendanceSession = async (session) => {
+        const { course } = this.state;
+        const sessionIndex = course.attendance.findIndex(ses => ses.active)
+        course.attendance[sessionIndex].active =  false;
+        const updatedCourse = {
+            ...course
+        }
+        this.setState({ course: {...updatedCourse}, activeSession: null });
+        await updateCourse(updatedCourse).then(() => {});
+    }
+
     render() {
-        const { course, tabValue } = this.state;
+        const { course, tabValue, activeSession } = this.state;
         return (
             <div className={styles.wrapper}>
                 <div className={styles.card}>
@@ -161,6 +175,8 @@ class Course extends Component {
                         {tabValue === 3 && (
                             <Attendance
                                 createNewSession={this.createAttendanceSession} 
+                                closeSession={this.closeAttendanceSession}
+                                activeSession={activeSession}
                                 course={course}/>
                         )}
                         {tabValue === 4 && <div>Item Five</div>}

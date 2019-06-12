@@ -4,14 +4,10 @@ import { withRouter } from 'react-router';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import SendIcon from '@material-ui/icons/Send';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
-
 
 import styles from './TrainerDashboard.module.scss';
 import { inject, observer } from 'mobx-react';
@@ -19,9 +15,6 @@ import { getCourses } from '../../core/api/courses';
 import WhatDoYouWantToDo from '../admin/Main/WhatDoYouWantToDo';
 import Course from './Course/Course';
 import { Hidden, Drawer } from '@material-ui/core';
-// import WhatDoYouWantToDo from './admin/Main/WhatDoYouWantToDo';
-// import EditArias from './admin/EditArias/EditArias';
-// import UsersList from './admin/Users/UsersList';
 @inject('sessionStore', 'drawerStore')
 @observer
 class TrainerDashboard extends Component {
@@ -59,39 +52,41 @@ class TrainerDashboard extends Component {
         setTrainerDrawerOpen(!trainerDrawerOpen);
     }
 
+    goOnMainPage = () => {
+        const { history } = this.props;
+        history.push('/trainer-dashboard');
+        this.handleDrawerToggle();
+    }
+
     drawerItems = () => {
         const { asignedCourses, open } = this.state;
 
         return (
             <List
               component="nav"
-              // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
               className={styles.listRoot}>
                 <ListItem button onClick={this.goOnMainPage}>
-                    <ListItemIcon>
-                    <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary="Welcome" />
                 </ListItem>
                 <ListItem button onClick={this.handleCollapseClick}>
-                    <ListItemIcon>
-                    <SendIcon />
-                    </ListItemIcon>
                     <ListItemText primary="My courses" />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {asignedCourses.map(course => (
-                            <ListItem key={course.courseId} button onClick={() => this.goOnCoursePage(course)} className={styles.nested}>
-                                <ListItemIcon>
-                                    <SendIcon />
-                                </ListItemIcon>
+                            <ListItem 
+                                key={course.courseId} 
+                                button onClick={() => this.goOnCoursePage(course)} 
+                                className={styles.nested}>
                                 <ListItemText primary={course.name} />
                             </ListItem>
                         ))}
                     </List>
                 </Collapse>
+                <ListItem button onClick={this.goOnMainPage}>
+                    <ListItemText primary="Feedback" />
+                </ListItem>
             </List>
         )
     }
