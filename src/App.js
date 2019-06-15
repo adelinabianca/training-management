@@ -75,7 +75,7 @@ class App extends Component {
                   <Route exact path="/login" component={Login} />
                   <PrivateAdminRoute path="/admin-dashboard" component={AdminDashboard} />
                   <PrivateTrainerRoute path="/trainer-dashboard" component={TrainerDashboard} />
-                  <Route path="/participant-dashboard" component={ParticipantDashboard} />
+                  <Route path="/user-account" component={ParticipantDashboard} />
                   <Route exact path="/aria/:ariaName" component={Aria} />
                 </Switch>
             </div>

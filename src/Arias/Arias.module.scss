@@ -2,7 +2,7 @@
 @import '../styles/mixins';
 
 .mainWrapper {
-    width: 70%;
+    width: 100%;
     margin: 4px auto;
     display: flex;
     flex-direction: row;
@@ -61,6 +61,9 @@ div.card {
 }
 
 @include for-desktop() {
+    .mainWrapper {
+        width: 85%;
+    }
     div.card {
         width: 30%;
     }

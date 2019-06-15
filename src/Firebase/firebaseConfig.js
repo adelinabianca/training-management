@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDt-5FGCSKYYpsLBye4eCCgOlb59kKCrpA",
@@ -38,6 +39,7 @@ class Firebase {
   
       this.auth = app.auth();
       this.db = app.database();
+      this.storage = app.storage();
   
       /* Social Sign In Method Provider */
   
@@ -88,9 +90,9 @@ class Firebase {
               const dbUser = snapshot.val();
   
               // default empty roles
-            //   if (!dbUser.roles) {
-            //     dbUser.roles = [];
-            //   }
+              if (!dbUser.roles) {
+                dbUser.roles = [];
+              }
   
               // merge auth and db user
               authUser = {
@@ -119,6 +121,21 @@ class Firebase {
     message = uid => this.db.ref(`messages/${uid}`);
   
     messages = () => this.db.ref('messages');
+
+    // *** Course API ***
+    courses = () => this.db.ref('courses');
+
+    course = (courseId) => this.db.ref(`courses/${courseId}`);
+
+    // *** Arias API ***
+
+    aria = (ariaId) => this.db.ref(`arias/${ariaId}`);
+
+    arias = () => this.db.ref('/arias');
+
+    // *** attendance API ***
+
+    attendees = (courseId, sessionId) => this.db.red(`/courses/${courseId}/attendance/${sessionId}/attendees`);
   }
   
   export default Firebase;

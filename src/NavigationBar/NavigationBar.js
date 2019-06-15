@@ -48,7 +48,7 @@ class NavigationBar extends Component {
     goOnUserPanel = () => {
         const { history } = this.props;
         this.handleCloseMenu();
-        history.push('/participant-dashboard');
+        history.push('/user-account');
     }
 
     handleDrawerToggle = () => {
@@ -108,8 +108,8 @@ class NavigationBar extends Component {
                                         authUser.roles.includes('admin') && (<MenuItem onClick={this.goToAdminDashboard}>Admin dashboard</MenuItem>)}
                                     {authUser && authUser.roles && 
                                         authUser.roles.includes('trainer') && (<MenuItem onClick={this.goToTrainerDashboard}>Trainer dashboard</MenuItem>)}
-                                    <MenuItem onClick={this.goOnUserPanel}>Cursuri</MenuItem>
-                                    <MenuItem onClick={this.goToMyAccount}>Contul meu</MenuItem>
+                                    {/* <MenuItem onClick={this.goOnUserPanel}>Cursuri</MenuItem> */}
+                                    <MenuItem onClick={this.goOnUserPanel}>Contul meu</MenuItem>
                                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                                 </Menu>
                             </div>

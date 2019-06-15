@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-// import Fab from '@material-ui/core/Fab';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import Clear from '@material-ui/icons/Clear';
 
 import styles from './Members.module.scss';
 import { getUser, updateUser } from '../../../../core/api/users';
-import { Grid, Button, TextField, Dialog, DialogContent } from '@material-ui/core';
+import { Grid, Button, TextField, Dialog, DialogContent, DialogActions } from '@material-ui/core';
 import { getCourse, updateCourse } from '../../../../core/api/courses';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 // import { TextField, Button, Tooltip } from '@material-ui/core';
@@ -60,25 +61,8 @@ class Members extends Component {
         await onRemoveUser(user);
     }
 
-    // handleAcceptUser = async (acceptedUser) => {
-    //     const { courseId } = this.props;
-    //     console.log(acceptedUser);
-    //     await getUser(acceptedUser.uid).then(async response => {
-    //         const user = response.data;
-    //         const participantCourses = user.participantCoursesIds ? [...user.participantCoursesIds, courseId] : [courseId];
-    //         const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
-    //         await updateUser(updatedUser).then(res => {})
-    //     });
-    //     await getCourse(courseId).then(async response => {
-    //         const course = response.data;
-    //         const members = course.members ? [...course.members, acceptedUser.uid] : [acceptedUser.uid];
-    //         const updatedCourse = {...course, members};
-    //         await updateCourse(updatedCourse).then(() => {});
-    //     })
-    // }
-
-
     render() {
+        const { fullScreen } = this.props;
         const { members, seeAnswersDialog, selectedApplication } = this.state;
         return (
             <div className={styles.wrapper}>
@@ -103,25 +87,30 @@ class Members extends Component {
                                     <Button className={styles.seeAnswersBtn} onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</Button>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    azi
+                                    {user.applications[0].applicationDate || '-'}
                                 </Grid>
                                 <Grid item xs={3}>
                                     <TextField placeholder="Observatii" />
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <CustomButton onClick={() => this.handleRemoveUser(user)}>Accepta</CustomButton>
+                                    <CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>
                                 </Grid>
                             </Grid>
                         </li>
                         )
                     })}
                 </ul>
-                <Dialog open={seeAnswersDialog} onClose={this.handleCloseDialog}>
-                    <DialogContent>
+                <Dialog open={seeAnswersDialog} onClose={this.handleCloseDialog} fullScreen={fullScreen}>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseDialog} color="primary">
+                            <Clear />
+                        </Button>
+                    </DialogActions>
+                    <DialogContent className={styles.dialogContent}>
                         {selectedApplication && Object.keys(selectedApplication).map(question => (
                             <div key={question}>
-                                <div>{question}</div>
-                                <div>{selectedApplication[question]}</div>
+                                <div className={styles.question}>{question}</div>
+                                <div className={styles.answer}>{selectedApplication[question]}</div>
                             </div>
                         ))}
                     </DialogContent>
@@ -131,4 +120,4 @@ class Members extends Component {
     }
 }
 
-export default Members;
+export default withMobileDialog()(Members);

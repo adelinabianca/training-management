@@ -1,4 +1,5 @@
 @import '../../../../styles/variables';
+@import '../../../../styles/mixins';
 
 .wrapper {
     ul {
@@ -32,6 +33,35 @@
                 font-size: 13px;
                 &:hover {
                     background-color: $hover-light-color;
+                }
+            }
+        }
+    }
+}
+
+div.dialogContent {
+    min-width: 320px;
+    padding: 10px 30px 30px;
+}
+div.question {
+    margin: 15px 10px;
+    font-size: 18px;
+    color: $dark-font-color;
+    font-weight: bold;
+}
+div.answer {
+    margin: 8px;
+    color: $dark-font-color;
+    font-size: 16px;
+}
+
+@include for-desktop() {
+    .wrapper {
+        ul {
+            padding: 8px 30px;
+            li.listItem {
+                button.seeAnswersBtn {
+                    font-size: 13px;
                 }
             }
         }

@@ -6,12 +6,7 @@ import {  withStyles } from '@material-ui/core/styles';
 
 import styles from './ParticipantCourse.module.scss';
 import { getCourse, updateCourse } from '../../../core/api/courses';
-import { getUser, updateUser } from '../../../core/api/users';
 import UserAttendance from './UserAttendance/UserAttendance';
-// import EditApplyForm from './EditApplyForm/EditApplyForm';
-// import Applicants from './Applicants/Applicants';
-// import Members from './Members/Members';
-// import Attendance from './Attendance/Attendance';
 
 const CustomTabs = withStyles({
     root: {
@@ -40,7 +35,8 @@ class ParticipantCourse extends Component {
         super(props);
         this.state = {
             course: null,
-            tabValue: 0
+            tabValue: 0,
+            activeSession: null
         }
     }
 
@@ -56,11 +52,16 @@ class ParticipantCourse extends Component {
     }
 
     init = async () => {
-        const { location: { pathname } } =  this.props;
-        const startIndex = pathname.lastIndexOf('/');
-        const courseId = pathname.substr(startIndex + 1);
+        const { match: { params: { courseId } } } =  this.props;
+
         await getCourse(courseId).then(response => {
-            this.setState({ course: response.data, tabValue: 0 });
+            const course = response.data;
+            let activeSession = null;
+            if (course.attendance) {
+                activeSession = course.attendance.find(session => session.active);
+            }
+            this.setState({ course, tabValue: 0, activeSession });
+            
         })
     }
 
@@ -68,46 +69,22 @@ class ParticipantCourse extends Component {
         this.setState({ tabValue: value });
     };
 
-    saveApplyFormQuestions = async (questions) => {
-        const { course } = this.state;
-        course.applyFormQuestions = questions;
-        this.setState({ course: {...course} })
-        await updateCourse(course).then(response => {})
-    }
-
-    acceptApplicant = async (acceptedUser) => {
-        const { course } = this.state;
-
-        await getUser(acceptedUser.uid).then(async response => {
-            const user = response.data;
-            const participantCourses = user.participantCoursesIds ? [...user.participantCoursesIds, course.courseId] : [course.courseId];
-            const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
-            await updateUser(updatedUser).then(res => {})
-        });
-
-        const members = course.members ? [...course.members, acceptedUser.uid] : [acceptedUser.uid];
-        const updatedCourse = {...course, members};
-        this.setState({ course: updatedCourse });
-        await updateCourse(updatedCourse).then(() => {});
-    }
-
-    removeMember = async (removedUser) => {
-        const { course } = this.state;
-
-        course.members = [...course.members].filter(userUid => userUid !== removedUser.uid)
-        this.setState({ course: {...course}});
-        await updateCourse(course).then(() => {});
-
-        await getUser(removedUser.uid).then(async response => {
-            const user = response.data;
-            const participantCourses =[...user.participantCoursesIds].filter(courseID => courseID !== course.courseId);
-            const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
-            await updateUser(updatedUser).then(res => {})
-        });
+    setUserPresent = async (user) => {
+        console.log(user);
+        const { course, activeSession } = this.state;
+        const updatedCourse = {...course};
+        if (activeSession) {
+            const index = updatedCourse.attendance.findIndex(session => session.active)
+            const updatedAttendees = activeSession.attendees ? [...activeSession.attendees, { uid: user.uid, username: user.username}] : [{ uid: user.uid, username: user.username}];
+            updatedCourse.attendance[index] = {...activeSession, attendees: updatedAttendees }
+            this.setState({ activeSession: {...activeSession, attendees: updatedAttendees }});
+        }
+        this.setState({ course: {...updatedCourse} });
+        await updateCourse(updatedCourse);
     }
 
     render() {
-        const { course, tabValue } = this.state;
+        const { course, tabValue, activeSession } = this.state;
         return (
             <div className={styles.wrapper}>
                 <div className={styles.card}>
@@ -151,7 +128,7 @@ class ParticipantCourse extends Component {
                             //     courseId={course.courseId} />
                         )}
                         {tabValue === 3 && (
-                            <UserAttendance />
+                            <UserAttendance activeSession={activeSession} handleAttendance={this.setUserPresent} />
                             // <Attendance
                             //     members={course && course.members ? course.members : []} 
                             //     courseId={course.courseId}/>

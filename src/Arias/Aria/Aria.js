@@ -92,22 +92,34 @@ class Aria extends Component {
     handleFormSubmit = async (newValues) => {
         const { sessionStore: { authUser } } = this.props;
         const { selectedCourse } = this.state;
+
+        const application = { courseId: selectedCourse.courseId, answers: newValues, applicationDate: this.getCurrentDate() };
         
         if (!authUser.applications) {
-            authUser.applications = [{ courseId: selectedCourse.courseId, answers: newValues }]
+            authUser.applications = [application];
         } else {
-            authUser.applications = [...authUser.applications, { courseId: selectedCourse.courseId, answers: newValues }]
+            authUser.applications = [...authUser.applications, application];
         }
-        await updateUser(authUser).then(resp => {})
+        await updateUser(authUser).then(resp => {});
 
         if (!selectedCourse.applicants) {
-            selectedCourse.applicants = [authUser.uid]
+            selectedCourse.applicants = [authUser.uid];
         } else {
-            selectedCourse.applicants = [...selectedCourse.applicants, authUser.uid]
+            selectedCourse.applicants = [...selectedCourse.applicants, authUser.uid];
         }
-        await updateCourse(selectedCourse).then(res => {})
+        await updateCourse(selectedCourse).then(res => {});
 
-        this.setState({ open: false, selectedCourse })
+        this.setState({ open: false, selectedCourse });
+    }
+
+    getCurrentDate = (separator='/') => {
+
+        const newDate = new Date();
+        const date = newDate.getDate();
+        const month = newDate.getMonth() + 1;
+        const year = newDate.getFullYear();
+        
+        return `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`;
     }
 
     render() {
