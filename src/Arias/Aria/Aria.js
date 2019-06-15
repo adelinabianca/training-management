@@ -12,6 +12,7 @@ import ApplyForm from '../../Forms/ApplyForm/ApplyForm';
 import { getCourses, updateCourse } from '../../core/api/courses';
 import { updateUser } from '../../core/api/users';
 import CustomButton from '../../core/components/CustomButton/CustomButton';
+import Footer from '../../core/components/Footer/Footer';
 
 @inject('ariasStore', 'coursesStore', 'sessionStore')
 @observer

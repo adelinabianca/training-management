@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.wrapper {
+    border-radius: 0 0 170px;
+    background-color: $gray-bg-color;
+    min-height: 300px;
+    .content {
+        width: 90%;
+        margin: 0 auto;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+            min-width: 200px;
+            border-radius: 25px;
+            border: 2px solid #116466;
+            // color: #2c3531;
+        }
+    }
+}
+
+
+@include for-desktop() {
+    .wrapper {
+
+        .content {
+            width: 60%;
+        }
+    }
+}

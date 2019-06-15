@@ -17,6 +17,7 @@ import { withAuthentication } from './Firebase/Session';
 import AdminDashboard from './Dashboard/admin/AdminDashboard';
 import TrainerDashboard from './Dashboard/trainer/TrainerDashboard';
 import ParticipantDashboard from './Dashboard/participant/ParticipantDashboard';
+import Footer from './core/components/Footer/Footer';
 
 const stores = {
   userStore,
@@ -79,6 +80,7 @@ class App extends Component {
                   <Route exact path="/aria/:ariaName" component={Aria} />
                 </Switch>
             </div>
+            <Footer />
           </BrowserRouter>
         </Provider>
       </>
