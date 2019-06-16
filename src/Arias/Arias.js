@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Button, Typography } from '@material-ui/core';
 
-// import { arias } from '../core/mocks/ariasMocks';
-import { Card, CardActionArea, CardMedia, CardActions, Button, Typography, CardContent } from '@material-ui/core';
 import styles from './Arias.module.scss';
-import image from '../assets/images/2llamas.jpg';
 import { getArias } from '../core/api/arias';
-import CustomButton from '../core/components/CustomButton/CustomButton';
-import ariaImage from '../assets/images/aria1.jpg';
 
 @inject('ariasStore')
 @observer
@@ -47,22 +43,11 @@ class Arias extends Component {
                                 {aria.description}
                             </Typography>
                             <Button onClick={() => this.handleClick(aria, index)}>
-                                See details and apply
+                                Vezi detalii si aplica
                             </Button>
                         </div>
 
                     </div>
-                    // <article key={aria.ariaId} className={styles.ariaWrapper}>
-                    //     <span className={styles.image}>
-                    //         <img src={ariaImage} alt=""/>
-                    //     </span>
-                    //     <a href={`/aria/${aria.ariaId}`} className={styles.link} onClick={() => this.handleClick(aria, index)}>
-                    //         <h2>{aria.name}</h2>
-                    //         <div className={styles.content}>
-                    //             <p>{aria.name}</p>
-                    //         </div>
-                    //     </a>
-                    // </article>
                 ))}
             </div>
         )

@@ -17,7 +17,8 @@ import { withAuthentication } from './Firebase/Session';
 import AdminDashboard from './Dashboard/admin/AdminDashboard';
 import TrainerDashboard from './Dashboard/trainer/TrainerDashboard';
 import ParticipantDashboard from './Dashboard/participant/ParticipantDashboard';
-import Footer from './core/components/Footer/Footer';
+import About from './MainPage/About/About';
+import PresentationalConference from './core/components/PresentationalPage/PresentationalConference';
 
 const stores = {
   userStore,
@@ -74,13 +75,14 @@ class App extends Component {
                   <Redirect exact from="/" to="/main" />
                   <Route exact path="/main" component={MainPage} />
                   <Route exact path="/login" component={Login} />
+                  <Route exact path="/about" component={About} />
+                  <Route exact path="/conference" component={PresentationalConference} />
                   <PrivateAdminRoute path="/admin-dashboard" component={AdminDashboard} />
                   <PrivateTrainerRoute path="/trainer-dashboard" component={TrainerDashboard} />
                   <Route path="/user-account" component={ParticipantDashboard} />
                   <Route exact path="/aria/:ariaName" component={Aria} />
                 </Switch>
             </div>
-            <Footer />
           </BrowserRouter>
         </Provider>
       </>

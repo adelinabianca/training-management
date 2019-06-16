@@ -54,19 +54,38 @@ div.headerWrapper {
             margin-left: 16px;
             button:hover {
                 background: transparent;
+            
             }
-            div.avatar {
-                color: $secondary-font-color;
-                border: 1px solid $secondary-font-color;
-                width: 32px;
-                height: 32px;
+            span.userName {
+                margin-left: 8px;
+                color: $primary-font-color;
+                font-weight: bold;
                 font-size: 16px;
-                background-color: transparent;
+            }
+            svg {
+                color: $primary-font-color;
+            }
+            // div.avatar {
+            //     color: $secondary-font-color;
+            //     border: 1px solid $secondary-font-color;
+            //     width: 32px;
+            //     height: 32px;
+            //     font-size: 16px;
+            //     background-color: transparent;
+            //     &:hover {
+            //         color: $primary-font-color;
+            //         border: 1px solid $primary-font-color;
+            //         // text-shadow: 0px 0px 4px #555;
+            //         }
+            // }
+            button.authBtn {
+                background-color: $secondary-bg-color;
+                border-radius: 25px;
+                color: $secondary-font-color;
+                font-weight: bold;
                 &:hover {
-                    color: $primary-font-color;
-                    border: 1px solid $primary-font-color;
-                    // text-shadow: 0px 0px 4px #555;
-                    }
+                    background-color: #bf4f5e;
+                }
             }
         }
     }

@@ -28,7 +28,7 @@ class EditCourseForm extends Component {
 
         await getAllUsers().then(response => {
             setUsers(response.data);
-            const allTrainers = Object.values(response.data).filter(user => user.roles.includes('trainer'));
+            const allTrainers = Object.values(response.data).filter(user => user.roles && user.roles.includes('trainer'));
             let selectedTrainers = []
             if (formValues.trainersIds) {
                 selectedTrainers = allTrainers.filter(trainer => formValues.trainersIds.includes(trainer.uid));

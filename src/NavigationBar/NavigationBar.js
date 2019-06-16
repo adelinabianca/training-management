@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router';
 import { observer, inject }  from 'mobx-react';
-import { Button, Menu, MenuItem, Avatar, Hidden } from '@material-ui/core';
+import { Button, MenuList, MenuItem, Avatar, Hidden } from '@material-ui/core';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
 import MenuIcon from '@material-ui/icons/Menu';
+import ArrowIcon from '@material-ui/icons/ArrowDropDown';
 import styles from './NavigationBar.module.scss';
 import { withAuthentication } from '../Firebase/Session';
-import fiilogo from '../assets/images/logo-fii.png';
+import fiilogo from '../assets/images/fplogo.png';
 
 @inject('sessionStore', 'drawerStore')
 @observer
@@ -75,9 +80,9 @@ class NavigationBar extends Component {
                     <Hidden smDown>
                         <span className={styles.menuItem}><Link to='/main'>Arii</Link></span>
                         <span><Link to='/main'>Program</Link></span>
-                        <span><Link to='/main'>Evenimente</Link></span>
-                        <span><Link to='/main'>Cum aplic</Link></span>
-                        <span><Link to='/main'>Despre</Link></span>
+                        <span><Link to='/conference'>Conferinta</Link></span>
+                        <span><Link to='/main'>Hackathon</Link></span>
+                        <span><Link to='/about'>Despre</Link></span>
                     </Hidden>
                     <div className={styles.account}>
                         {authUser ? (
@@ -87,34 +92,35 @@ class NavigationBar extends Component {
                                     aria-haspopup="true"
                                     onClick={this.openMenu}
                                 >
-                                    <Avatar className={styles.avatar}>{initials}</Avatar>
+                                    {/* <Avatar className={styles.avatar}>{initials}</Avatar> */}
+                                    <span className={styles.userName}>{authUser.username}</span>
+                                    <ArrowIcon />
                                 </Button>
-                                <Menu 
-                                    id="simple-menu" 
-                                    anchorEl={anchorEl} 
-                                    open={Boolean(anchorEl)} 
-                                    onClose={this.handleCloseMenu}
-                                    elevation={0}
-                                    getContentAnchorEl={null}
-                                    anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'center',
-                                    }}>
-                                    {authUser && authUser.roles && 
-                                        authUser.roles.includes('admin') && (<MenuItem onClick={this.goToAdminDashboard}>Admin dashboard</MenuItem>)}
-                                    {authUser && authUser.roles && 
-                                        authUser.roles.includes('trainer') && (<MenuItem onClick={this.goToTrainerDashboard}>Trainer dashboard</MenuItem>)}
-                                    {/* <MenuItem onClick={this.goOnUserPanel}>Cursuri</MenuItem> */}
-                                    <MenuItem onClick={this.goOnUserPanel}>Contul meu</MenuItem>
-                                    <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
-                                </Menu>
+                                <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} transition style={{ zIndex: '9999' }}>
+                                    {({ TransitionProps, placement }) => (
+                                    <Grow
+                                        {...TransitionProps}
+                                        id="simple-menu"
+                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                    >
+                                        <Paper>
+                                        <ClickAwayListener onClickAway={this.handleCloseMenu}>
+                                            <MenuList>
+                                                {authUser && authUser.roles && 
+                                                    authUser.roles.includes('admin') && (<MenuItem onClick={this.goToAdminDashboard}>Admin dashboard</MenuItem>)}
+                                                {authUser && authUser.roles && 
+                                                    authUser.roles.includes('trainer') && (<MenuItem onClick={this.goToTrainerDashboard}>Trainer dashboard</MenuItem>)}
+                                                <MenuItem onClick={this.goOnUserPanel}>Contul meu</MenuItem>
+                                                <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                                            </MenuList>
+                                        </ClickAwayListener>
+                                        </Paper>
+                                    </Grow>
+                                    )}
+                                </Popper>
                             </div>
                         ) :
-                        (<span><Link to='/login'>Autentificare</Link></span>)}
+                        (<span><Link to='/login'><Button className={styles.authBtn}>Autentificare</Button></Link></span>)}
                     </div>
                     
                 </nav>

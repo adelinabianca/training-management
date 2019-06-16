@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.content {
+    margin: 20px auto;
+    width: 80%;
+}
+
+@include for-desktop() {
+    .content {
+        width: 60%;
+        margin-top: 80px;
+    }
+}

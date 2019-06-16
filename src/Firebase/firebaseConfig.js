@@ -135,7 +135,7 @@ class Firebase {
 
     // *** attendance API ***
 
-    attendees = (courseId, sessionId) => this.db.red(`/courses/${courseId}/attendance/${sessionId}/attendees`);
+    attendees = (courseId, sessionId) => this.db.ref(`/courses/${courseId}/attendance/${sessionId}/attendees`);
   }
   
   export default Firebase;

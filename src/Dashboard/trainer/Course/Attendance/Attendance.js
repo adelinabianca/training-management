@@ -6,8 +6,11 @@ import Clear from '@material-ui/icons/Clear';
 import styles from './Attendance.module.scss';
 import {  Button, TextField, Dialog, DialogContent, withMobileDialog, DialogActions } from '@material-ui/core';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
+import { withFirebase } from '../../../../Firebase';
 
 class Attendance extends Component {
+    attendeesRef;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -15,25 +18,78 @@ class Attendance extends Component {
             openQR: false,
             newSessionName: '',
             newLimit: '',
-            selectedSession: null
+            selectedSession: null,
+            attendees: []
         }
     }
 
-    async componentDidMount() {
-        const { activeSession } = this.props;
+    componentDidMount() {
+        const { activeSession, firebase, course: { courseId } } = this.props;
         this.setState({ selectedSession: activeSession });
-        await this.init()
+        this.setAttendees();
     }
 
-    async componentDidUpdate(prevProps) {
-        const { course } = this.props;
-        if (JSON.stringify(course.attendance) !== JSON.stringify(prevProps.course.attendance)
-            || course.courseId !== prevProps.course.courseId) {
-            await this.init();
+    componentDidUpdate(prevProps) {
+        const { activeSession } = this.props;
+
+        if (JSON.stringify(activeSession) !== JSON.stringify(prevProps.activeSession)) {
+            this.setState({ selectedSession: activeSession });
+            this.attendeesRef.off();
+            
+            this.setAttendees();
         }
     }
 
-    init = async() => {
+    setAttendees = () => {
+        const { firebase, course: { courseId } } = this.props;
+        const activeSessionId = this.getActiveSessionIdFromCourse();
+        if (activeSessionId != null) {
+            this.attendeesRef = firebase.attendees(courseId, activeSessionId);
+            this.attendeesRef.on('value', (snapshot) => {
+                this.setState({ attendees: snapshot.val() });
+            })
+        }
+    }
+
+    
+    // async componentDidMount() {
+        
+    //     await this.init()
+    // }
+
+    // async componentDidUpdate(prevProps) {
+    //     const { course, activeSession } = this.props;
+    //     if (JSON.stringify(course.attendance) !== JSON.stringify(prevProps.course.attendance)
+    //         || JSON.stringify(activeSession) !== JSON.stringify(prevProps.activeSession)
+    //         || course.courseId !== prevProps.course.courseId) {
+    //         await this.init();
+    //     }
+    // }
+
+    componentWillUnmount() {
+        if(this.attendeesRef) this.attendeesRef.off();
+    }
+
+    // init = async() => {
+        // const { activeSession } = this.props;
+        // this.setState({ selectedSession: activeSession });
+    //     const { course: { courseId, attendance }, firebase } = this.props;
+    //     const activeSessionId = this.getActiveSessionIdFromCourse();
+        // if (activeSessionId) {
+        //     this.attendeesRef = firebase.attendees(courseId, activeSessionId);
+        //     this.attendeesRef.on('value', (snapshot) => {
+        //         console.log(snapshot.val())
+        //         this.setState({ attendees: snapshot.val()})
+        //     })
+        // }
+    // }
+
+    getActiveSessionIdFromCourse = () => {
+        const { course: { attendance } } = this.props;
+        if (attendance) {
+            const activeSessionId = attendance.findIndex(session => session.active);
+            return activeSessionId;
+        }
         
     }
 
@@ -76,9 +132,8 @@ class Attendance extends Component {
 
 
     render() {
-        const { uniqueCode, openQR, newSessionName, newLimit, selectedSession } = this.state;
+        const { uniqueCode, openQR, newSessionName, newLimit, selectedSession, attendees } = this.state;
         const { course, fullScreen, activeSession } = this.props;
-
         return (
             <div className={styles.wrapper}>
                 <div className={styles.sessions}>
@@ -137,7 +192,10 @@ class Attendance extends Component {
                             {selectedSession.active && <CustomButton onClick={this.generateQrCode}>Afiseaza Qr code</CustomButton>}
                             <div>Membri prezenti: </div>
                             <div>
-                                {selectedSession.attendees && selectedSession.attendees.map((attendee, index) => (
+                                {selectedSession === activeSession && attendees && attendees.map((attendee, index) => (
+                                    <div key={attendee.uid}>{index+1}. {attendee.username}</div>
+                                ))}
+                                {selectedSession !== activeSession && selectedSession.attendees && selectedSession.attendees.map((attendee, index) => (
                                     <div key={attendee.uid}>{index+1}. {attendee.username}</div>
                                 ))}
                             </div>
@@ -162,4 +220,4 @@ class Attendance extends Component {
     }
 }
 
-export default withMobileDialog()(Attendance);
+export default withFirebase(withMobileDialog()(Attendance));

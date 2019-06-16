@@ -80,7 +80,7 @@ class ParticipantCourse extends Component {
             this.setState({ activeSession: {...activeSession, attendees: updatedAttendees }});
         }
         this.setState({ course: {...updatedCourse} });
-        await updateCourse(updatedCourse);
+        await updateCourse(updatedCourse).then( () => {});
     }
 
     render() {

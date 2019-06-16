@@ -18,19 +18,19 @@ const CustomTabs = withStyles({
       boxShadow: 'none'
     },
     indicator: {
-      backgroundColor: '#FFF',
+      backgroundColor: 'gray',
     },
     scrollButtons: {
-        color: '#FFF'
+        width: 0
     }
 })(Tabs);
 
 const CustomTab = withStyles({
     root: {
-      color: '#FFF'
+      color: 'dark-gray'
     },
     selected: {
-      color: '#FFF',
+      color: 'gray',
     },
 })(Tab);
 
@@ -116,7 +116,10 @@ class Course extends Component {
             attendance
         }
         this.setState({ course: {...updatedCourse}});
-        await updateCourse(updatedCourse).then(() => {});
+        await updateCourse(updatedCourse).then((snap) => {
+            console.log(snap);
+            this.setState({ activeSession: newSession })
+        });
     }
 
     closeAttendanceSession = async (session) => {
