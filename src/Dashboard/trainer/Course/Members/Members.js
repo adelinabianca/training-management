@@ -3,13 +3,9 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Clear from '@material-ui/icons/Clear';
 
 import styles from './Members.module.scss';
-import { getUser, updateUser } from '../../../../core/api/users';
-import { Grid, Button, TextField, Dialog, DialogContent, DialogActions } from '@material-ui/core';
-import { getCourse, updateCourse } from '../../../../core/api/courses';
+import { getUser } from '../../../../core/api/users';
+import { Grid, Button, Dialog, DialogContent, DialogActions } from '@material-ui/core';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
-// import { TextField, Button, Tooltip } from '@material-ui/core';
-// import { Add } from '@material-ui/icons';
-
 class Members extends Component {
     constructor(props) {
         super(props);
@@ -72,7 +68,6 @@ class Members extends Component {
                             <Grid item xs={3}><span><strong>Nume</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Formular de aplicare</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Data</strong></span></Grid>
-                            {/* <Grid item xs={3}><span><strong>Observatii</strong></span></Grid> */}
                             <Grid item xs={3}><span><strong>Actiuni</strong></span></Grid>
                         </Grid>
                     </li>
@@ -89,9 +84,6 @@ class Members extends Component {
                                 <Grid item xs={3}>
                                     {user.applications[0].applicationDate || '-'}
                                 </Grid>
-                                {/* <Grid item xs={3}>
-                                    <TextField placeholder="Observatii" />
-                                </Grid> */}
                                 <Grid item xs={3}>
                                     <CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>
                                 </Grid>

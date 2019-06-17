@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Fab from '@material-ui/core/Fab';
 
 import styles from './EditApplyForm.module.scss';
 import { TextField, Tooltip, InputLabel } from '@material-ui/core';

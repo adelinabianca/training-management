@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, CardContent, CardActions, Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 
 import styles from './EditArias.module.scss';

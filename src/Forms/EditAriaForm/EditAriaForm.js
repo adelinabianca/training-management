@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
 import styles from './EditAriaForm.module.scss';
-import { InputLabel, TextField, Button, Card } from '@material-ui/core';
+import { InputLabel, TextField } from '@material-ui/core';
 import { withFirebase } from '../../Firebase';
 import { inject, observer } from 'mobx-react';
 import EditCourseForm from '../EditCourseForm/EditCourseForm';

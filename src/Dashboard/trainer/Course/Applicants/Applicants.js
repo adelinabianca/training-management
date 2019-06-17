@@ -4,7 +4,7 @@ import Clear from '@material-ui/icons/Clear';
 
 import styles from './Applicants.module.scss';
 import { getUser } from '../../../../core/api/users';
-import { Grid, Button, TextField, Dialog, DialogContent, DialogActions } from '@material-ui/core';
+import { Grid, Button, Dialog, DialogContent, DialogActions } from '@material-ui/core';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 
 class Applicants extends Component {
@@ -77,7 +77,6 @@ class Applicants extends Component {
                             <Grid item xs={3}><span><strong>Aplicant</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Formular de aplicare</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Data</strong></span></Grid>
-                            {/* <Grid item xs={3}><span><strong>Observatii</strong></span></Grid> */}
                             <Grid item xs={3}><span><strong>Actiuni</strong></span></Grid>
                         </Grid>
                     </li>
@@ -94,9 +93,6 @@ class Applicants extends Component {
                                     <Grid item xs={3}>
                                         {user.applications[0].applicationDate || '-'}
                                     </Grid>
-                                    {/* <Grid item xs={3}>
-                                        <TextField />
-                                    </Grid> */}
                                     <Grid item xs={3}>
                                         {!courseMembers.includes(user.uid) && (<CustomButton onClick={() => this.handleAcceptUser(user)}>Accepta</CustomButton>)}
                                         {courseMembers.includes(user.uid) && (<CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>)}

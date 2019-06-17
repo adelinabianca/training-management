@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
 import styles from './EditCourseForm.module.scss';
-import { InputLabel, TextField, Button, Card, Input, MenuItem, FormControl } from '@material-ui/core';
+import { InputLabel, TextField, Card, Input, MenuItem, FormControl } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import { withFirebase } from '../../Firebase';

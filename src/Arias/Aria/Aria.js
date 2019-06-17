@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Card, CardContent, CardHeader, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import { withStyles } from '@material-ui/core/styles';
+import { Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 
 import styles from './Aria.module.scss';
 import { getAria } from '../../core/api/arias';
@@ -12,7 +9,6 @@ import ApplyForm from '../../Forms/ApplyForm/ApplyForm';
 import { getCourses, updateCourse } from '../../core/api/courses';
 import { updateUser } from '../../core/api/users';
 import CustomButton from '../../core/components/CustomButton/CustomButton';
-import Footer from '../../core/components/Footer/Footer';
 
 @inject('ariasStore', 'coursesStore', 'sessionStore')
 @observer
@@ -164,20 +160,5 @@ class Aria extends Component {
     }
 };
 
-const VerticalTabs = withStyles(theme => ({
-    flexContainer: {
-      flexDirection: 'column'
-    },
-    indicator: {
-      display: 'none',
-    }
-  }))(Tabs)
-  
-  const MyTab = withStyles(theme => ({
-    selected: {
-      color: 'tomato',
-      borderLeft: '2px solid tomato'
-    }
-  }))(Tab);
 
 export default Aria;

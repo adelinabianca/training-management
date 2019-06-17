@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router';
 import { observer, inject }  from 'mobx-react';
-import { Button, MenuList, MenuItem, Avatar, Hidden } from '@material-ui/core';
+import { Button, MenuList, MenuItem, Hidden } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
