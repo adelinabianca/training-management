@@ -69,30 +69,30 @@ class Members extends Component {
                 <ul>
                     <li className={styles.listHeader}>
                         <Grid container>
-                            <Grid item xs={2}><span><strong>Nume</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Nume</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Formular de aplicare</strong></span></Grid>
-                            <Grid item xs={2}><span><strong>Data</strong></span></Grid>
-                            <Grid item xs={3}><span><strong>Observatii</strong></span></Grid>
-                            <Grid item xs={2}><span><strong>Actiuni</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Data</strong></span></Grid>
+                            {/* <Grid item xs={3}><span><strong>Observatii</strong></span></Grid> */}
+                            <Grid item xs={3}><span><strong>Actiuni</strong></span></Grid>
                         </Grid>
                     </li>
                     {members.map((user, index) => {
                         return (
                         <li key={index} className={styles.listItem}>
                             <Grid container>
-                                <Grid item xs={2}>
+                                <Grid item xs={3}>
                                     {user.username}
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Button className={styles.seeAnswersBtn} onClick={() => this.openAnswersDialog(user.applications[0])}>Vezi raspunsuri</Button>
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={3}>
                                     {user.applications[0].applicationDate || '-'}
                                 </Grid>
-                                <Grid item xs={3}>
+                                {/* <Grid item xs={3}>
                                     <TextField placeholder="Observatii" />
-                                </Grid>
-                                <Grid item xs={2}>
+                                </Grid> */}
+                                <Grid item xs={3}>
                                     <CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>
                                 </Grid>
                             </Grid>

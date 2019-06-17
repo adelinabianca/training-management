@@ -7,6 +7,7 @@ import {  withStyles } from '@material-ui/core/styles';
 import styles from './ParticipantCourse.module.scss';
 import { getCourse, updateCourse } from '../../../core/api/courses';
 import UserAttendance from './UserAttendance/UserAttendance';
+import CourseDetails from './CourseDetails/CourseDetails';
 
 const CustomTabs = withStyles({
     root: {
@@ -14,19 +15,19 @@ const CustomTabs = withStyles({
       boxShadow: 'none'
     },
     indicator: {
-      backgroundColor: '#FFF',
+      backgroundColor: 'gray',
     },
     scrollButtons: {
-        color: '#FFF'
+        width: 0
     }
 })(Tabs);
 
 const CustomTab = withStyles({
     root: {
-      color: '#FFF'
+      color: 'gray'
     },
     selected: {
-      color: '#FFF',
+      color: 'gray',
     },
 })(Tab);
 
@@ -98,42 +99,23 @@ class ParticipantCourse extends Component {
                                 variant="scrollable"
                                 scrollButtons="auto"
                             >
-                                <CustomTab value={0} label="Formular de aplicare" />
-                                <CustomTab value={1} label="Aplicanti" />
-                                <CustomTab value={2} label="Membri" />
-                                <CustomTab value={3} label="Prezente" />
-                                <CustomTab value={4} label="Anunturi" />
+                                <CustomTab value={0} label="Detalii" />
+                                <CustomTab value={1} label="Prezente" />
+                                <CustomTab value={2} label="Anunturi" />
+                                <CustomTab value={3} label="Feedback" />
+                                {/* <CustomTab value={4} label="Anunturi" /> */}
                             </CustomTabs>
                         </AppBar>
                     </div>
                     <div className={styles.cardBody}>
                         {tabValue === 0 && (
-                            <div>Item Five</div>
-                            // <EditApplyForm 
-                            //     questions={course && course.applyFormQuestions ? course.applyFormQuestions : ['']} 
-                            //     handleFormSave={this.saveApplyFormQuestions} />
+                            <CourseDetails description={course ? course.description : ''} />
                         )}
                         {tabValue === 1 && (
-                            <div>Item Five</div>
-                            // <Applicants 
-                            //     applicants={course && course.applicants ? course.applicants : []} 
-                            //     course={course}
-                            //     onAcceptUser={this.acceptApplicant}
-                            //     onRemoveUser={this.removeMember} />
-                        )}
-                        {tabValue === 2 && (
-                            <div>Item Five</div>
-                            // <Members 
-                            //     members={course && course.members ? course.members : []} 
-                            //     courseId={course.courseId} />
-                        )}
-                        {tabValue === 3 && (
                             <UserAttendance activeSession={activeSession} handleAttendance={this.setUserPresent} />
-                            // <Attendance
-                            //     members={course && course.members ? course.members : []} 
-                            //     courseId={course.courseId}/>
                         )}
-                        {tabValue === 4 && <div>Item Five</div>}
+                        {tabValue === 2 && <div>Anunturi</div>}
+                        {tabValue === 3 && <div>Feedback</div>}
                     </div>
                 </div>
             </div>

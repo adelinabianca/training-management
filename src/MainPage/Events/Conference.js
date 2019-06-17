@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 import styles from './Conference.module.scss';
 import { Button } from '@material-ui/core';
@@ -14,7 +15,7 @@ class Conference extends Component {
                     Atât elevii și studenții, cât și cei pasionați de informatică sunt invitați să descopere noi lucruri ce țin de domeniul IT sau de ariile adiacente acestuia,
                     precum cea de soft-skills.
                   </p>
-                  <Button>Afla mai multe</Button>
+                  <Link to='/conference' ><Button>Afla mai multe</Button></Link>
                   
               </div>
             </div>

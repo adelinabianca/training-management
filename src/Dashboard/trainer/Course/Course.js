@@ -72,7 +72,10 @@ class Course extends Component {
 
     saveApplyFormQuestions = async (questions) => {
         const { course } = this.state;
-        course.applyFormQuestions = questions;
+        const newQuestions = questions.filter(question => question !== '');
+        if (newQuestions.length) {
+            course.applyFormQuestions = newQuestions;
+        }
         this.setState({ course: {...course} })
         await updateCourse(course).then(response => {})
     }
@@ -153,6 +156,7 @@ class Course extends Component {
                                 <CustomTab value={2} label="Membri" />
                                 <CustomTab value={3} label="Prezente" />
                                 <CustomTab value={4} label="Anunturi" />
+                                <CustomTab value={5} label="Feedback studenti" />
                             </CustomTabs>
                         </AppBar>
                     </div>
@@ -182,7 +186,8 @@ class Course extends Component {
                                 activeSession={activeSession}
                                 course={course}/>
                         )}
-                        {tabValue === 4 && <div>Item Five</div>}
+                        {tabValue === 4 && <div>Nu este niciun anunt momentan</div>}
+                        {tabValue === 5 && <div>Feedback de la studenti</div>}
                     </div>
                 </div>
             </div>

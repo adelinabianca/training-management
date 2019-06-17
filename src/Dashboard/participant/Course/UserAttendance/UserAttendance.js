@@ -4,6 +4,8 @@ import { TextField, Dialog, DialogContent } from '@material-ui/core';
 import QrReader from "react-qr-reader";
 import { inject, observer } from 'mobx-react';
 
+import styles from './UserAttendance.module.scss';
+
 @inject('sessionStore')
 @observer
 class UserAttendance extends Component {
@@ -57,7 +59,7 @@ class UserAttendance extends Component {
         const { activeSession, sessionStore: { authUser } } = this.props;
 
         if (!activeSession) {
-            return <div>Nu este nicio sesiune activa! Revino mai tarziu.</div>
+            return <div>Nu este nicio sesiune activa! Incearca mai tarziu.</div>
         }
 
         if(activeSession.attendees && activeSession.attendees.map(user => user.uid).includes(authUser.uid)) {
@@ -65,28 +67,36 @@ class UserAttendance extends Component {
         }
 
         return (
-            <div>
-                <CustomButton onClick={this.scanQrCode}>Scan QRCode</CustomButton>
-                <Dialog open={scan} fullWidth onClose={() => this.setState({scan: false})}>
-                    <DialogContent>
-                        <QrReader
-                            delay={300}
-                            onError={this.handleError}
-                            onScan={this.handleScan}
-                            style={{ width: "80%", margin: '0 auto' }}
-                        />
-                    </DialogContent>
+            <div className={styles.wrapper}>
+                <div className={styles.instructions}>
+                    Pentru a fi trecut ca <i>prezent</i> la aceasta sesiune, scanati QRcode-ul dat de trainer la curs SAU
+                    introduceti codul unic al sesiunii (comunicat de catre trainer).
+                </div>
+                <div className={styles.actions}>
+                    <CustomButton onClick={this.scanQrCode}>Scan QRCode</CustomButton>
+                    <Dialog open={scan} fullWidth onClose={() => this.setState({scan: false})}>
+                        <DialogContent>
+                            <QrReader
+                                delay={300}
+                                onError={this.handleError}
+                                onScan={this.handleScan}
+                                style={{ width: "80%", margin: '0 auto' }}
+                            />
+                        </DialogContent>
 
-                </Dialog>
-                <div>OR</div>
-                <div>Add unique code for session</div>
-                <TextField 
-                  name="code"
-                  value={code}
-                  onChange={this.handleInputChange}
-                  variant="outlined" />
-                <CustomButton onClick={this.attendSession}>Attend session</CustomButton>
-                {errorCode && <div>Codul este gresit. Incearca din nou.</div>}
+                    </Dialog>
+                    <div>SAU</div>
+                    <br/>
+                    <div>Introdu codul unic al sesiunii</div>
+                    <TextField 
+                    name="code"
+                    value={code}
+                    onChange={this.handleInputChange}
+                    variant="outlined"
+                    className={styles.input} />
+                    <CustomButton onClick={this.attendSession}>Submit</CustomButton>
+                    {errorCode && <div>Codul este gresit. Incearca din nou.</div>}
+                </div>
             </div>
         )
     }

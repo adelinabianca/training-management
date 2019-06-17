@@ -24,7 +24,7 @@ class Attendance extends Component {
     }
 
     componentDidMount() {
-        const { activeSession, firebase, course: { courseId } } = this.props;
+        const { activeSession } = this.props;
         this.setState({ selectedSession: activeSession });
         this.setAttendees();
     }
@@ -35,7 +35,6 @@ class Attendance extends Component {
         if (JSON.stringify(activeSession) !== JSON.stringify(prevProps.activeSession)) {
             this.setState({ selectedSession: activeSession });
             this.attendeesRef.off();
-            
             this.setAttendees();
         }
     }
@@ -51,38 +50,9 @@ class Attendance extends Component {
         }
     }
 
-    
-    // async componentDidMount() {
-        
-    //     await this.init()
-    // }
-
-    // async componentDidUpdate(prevProps) {
-    //     const { course, activeSession } = this.props;
-    //     if (JSON.stringify(course.attendance) !== JSON.stringify(prevProps.course.attendance)
-    //         || JSON.stringify(activeSession) !== JSON.stringify(prevProps.activeSession)
-    //         || course.courseId !== prevProps.course.courseId) {
-    //         await this.init();
-    //     }
-    // }
-
     componentWillUnmount() {
         if(this.attendeesRef) this.attendeesRef.off();
     }
-
-    // init = async() => {
-        // const { activeSession } = this.props;
-        // this.setState({ selectedSession: activeSession });
-    //     const { course: { courseId, attendance }, firebase } = this.props;
-    //     const activeSessionId = this.getActiveSessionIdFromCourse();
-        // if (activeSessionId) {
-        //     this.attendeesRef = firebase.attendees(courseId, activeSessionId);
-        //     this.attendeesRef.on('value', (snapshot) => {
-        //         console.log(snapshot.val())
-        //         this.setState({ attendees: snapshot.val()})
-        //     })
-        // }
-    // }
 
     getActiveSessionIdFromCourse = () => {
         const { course: { attendance } } = this.props;
@@ -127,9 +97,7 @@ class Attendance extends Component {
         const { closeSession } = this.props;
         const { selectedSession } = this.state;
         closeSession(selectedSession);
-        // this.setState({ selectedSession: null });
     }
-
 
     render() {
         const { uniqueCode, openQR, newSessionName, newLimit, selectedSession, attendees } = this.state;
@@ -157,16 +125,19 @@ class Attendance extends Component {
                 <div className={styles.content}>
                     {!selectedSession && (
                     <div>
-                        <h3>Adauga o sesiune noua</h3>
-                        <div>Nume</div>
-                        <TextField
-                            name="newSessionName"
-                            value={newSessionName}
-                            onChange={this.handleInputChange}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                        <div>Nr max membri</div>
+                        <h3>Adauga o sesiune de prezenta noua</h3>
+                        <div>Data</div>
+                        <form>
+                            <TextField
+                                name="newSessionName"
+                                value={newSessionName}
+                                onChange={this.handleInputChange}
+                                margin="dense"
+                                variant="outlined"
+                                type="date"
+                            />
+                        </form>
+                        <div>Numarul maxim de membri</div>
                         <TextField
                             name="newLimit"
                             value={newLimit}
@@ -174,7 +145,7 @@ class Attendance extends Component {
                             margin="dense"
                             variant="outlined"
                         />
-                        <div>Cod unic al sesiunii</div>
+                        <div>Codul unic al sesiunii</div>
                         <TextField 
                             name="uniqueCode"
                             value={uniqueCode}
@@ -187,18 +158,27 @@ class Attendance extends Component {
                     </div>
                     )}
                     {selectedSession && (
-                        <div>
-                            <div>Data: {selectedSession.date}</div>
-                            {selectedSession.active && <CustomButton onClick={this.generateQrCode}>Afiseaza Qr code</CustomButton>}
-                            <div>Membri prezenti: </div>
-                            <div>
-                                {selectedSession === activeSession && attendees && attendees.map((attendee, index) => (
-                                    <div key={attendee.uid}>{index+1}. {attendee.username}</div>
-                                ))}
-                                {selectedSession !== activeSession && selectedSession.attendees && selectedSession.attendees.map((attendee, index) => (
-                                    <div key={attendee.uid}>{index+1}. {attendee.username}</div>
-                                ))}
+                        <div className={styles.sessionInfo}>
+                            <h2>Data: {selectedSession.date}</h2>
+                            <div className={styles.attendance}>
+                                {selectedSession.active && (
+                                    <QRCode 
+                                    value={uniqueCode}
+                                    size={fullScreen ? 300 : 500} />
+                                )}
+                                
+                                
+                                <div className={styles.members}>
+                                    <h3>Membri prezenti: </h3>
+                                    {selectedSession === activeSession && attendees && attendees.map((attendee, index) => (
+                                        <div key={attendee.uid}>{index+1}. {attendee.username}</div>
+                                    ))}
+                                    {selectedSession !== activeSession && selectedSession.attendees && selectedSession.attendees.map((attendee, index) => (
+                                        <div key={attendee.uid}>{index+1}. {attendee.username}</div>
+                                    ))}
+                                </div>
                             </div>
+                            {selectedSession.active && <CustomButton onClick={this.generateQrCode}>Mareste Qr code</CustomButton>}
                             {selectedSession.active && <div><CustomButton onClick={this.closeSession}>Inchide sesiunea</CustomButton></div>}
                             <Dialog open={openQR} onClose={this.handleCloseDialog} fullScreen>
                                 <DialogActions>

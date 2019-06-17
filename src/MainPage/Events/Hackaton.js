@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 import styles from './Hackaton.module.scss';
 import { Button } from '@material-ui/core';
@@ -16,7 +17,7 @@ class Hackaton extends Component {
                     ei vor avea la dispoziție 24 de ore în care vor trebui să creeze o aplicație menită să răspundă unor nevoi sau probleme ale 
                     comunității.
                   </p>
-                  <Button>Afla mai multe</Button>
+                  <Link to='/hackathon'><Button>Afla mai multe</Button></Link>
               </div>
             </div>
         )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Fab from '@material-ui/core/Fab';
 
 import styles from './EditApplyForm.module.scss';
-import { TextField, Tooltip } from '@material-ui/core';
+import { TextField, Tooltip, InputLabel } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 
@@ -49,23 +49,23 @@ class EditApplyForm extends Component {
         const { questions } = this.state;
         return (
             <div className={styles.wrapper}>
-                <div>Adauga intrebarile pentru formularul de aplicare. Cand ai terminat salveaza modificarile. Poti modifica intrebarile mai tarziu.</div>
+                <div className={styles.instructions}>Adauga intrebarile pentru formularul de aplicare. Cand ai terminat salveaza modificarile. Poti modifica intrebarile mai tarziu.</div>
                 {questions.map((question, index) => (
                     <div key={index} className={styles.questionWrapper}>
-                        <Fab size="small" className={styles.numberIcon}>{index}</Fab>
+                        <InputLabel>Intrebare</InputLabel>
                         <TextField
                             name="question"
                             margin="dense"
                             variant="outlined"
                             value={question.length ? question : ''}
-                            placeholder="Add new question..."
+                            placeholder="Adauga o noua intrebare..."
                             onChange={(e) => this.handleInputChange(e, index)}
                             className={styles.inputContainer} />
                     </div>
                 ))}
                 <div className={styles.buttonsContainer}>
                     <Tooltip title="Adauga o noua intrebare" placement="bottom">
-                        <CustomButton onClick={this.addNewQuestion}><Add /></CustomButton>
+                        <CustomButton onClick={this.addNewQuestion}><Add />Adauga intrebare</CustomButton>
                     </Tooltip>
                     <CustomButton onClick={this.handleSave}>Salveaza</CustomButton>
                 </div>

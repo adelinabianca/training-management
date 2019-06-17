@@ -4,17 +4,14 @@ import { withRouter } from 'react-router';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import { AccountCircleOutlined } from '@material-ui/icons';
 
 import styles from './AdminDashboard.module.scss';
 import EditArias from './EditArias/EditArias';
 import UsersList from './Users/UsersList';
 import { Hidden, Drawer } from '@material-ui/core';
 import { observer, inject } from 'mobx-react';
+import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
 
 @inject('drawerStore')
 @observer
@@ -62,31 +59,21 @@ class AdminDashboard extends Component {
         return (
             <List
               component="nav"
-              // subheader={<ListSubheader component="div">Nested List Items</ListSubheader>}
               className={styles.listRoot}>
                 <ListItem button onClick={this.goOnMainPage}>
-                    <ListItemIcon>
-                    <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary="Contul meu" />
+                </ListItem>
+                <ListItem button onClick={this.goOnMainPage}>
+                    <ListItemText primary="Informatii utile" />
                 </ListItem>
                 <ListItem button onClick={this.handleEditArias}>
-                    <ListItemIcon>
-                    <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Arias" />
+                    <ListItemText primary="Traininguri" />
                 </ListItem>
                 <ListItem button onClick={this.handleEditEvents}>
-                    <ListItemIcon>
-                    <DraftsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Events" />
+                    <ListItemText primary="Evenimente" />
                 </ListItem>
                 <ListItem button onClick={this.handleEditUsers}>
-                    <ListItemIcon>
-                    <AccountCircleOutlined />
-                    </ListItemIcon>
-                    <ListItemText primary="Users" />
+                    <ListItemText primary="Utilizatori" />
                 </ListItem>
             </List>
        )
@@ -111,7 +98,7 @@ class AdminDashboard extends Component {
                </Hidden>
                <div className={styles.content}>
                     <Switch>
-                        <Route exact path="/admin-dashboard" />
+                        <Route exact path="/admin-dashboard" component={EditAccountDetailsForm} />
                         <Route exact path="/admin-dashboard/edit" component={EditArias} />
                         <Route exact path="/admin-dashboard/users" component={UsersList} />
                     </Switch>

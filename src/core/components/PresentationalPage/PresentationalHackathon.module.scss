@@ -6,14 +6,14 @@
     margin: 20px auto;
     .title {
         height: 100px;
-        background: $secondary-bg-color;
-        border-radius: 110px 0 0;
+        background:$dark-background-color;
+        border-radius: 0 0 110px;
         padding: 30px;
         display: flex;
         align-items: center;
         h2 {
             font-size: 32px;
-            color: #561414;
+            color: $primary-font-color;
         }
     }
     .description {
@@ -27,7 +27,7 @@
         width: 65%;
         .title {
             padding: 50px 70px;
-            border-radius: 170px 0 0;
+            border-radius: 0 0 170px;
             h2 {
                 font-size: 50px;
             }

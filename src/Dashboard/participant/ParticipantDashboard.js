@@ -4,9 +4,7 @@ import { withRouter } from 'react-router';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import SendIcon from '@material-ui/icons/Send';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -16,6 +14,7 @@ import { inject, observer } from 'mobx-react';
 import { getCourses } from '../../core/api/courses';
 import { Hidden, Drawer } from '@material-ui/core';
 import ParticipantCourse from './Course/ParticipantCourse';
+import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
 
 
 @inject('sessionStore', 'drawerStore')
@@ -37,6 +36,12 @@ class ParticipantDashboard extends Component {
                 this.setState({ participantCourses });
             })
         }
+    }
+
+    goOnMainPage = () => {
+        const { history } = this.props;
+        history.push(`/user-account`);
+        this.handleDrawerToggle();
     }
 
     goOnCoursePage = (course) => {
@@ -63,30 +68,24 @@ class ParticipantDashboard extends Component {
               component="nav"
               className={styles.listRoot}>
                 <ListItem button onClick={this.goOnMainPage}>
-                    <ListItemIcon>
-                    <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary="Contul meu" />
                 </ListItem>
                 <ListItem button onClick={this.handleCollapseClick}>
-                    <ListItemIcon>
-                    <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="My courses" />
+                    <ListItemText primary="Cursuri" />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {participantCourses.map(course => (
                             <ListItem key={course.courseId} button onClick={() => this.goOnCoursePage(course)} className={styles.nested}>
-                                <ListItemIcon>
-                                    <SendIcon />
-                                </ListItemIcon>
                                 <ListItemText primary={course.name} />
                             </ListItem>
                         ))}
                     </List>
                 </Collapse>
+                <ListItem button onClick={this.goOnMainPage}>
+                    <ListItemText primary="Feedback" />
+                </ListItem>
             </List>
         )
     }
@@ -110,7 +109,8 @@ class ParticipantDashboard extends Component {
                 </Hidden>
                <div className={styles.content}>
                   <Switch>
-                    <Route exact path="/user-account" />
+                    <Route exact path="/user-account" component={EditAccountDetailsForm} />
+                    <Route exact path="/user-account/details" component={EditAccountDetailsForm} />
                     <Route exact path="/user-account/course/:courseId" component={ParticipantCourse} />
                   </Switch>
                </div>

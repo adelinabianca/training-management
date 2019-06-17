@@ -12,9 +12,10 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import styles from './TrainerDashboard.module.scss';
 import { inject, observer } from 'mobx-react';
 import { getCourses } from '../../core/api/courses';
-import WhatDoYouWantToDo from '../admin/Main/WhatDoYouWantToDo';
 import Course from './Course/Course';
 import { Hidden, Drawer } from '@material-ui/core';
+import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
+
 @inject('sessionStore', 'drawerStore')
 @observer
 class TrainerDashboard extends Component {
@@ -66,10 +67,10 @@ class TrainerDashboard extends Component {
               component="nav"
               className={styles.listRoot}>
                 <ListItem button onClick={this.goOnMainPage}>
-                    <ListItemText primary="Welcome" />
+                    <ListItemText primary="Contul meu" />
                 </ListItem>
                 <ListItem button onClick={this.handleCollapseClick}>
-                    <ListItemText primary="My courses" />
+                    <ListItemText primary="Cursuri" />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
@@ -110,7 +111,7 @@ class TrainerDashboard extends Component {
                 </Hidden>
                <div className={styles.content}>
                   <Switch>
-                        <Route exact path="/trainer-dashboard" component={WhatDoYouWantToDo} />
+                        <Route exact path="/trainer-dashboard" component={EditAccountDetailsForm} />
                         <Route exact path="/trainer-dashboard/:courseId" component={Course} />
                     </Switch>
                </div>

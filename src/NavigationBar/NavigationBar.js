@@ -81,7 +81,7 @@ class NavigationBar extends Component {
                         <span className={styles.menuItem}><Link to='/main'>Arii</Link></span>
                         <span><Link to='/main'>Program</Link></span>
                         <span><Link to='/conference'>Conferinta</Link></span>
-                        <span><Link to='/main'>Hackathon</Link></span>
+                        <span><Link to='/hackathon'>Hackathon</Link></span>
                         <span><Link to='/about'>Despre</Link></span>
                     </Hidden>
                     <div className={styles.account}>

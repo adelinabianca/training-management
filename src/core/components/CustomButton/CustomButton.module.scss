@@ -1,9 +1,12 @@
 @import '../../../styles/variables';
 
 button.button {
+    border-radius: 25px;
     color: $secondary-font-color;
     background-color: $button-bg-color;
     box-shadow: $button-box-shaddow;
+    padding-left: 16px;
+    padding-right: 16px;
     &:hover {
         background-color: $hover-button-color;
     }

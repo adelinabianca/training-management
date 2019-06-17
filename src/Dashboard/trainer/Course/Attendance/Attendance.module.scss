@@ -6,19 +6,25 @@
     flex-direction: column;
     .sessions {
         display: flex;
-        width: 10%;
+        padding: 0 10px;
         button {
             min-width: auto;
             padding: 10px;
             border-radius: 0;
-            background-color: #a1c0d7;
-            border: 1px solid #89a8c0;
+            color: $dark-font-color;
+            font-weight: bold;
+            margin: 0 4px;
+            text-decoration: underline;
+            box-shadow: 0 0 0 0  rgba(0,0,0,0);
+            transition: .3s all ease-in-out;
             &:hover {
-                background-color: #89a8c0;
+                box-shadow: 1px 1px 1px 1px rgba(0,0,0,.11);
+                background: transparent;
             }
             &.selectedSession {
-                background-color: #fff;
-                border-bottom: 0;
+                // background-color: #fff;
+                // border: 2px solid $dark-font-color;
+                box-shadow: 1px 1px 1px 1px rgba(0,0,0,.11);
             }
         }
     }
@@ -32,19 +38,24 @@ div.dialogContent {
     margin: 0 auto;
 }
 
+.attendance {
+    display: flex;
+    flex-direction: column;
+    .members {
+        padding: 0 20px;
+    }
+}
+.sessionInfo {
+    button {
+        margin-top: 20px;
+    }
+}
+
 @include for-desktop() {
     .wrapper {
+        margin: 0 30px;
+    }
+    .attendance {
         flex-direction: row;
-        margin: 30px;
-        .sessions {
-            flex-direction: column;
-            button {
-              height: 70px;
-              &.selectedSession {
-                border-bottom: 1px solid #89a8c0;
-                border-right: 0;
-              }
-            }
-        }
     }
 }

@@ -20,11 +20,11 @@ div.actions {
 
 div.card {
     position: relative;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
+    // box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
     border: 0;
-    border-bottom: 2px solid #b3e3ff;
+    // border-bottom: 2px solid #b3e3ff;
     color: #333;
-    background: $primary-bg-color;
+    // background: $primary-bg-color;
     width: 100%;
     margin: 30px auto;
     display: flex;
@@ -33,20 +33,25 @@ div.card {
     max-width: 300px;
     word-wrap: break-word;
     font-size: .875rem;
+    transition: .5s all ease-out;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    &:hover {
+        box-shadow: 0px 0px 48px -1px rgba(0,0,0,0.17);
+    }
     div.cardHeaderPrimary {
         border-radius: 3px;
         padding: 4px 15px;
-        background: $card-header-bg;
-        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
-        margin: -20px 15px 0;
-        color: $secondary-font-color;
+        // background: $card-header-bg;
+        // box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
+        margin: 20px 15px 0;
+        color: $primary-font-color;
     }
     div.cardHeader {
         z-index: 3;
         border-bottom: none;
         text-transform: uppercase;
         font-size: 13px;
-        text-shadow: 0px 1px 10px #555;
+        // text-shadow: 0px 1px 10px #555;
     }
     div.cardBody {
         margin: 20px;
@@ -64,8 +69,10 @@ div.card {
         }
         button {
             margin-top: 15px;
+            border-radius: 25px;
             font-weight: bold;
-            color: $dark-font-color;
+            background-color: $dark-font-color;
+            color: $secondary-font-color;
             &:hover {
                 background-color: $hover-light-color;
             }
