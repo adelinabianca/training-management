@@ -31,8 +31,9 @@ class ParticipantDashboard extends Component {
     async componentDidMount() {
         const { sessionStore: { authUser } } = this.props;
         if (authUser.participantCoursesIds) {
+            const confirmedCourses = authUser.participantCoursesIds.filter(course => course.confirmed).map(course => course.courseId)
             await getCourses().then(response => {
-                const participantCourses = Object.values(response.data).filter(course => authUser.participantCoursesIds.includes(course.courseId));
+                const participantCourses = Object.values(response.data).filter(course => confirmedCourses.includes(course.courseId));
                 this.setState({ participantCourses });
             })
         }

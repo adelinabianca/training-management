@@ -1,0 +1,43 @@
+@import '../../../styles/variables';
+
+button.expand {
+    transform: rotate(0deg);
+    margin-left: auto;
+    transition: transform .3s ease-in-out;
+}
+
+button.expandOpen {
+    transform: rotate(180deg);
+}
+
+div.card {
+    margin: 10px;
+    div.header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+    }
+}
+
+div.tableWrapper {
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        li.listHeader {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            border-bottom: 1px solid #efefef;;
+            min-height: 60px;
+            span {
+                word-break: break-all;
+            }
+            // div {
+            //     align-items: center;
+            // }
+        }
+    }
+}
+

@@ -12,6 +12,7 @@ import UsersList from './Users/UsersList';
 import { Hidden, Drawer } from '@material-ui/core';
 import { observer, inject } from 'mobx-react';
 import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
+import EditApplicants from './EditApplicants/EditApplicants';
 
 @inject('drawerStore')
 @observer
@@ -26,27 +27,27 @@ class AdminDashboard extends Component {
     handleEditArias = () => {
         const { history } = this.props;
         history.push('/admin-dashboard/edit');
-        this.setState({ selectedItem: 1 });
+        // this.setState({ selectedItem: 1 });
         this.handleDrawerToggle();
     }
 
     handleEditUsers = () => {
         const { history } = this.props;
         
-        this.setState({ selectedItem: 3 });
+        // this.setState({ selectedItem: 3 });
         history.push('/admin-dashboard/users');
         this.handleDrawerToggle();
     }
 
     goOnMainPage = () => {
         const { history } = this.props;
-        this.setState({ selectedItem: 0 })
         history.push('/admin-dashboard');
         this.handleDrawerToggle();
     }
 
-    handleEditEvents = () => {
-        this.setState({ selectedItem: 2})
+    handleEditApplicants = () => {
+        const { history } = this.props;
+        history.push('/admin-dashboard/applicants');
         this.handleDrawerToggle();
     }
 
@@ -69,8 +70,8 @@ class AdminDashboard extends Component {
                 <ListItem button onClick={this.handleEditArias}>
                     <ListItemText primary="Traininguri" />
                 </ListItem>
-                <ListItem button onClick={this.handleEditEvents}>
-                    <ListItemText primary="Evenimente" />
+                <ListItem button onClick={this.handleEditApplicants}>
+                    <ListItemText primary="Administreaza aplicanti" />
                 </ListItem>
                 <ListItem button onClick={this.handleEditUsers}>
                     <ListItemText primary="Utilizatori" />
@@ -101,6 +102,7 @@ class AdminDashboard extends Component {
                         <Route exact path="/admin-dashboard" component={EditAccountDetailsForm} />
                         <Route exact path="/admin-dashboard/edit" component={EditArias} />
                         <Route exact path="/admin-dashboard/users" component={UsersList} />
+                        <Route exact path="/admin-dashboard/applicants" component={EditApplicants} />
                     </Switch>
                </div>
             </div>

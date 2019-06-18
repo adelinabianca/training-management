@@ -68,7 +68,7 @@ class Applicants extends Component {
     render() {
         const { applicants, seeAnswersDialog, selectedApplication } = this.state;
         const { course: { members }, fullScreen } = this.props;
-        const courseMembers = members || [];
+        const courseMembers = members ? members.map(member => member.uid) : [];
         return (
             <div className={styles.wrapper}>
                 <ul>

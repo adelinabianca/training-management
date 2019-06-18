@@ -21,7 +21,8 @@ const CustomTabs = withStyles({
       backgroundColor: 'gray',
     },
     scrollButtons: {
-        width: 0
+        // width: 0,
+        color: 'gray'
     }
 })(Tabs);
 
@@ -85,12 +86,13 @@ class Course extends Component {
 
         await getUser(acceptedUser.uid).then(async response => {
             const user = response.data;
-            const participantCourses = user.participantCoursesIds ? [...user.participantCoursesIds, course.courseId] : [course.courseId];
+            const participantCourse = { courseId: course.courseId, confirmed: false, contacted: false }
+            const participantCourses = user.participantCoursesIds ? [...user.participantCoursesIds, participantCourse] : [participantCourse];
             const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
             await updateUser(updatedUser).then(res => {})
         });
-
-        const members = course.members ? [...course.members, acceptedUser.uid] : [acceptedUser.uid];
+        const mappedAcceptedUser = {uid: acceptedUser.uid, confirmed: false, contacted: false};
+        const members = course.members ? [...course.members, mappedAcceptedUser] : [mappedAcceptedUser];
         const updatedCourse = {...course, members};
         this.setState({ course: updatedCourse });
         await updateCourse(updatedCourse).then(() => {});
@@ -99,13 +101,13 @@ class Course extends Component {
     removeMember = async (removedUser) => {
         const { course } = this.state;
 
-        course.members = [...course.members].filter(userUid => userUid !== removedUser.uid)
+        course.members = [...course.members].filter(user => user.uid !== removedUser.uid)
         this.setState({ course: {...course}});
         await updateCourse(course).then(() => {});
 
         await getUser(removedUser.uid).then(async response => {
             const user = response.data;
-            const participantCourses =[...user.participantCoursesIds].filter(courseID => courseID !== course.courseId);
+            const participantCourses =[...user.participantCoursesIds].filter(participantCourse => participantCourse.courseId !== course.courseId);
             const updatedUser = { ...response.data, participantCoursesIds: participantCourses}
             await updateUser(updatedUser).then(res => {})
         });
@@ -176,8 +178,7 @@ class Course extends Component {
                         {tabValue === 2 && (
                             <Members 
                                 members={course && course.members ? course.members : []} 
-                                courseId={course.courseId}
-                                onRemoveUser={this.removeMember} />
+                                courseId={course.courseId} />
                         )}
                         {tabValue === 3 && (
                             <Attendance

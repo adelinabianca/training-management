@@ -5,7 +5,8 @@ import Clear from '@material-ui/icons/Clear';
 import styles from './Members.module.scss';
 import { getUser } from '../../../../core/api/users';
 import { Grid, Button, Dialog, DialogContent, DialogActions } from '@material-ui/core';
-import CustomButton from '../../../../core/components/CustomButton/CustomButton';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 class Members extends Component {
     constructor(props) {
         super(props);
@@ -31,11 +32,11 @@ class Members extends Component {
         const { members, courseId } = this.props;
         let allMembers = [];
         if (members.length) {
-            members.forEach(async userUID => {
-                await getUser(userUID).then(response => {
+            members.forEach(async user => {
+                await getUser(user.uid).then(response => {
                     const member = response.data;
                     member.applications = member.applications.filter(application => application.courseId === courseId)
-                    allMembers = [...allMembers, member];
+                    allMembers = [...allMembers, {...member, confirmed: user.confirmed}];
                     this.setState({ members: allMembers, seeAnswersDialog: false, selectedApplication: null });
                 })
             });
@@ -52,10 +53,6 @@ class Members extends Component {
         this.setState({ seeAnswersDialog: false });
     }
 
-    handleRemoveUser = async (user) => {
-        const { onRemoveUser } = this.props;
-        await onRemoveUser(user);
-    }
 
     render() {
         const { fullScreen } = this.props;
@@ -68,7 +65,7 @@ class Members extends Component {
                             <Grid item xs={3}><span><strong>Nume</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Formular de aplicare</strong></span></Grid>
                             <Grid item xs={3}><span><strong>Data</strong></span></Grid>
-                            <Grid item xs={3}><span><strong>Actiuni</strong></span></Grid>
+                            <Grid item xs={3}><span><strong>Confirmed</strong></span></Grid>
                         </Grid>
                     </li>
                     {members.map((user, index) => {
@@ -85,7 +82,7 @@ class Members extends Component {
                                     {user.applications[0].applicationDate || '-'}
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <CustomButton onClick={() => this.handleRemoveUser(user)}>Sterge</CustomButton>
+                                    {user.confirmed ? <CheckIcon className={styles.checkIcon} /> : <ClearIcon className={styles.clearIcon} />}
                                 </Grid>
                             </Grid>
                         </li>
