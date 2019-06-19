@@ -13,6 +13,8 @@ import { Hidden, Drawer } from '@material-ui/core';
 import { observer, inject } from 'mobx-react';
 import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
 import EditApplicants from './EditApplicants/EditApplicants';
+import Reports from './Reports/Reports';
+import GeneralFeedback from './GeneralFeedback/GeneralFeedback';
 
 @inject('drawerStore')
 @observer
@@ -51,6 +53,18 @@ class AdminDashboard extends Component {
         this.handleDrawerToggle();
     }
 
+    goOnUtilInfo = () => {
+        const { history } = this.props;
+        history.push('/admin-dashboard/info');
+        this.handleDrawerToggle();
+    }
+
+    goOnFeedbackPage = () => {
+        const { history } = this.props;
+        history.push('/admin-dashboard/feedback');
+        this.handleDrawerToggle();
+    }
+
     handleDrawerToggle = () => {
         const { drawerStore: {  adminDrawerOpen, setAdminDrawerOpen} } = this.props;
         setAdminDrawerOpen(!adminDrawerOpen);
@@ -64,7 +78,7 @@ class AdminDashboard extends Component {
                 <ListItem button onClick={this.goOnMainPage}>
                     <ListItemText primary="Contul meu" />
                 </ListItem>
-                <ListItem button onClick={this.goOnMainPage}>
+                <ListItem button onClick={this.goOnUtilInfo}>
                     <ListItemText primary="Informatii utile" />
                 </ListItem>
                 <ListItem button onClick={this.handleEditArias}>
@@ -75,6 +89,9 @@ class AdminDashboard extends Component {
                 </ListItem>
                 <ListItem button onClick={this.handleEditUsers}>
                     <ListItemText primary="Utilizatori" />
+                </ListItem>
+                <ListItem button onClick={this.goOnFeedbackPage}>
+                    <ListItemText primary="Feedback general" />
                 </ListItem>
             </List>
        )
@@ -103,6 +120,8 @@ class AdminDashboard extends Component {
                         <Route exact path="/admin-dashboard/edit" component={EditArias} />
                         <Route exact path="/admin-dashboard/users" component={UsersList} />
                         <Route exact path="/admin-dashboard/applicants" component={EditApplicants} />
+                        <Route exact path="/admin-dashboard/info" component={Reports} />
+                        <Route exact path="/admin-dashboard/feedback" component={GeneralFeedback} />
                     </Switch>
                </div>
             </div>

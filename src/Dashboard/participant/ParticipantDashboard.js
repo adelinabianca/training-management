@@ -15,6 +15,7 @@ import { getCourses } from '../../core/api/courses';
 import { Hidden, Drawer } from '@material-ui/core';
 import ParticipantCourse from './Course/ParticipantCourse';
 import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
+import FeedbackFromStudents from './Feedback/FeedbackFromStudents';
 
 
 @inject('sessionStore', 'drawerStore')
@@ -51,6 +52,12 @@ class ParticipantDashboard extends Component {
         this.handleDrawerToggle();
     }
 
+    goOnFeedbackPage = () => {
+        const { history } = this.props;
+        history.push('/user-account/feedback');
+        this.handleDrawerToggle();
+    }
+
     handleCollapseClick = () => {
         const { open } = this.state;
         this.setState({ open: !open });
@@ -84,7 +91,7 @@ class ParticipantDashboard extends Component {
                         ))}
                     </List>
                 </Collapse>
-                <ListItem button onClick={this.goOnMainPage}>
+                <ListItem button onClick={this.goOnFeedbackPage}>
                     <ListItemText primary="Feedback" />
                 </ListItem>
             </List>
@@ -112,6 +119,7 @@ class ParticipantDashboard extends Component {
                   <Switch>
                     <Route exact path="/user-account" component={EditAccountDetailsForm} />
                     <Route exact path="/user-account/details" component={EditAccountDetailsForm} />
+                    <Route exact path="/user-account/feedback" component={FeedbackFromStudents} />
                     <Route exact path="/user-account/course/:courseId" component={ParticipantCourse} />
                   </Switch>
                </div>

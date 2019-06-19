@@ -15,6 +15,7 @@ import { getCourses } from '../../core/api/courses';
 import Course from './Course/Course';
 import { Hidden, Drawer } from '@material-ui/core';
 import EditAccountDetailsForm from '../../Forms/EditAccountDetailsForm/EditAccountDetailsForm';
+import FeedbackFromTrainer from './Feedback/FeedbackFromTrainer';
 
 @inject('sessionStore', 'drawerStore')
 @observer
@@ -59,6 +60,12 @@ class TrainerDashboard extends Component {
         this.handleDrawerToggle();
     }
 
+    goOnFeedbackPage = () => {
+        const { history } = this.props;
+        history.push('/trainer-dashboard/feedback');
+        this.handleDrawerToggle();
+    }
+
     drawerItems = () => {
         const { asignedCourses, open } = this.state;
 
@@ -85,7 +92,7 @@ class TrainerDashboard extends Component {
                         ))}
                     </List>
                 </Collapse>
-                <ListItem button onClick={this.goOnMainPage}>
+                <ListItem button onClick={this.goOnFeedbackPage}>
                     <ListItemText primary="Feedback" />
                 </ListItem>
             </List>
@@ -112,6 +119,7 @@ class TrainerDashboard extends Component {
                <div className={styles.content}>
                   <Switch>
                         <Route exact path="/trainer-dashboard" component={EditAccountDetailsForm} />
+                        <Route exact path="/trainer-dashboard/feedback" component={FeedbackFromTrainer} />
                         <Route exact path="/trainer-dashboard/:courseId" component={Course} />
                     </Switch>
                </div>

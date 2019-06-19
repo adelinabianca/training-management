@@ -1,35 +1,39 @@
 $primary-bg-color: #FFF;
-$secondary-bg-color: #d9808c; //#8e24aa;
+$secondary-bg-color: #bbbbbb;//#d9808c; //#8e24aa;
 $default-bg-color: #FFF; //#F4F6FC;
-$dark-background-color: #d1e8e2;
-$presentation-bg: linear-gradient(to bottom, #d1e8e2 0%, #d97b7b00 100%);
-$card-header-bg: linear-gradient(to left, #d9808c 0%, #d97b7b00 -2%, #ffcb9a 100%); //linear-gradient(to right, #00375c 0%, #000f47 -2%, #77d0ffb5 100%);
-$button-bg-color: #d9808c;//#2161d8;
+$dark-background-color: #ccc;
+$presentation-bg: linear-gradient(to bottom, #bbb 0%, #d97b7b00 100%);
+$card-header-bg: linear-gradient(to left, #bbb 0%, #d97b7b00 -2%, #ddd 100%); //linear-gradient(to right, #00375c 0%, #000f47 -2%, #77d0ffb5 100%);
+$button-bg-color: #29a8ab;//#d9808c;//#2161d8;
 
-$primary-font-color: #d9808c;//#00b0ff;
+$primary-font-color: #29a8ab;//#00b0ff;
 $secondary-font-color: #FFF;
 $faded-font-color: #777;
 $secondary-faded-font: #8A9BAF;
-$dark-font-color: #116466;
+$dark-font-color: #1d7b7c;
 
 $icon-color: #116466;
 $disabled-icon-color: rgba(0, 0, 0, 0.26);
 
-$hover-button-color: #116466;
-$hover-light-color: #d1e8e2;
-$border-color: #116466;
+$hover-button-color: #1d7b7c; //#116466;
+$hover-light-color: #d7eee8;
+$border-color: #1d7b7c;
 
 $navbar-height: 70px;
 
 $button-box-shaddow: 0.125em 0.175em 0 0 rgba(0, 0, 0, 0.125);
 
 $gray-bg-color: #d1e8e2;
-$button-bg-color2: #3142c4;
+// $button-bg-color2: #3142c4;
 $font-color: #116466;
-$pink-bg-color: #ffcb9a;
+$pink-bg-color: #bbbbbb;
 
 
-// #eeeeee • #dddddd • #cccccc • #bbbbbb • #29a8ab
+$color1: #eeeeee;
+$color2: #dddddd;
+$color3: #cccccc;
+$color4: #bbbbbb;
+$color4: #29a8ab;
 
 //#c2d3da #81A3A7 #585a56 #f1f3f2 #272424
 

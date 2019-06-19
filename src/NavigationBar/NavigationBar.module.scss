@@ -13,7 +13,6 @@ div.headerWrapper {
     height: $navbar-height;
     z-index: 1201;
     left: 0;
-    // box-shadow: 0 0.05em 0.5em 0 rgba(0, 0, 0, 0.5);
     .logo {
         display: flex;
         align-items: center;
@@ -43,7 +42,6 @@ div.headerWrapper {
                 text-decoration: none;
                 &:hover {
                 color: $primary-font-color;
-                // text-shadow: 0px 0px 4px #555;
                 }
                 &:active {
                 background-color: rgba(0, 0, 0, 0.08); // should display active current page 
@@ -65,26 +63,13 @@ div.headerWrapper {
             svg {
                 color: $primary-font-color;
             }
-            // div.avatar {
-            //     color: $secondary-font-color;
-            //     border: 1px solid $secondary-font-color;
-            //     width: 32px;
-            //     height: 32px;
-            //     font-size: 16px;
-            //     background-color: transparent;
-            //     &:hover {
-            //         color: $primary-font-color;
-            //         border: 1px solid $primary-font-color;
-            //         // text-shadow: 0px 0px 4px #555;
-            //         }
-            // }
             button.authBtn {
-                background-color: $secondary-bg-color;
+                background-color: $button-bg-color;
                 border-radius: 25px;
                 color: $secondary-font-color;
                 font-weight: bold;
                 &:hover {
-                    background-color: #bf4f5e;
+                    background-color: $hover-button-color;
                 }
             }
         }

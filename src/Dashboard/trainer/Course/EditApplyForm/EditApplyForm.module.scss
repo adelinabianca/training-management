@@ -29,6 +29,9 @@ div.inputContainer {
         width: 80%;
     }
     div.buttonsContainer {
-        width: 25%;
+        justify-content: flex-start;
+        button {
+            margin-right: 8px;
+        }
     }
 }

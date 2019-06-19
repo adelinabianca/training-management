@@ -37,7 +37,6 @@ form.formWrapper {
 
 div.card {
     position: relative;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
     border: 0;
     margin-bottom: 30px;
     margin-top: 30px;
@@ -52,16 +51,13 @@ div.card {
     div.cardHeaderPrimary {
         border-radius: 3px;
         padding: 15px;
-        background: $card-header-bg;
-        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
         margin: -20px 15px 0;
-        color: $secondary-font-color;
+        color: gray;
     }
     div.cardHeader {
         z-index: 3;
         border-bottom: none;
         font-size: 16px;
-        text-shadow: 0px 1px 10px #555;
     }
     div.usersTitle {
         display: flex;
@@ -97,7 +93,7 @@ div.card {
                     }
                 }
                 span.roles {
-                    color: #2161d8;
+                    color: orangered;
                     text-transform: uppercase;
                 }
             }

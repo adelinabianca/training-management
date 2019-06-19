@@ -11,6 +11,7 @@ import EditApplyForm from './EditApplyForm/EditApplyForm';
 import Applicants from './Applicants/Applicants';
 import Members from './Members/Members';
 import Attendance from './Attendance/Attendance';
+import CourseFeedback from './Feedback/CourseFeedback';
 
 const CustomTabs = withStyles({
     root: {
@@ -188,7 +189,7 @@ class Course extends Component {
                                 course={course}/>
                         )}
                         {tabValue === 4 && <div>Nu este niciun anunt momentan</div>}
-                        {tabValue === 5 && <div>Feedback de la studenti</div>}
+                        {tabValue === 5 && <CourseFeedback courseId={course.courseId}/>  }
                     </div>
                 </div>
             </div>

@@ -3,7 +3,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Card, CardContent, Collapse, IconButton, Grid, Checkbox } from '@material-ui/core';
 
 import styles from './CourseCard.module.scss';
-import { getUser } from '../../../core/api/users';
+import { getUser, updateUser } from '../../../core/api/users';
+import { updateCourse } from '../../../core/api/courses';
 
 class CourseCard extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class CourseCard extends Component {
         const { course: { members } } = this.props;
         if (members) {
             const userPromises = members.map(async user => {
-                return await getUser(user).then(response => {return response.data});
+                return await getUser(user.uid).then(response => {return response.data});
             })
             Promise.all(userPromises).then((res) => {
                 this.setState({ applicants: res })
@@ -33,12 +34,86 @@ class CourseCard extends Component {
 
     getDefaultCourseFromUser = (user) => {
         const { course } = this.props;
-        return user.participantCoursesId.find(c=> c.courseId === course.courseId);
+        return user.participantCoursesIds.find(c=> c.courseId === course.courseId);
+    }
+
+    handleContacted = (e, user) => {
+        const { target: { checked } } = e;
+        const { applicants } = this.state;
+        const { course } = this.props;
+        
+        const courseIndex = user.participantCoursesIds.findIndex(course => course.courseId === this.getDefaultCourseFromUser(user).courseId);
+        const memberIndex = course.members.findIndex(member => member.uid === user.uid);
+        if (checked) {
+            user.participantCoursesIds[courseIndex] = {
+                ...user.participantCoursesIds[courseIndex],
+                contacted: true
+            }
+
+            course.members[memberIndex] = {
+                ...course.members[memberIndex],
+                contacted: true
+            }
+        } else {
+            user.participantCoursesIds[courseIndex] = {
+                ...user.participantCoursesIds[courseIndex],
+                contacted: false
+            }
+
+            course.members[memberIndex] = {
+                ...course.members[memberIndex],
+                contacted: false
+            }
+        }
+
+        const userIndex = applicants.findIndex(applicant => applicant.uid === user.uid);
+        applicants[userIndex] = user;
+        this.setState({ applicants });
+        updateUser(user);
+        updateCourse(course);
+    }
+
+    handleConfirmation = (e, user) => {
+        const { target: { checked } } = e;
+        const { applicants } = this.state;
+        const { course } = this.props;
+        
+        const courseIndex = user.participantCoursesIds.findIndex(course => course.courseId === this.getDefaultCourseFromUser(user).courseId);
+        const memberIndex = course.members.findIndex(member => member.uid === user.uid);
+        if (checked) {
+            user.participantCoursesIds[courseIndex] = {
+                ...user.participantCoursesIds[courseIndex],
+                confirmed: true
+            }
+            
+            course.members[memberIndex] = {
+                ...course.members[memberIndex],
+                confirmed: true
+            }
+        } else {
+            user.participantCoursesIds[courseIndex] = {
+                ...user.participantCoursesIds[courseIndex],
+                confirmed: false
+            }
+
+            course.members[memberIndex] = {
+                ...course.members[memberIndex],
+                confirmed: false
+            }
+        }
+
+        
+        const userIndex = applicants.findIndex(applicant => applicant.uid === user.uid);
+        applicants[userIndex] = user;
+        this.setState({ applicants });
+        updateUser(user);
+        updateCourse(course);
     }
 
     render() {
         const { course } = this.props;
         const { isExpanded, applicants } = this.state;
+
         return (
             <div className={styles.wrapper}>
                 <Card className={styles.card}>
@@ -74,8 +149,22 @@ class CourseCard extends Component {
                                                 <Grid item xs={3}><span>{applicant.username}</span></Grid>
                                                 <Grid item xs={3}><span>{applicant.email}</span></Grid>
                                                 <Grid item xs={2}><span>{applicant.phone}</span></Grid>
-                                                <Grid item xs={2}><span><Checkbox value={this.getDefaultCourseFromUser(applicant).contacted}/></span></Grid>
-                                                <Grid item xs={2}><span><Checkbox value={this.getDefaultCourseFromUser(applicant).confirmed}/></span></Grid>
+                                                <Grid item xs={2}>
+                                                    <span>
+                                                    <Checkbox 
+                                                        checked={this.getDefaultCourseFromUser(applicant).contacted}
+                                                        value='contacted'
+                                                        onChange={(e) => this.handleContacted(e, applicant)}/>
+                                                    </span>
+                                                </Grid>
+                                                <Grid item xs={2}>
+                                                    <span>
+                                                    <Checkbox 
+                                                        checked={this.getDefaultCourseFromUser(applicant).confirmed}
+                                                        value="confirmed"
+                                                        onChange={(e) => this.handleConfirmation(e, applicant)} />
+                                                    </span>
+                                                </Grid>
                                             </Grid>
                                         </li>
                                     ))}

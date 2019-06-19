@@ -8,6 +8,7 @@ import styles from './ParticipantCourse.module.scss';
 import { getCourse, updateCourse } from '../../../core/api/courses';
 import UserAttendance from './UserAttendance/UserAttendance';
 import CourseDetails from './CourseDetails/CourseDetails';
+import ParticipantCourseFeedback from './Feedback/ParticipantCourseFeedback';
 
 const CustomTabs = withStyles({
     root: {
@@ -103,7 +104,6 @@ class ParticipantCourse extends Component {
                                 <CustomTab value={1} label="Prezente" />
                                 <CustomTab value={2} label="Anunturi" />
                                 <CustomTab value={3} label="Feedback" />
-                                {/* <CustomTab value={4} label="Anunturi" /> */}
                             </CustomTabs>
                         </AppBar>
                     </div>
@@ -115,7 +115,7 @@ class ParticipantCourse extends Component {
                             <UserAttendance activeSession={activeSession} handleAttendance={this.setUserPresent} />
                         )}
                         {tabValue === 2 && <div>Anunturi</div>}
-                        {tabValue === 3 && <div>Feedback</div>}
+                        {tabValue === 3 && <ParticipantCourseFeedback course={course}/> }
                     </div>
                 </div>
             </div>

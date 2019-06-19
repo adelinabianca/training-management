@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
-import styles from './EditApplicants.module.scss';
-import { withFirebase } from '../../../Firebase';
-import CourseCard from './CourseCard';
+import styles from './AttendanceComplete.module.scss';
+import { withFirebase } from '../../../../Firebase';
+import { Card, CardContent, IconButton, Collapse, Grid } from '@material-ui/core';
+import AttendanceCourseCard from './AttendanceCourseCard';
 
-class EditApplicants extends Component {
+// import CourseCard from './CourseCard';
+
+class AttendanceComplete extends Component {
     coursesRef;
 
     constructor(props) {
@@ -31,11 +34,11 @@ class EditApplicants extends Component {
         return (
             <div className={styles.wrapper}>
                 {courses.map(course => (
-                  <CourseCard key={course.courseId} course={course} />
+                    <AttendanceCourseCard key={course.courseId} course={course} />
                 ))}
             </div>
         );
     }
 }
 
-export default withFirebase(EditApplicants);
+export default withFirebase(AttendanceComplete);

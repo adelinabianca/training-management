@@ -1,25 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import styles from './CourseDetails.module.scss';
 
+const CourseDetails =(props) => {
+    const { description } = props;
+    return (
+        <div className={styles.wrapper}>
+            {description}
+        </div>
+    );
 
-
-class CourseDetails extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
-
-
-    render() {
-        const { description, trainers } = this.props;
-        return (
-            <div className={styles.wrapper}>
-                {description}
-            </div>
-        );
-    }
 }
 
 export default CourseDetails;

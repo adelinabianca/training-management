@@ -136,6 +136,14 @@ class Firebase {
     // *** attendance API ***
 
     attendees = (courseId, sessionId) => this.db.ref(`/courses/${courseId}/attendance/${sessionId}/attendees`);
+
+    // *** feedback API *
+
+    courseFeedback = (courseId) => this.db.ref(`courses/${courseId}/feedback`);
+
+    feedback = () => this.db.ref('/feedback');
+    
+
   }
   
   export default Firebase;

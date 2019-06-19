@@ -61,10 +61,10 @@ label.formLabel {
 }
 
 button.loginBtn {
-    background-color: $secondary-bg-color;
+    background-color: $button-bg-color;
     color: white;
     margin-top: 24px;
     &:hover {
-        background-color: #bf4f5e;
+        background-color: $hover-button-color;
     }
 }

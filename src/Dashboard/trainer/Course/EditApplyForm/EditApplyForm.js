@@ -64,7 +64,7 @@ class EditApplyForm extends Component {
                 ))}
                 <div className={styles.buttonsContainer}>
                     <Tooltip title="Adauga o noua intrebare" placement="bottom">
-                        <CustomButton onClick={this.addNewQuestion}><Add />Adauga intrebare</CustomButton>
+                        <CustomButton onClick={this.addNewQuestion}><Add /></CustomButton>
                     </Tooltip>
                     <CustomButton onClick={this.handleSave}>Salveaza</CustomButton>
                 </div>
