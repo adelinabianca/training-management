@@ -17,3 +17,7 @@ export const addCourse = async (courseInfo) => {
 export const updateCourse = async (updatedCourse) => {
   return axios.put(`${baseURL}/${updatedCourse.courseId}.json`, { ...updatedCourse, courseId: updatedCourse.courseId});
 }
+
+export const deleteCourse = async (courseId) => {
+  return axios.delete(`${baseURL}/${courseId}.json`);
+}

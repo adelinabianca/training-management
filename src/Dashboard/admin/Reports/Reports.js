@@ -60,8 +60,8 @@ class Reports extends Component {
                                 variant="scrollable"
                                 scrollButtons="auto"
                             >
-                                <CustomTab value={0} label="Prezente" />
-                                <CustomTab value={1} label="Feedback" />
+                                <CustomTab value={0} label="Statistici" />
+                                <CustomTab value={1} label="Prezente" />
                             </CustomTabs>
                         </AppBar>
                     </div>
@@ -69,7 +69,7 @@ class Reports extends Component {
                         {tabValue === 0 && (
                             <AttendanceComplete />
                         )}
-                        {tabValue === 1 && (<div>Momentan nu s-a primit niciun feedback</div>)}
+                        {tabValue === 1 && <AttendanceComplete />}
                     </div>
                 </div>
             </div>

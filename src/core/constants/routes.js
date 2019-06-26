@@ -1,0 +1,9 @@
+export const MAIN = "/main" ;
+export const AUTH = "/login";
+export const ABOUT = "/about";
+export const CONFERENCE = "/conference";
+export const HACKATHON = "/hackathon";
+export const ADMIN ="/admin-dashboard";
+export const TRAINER ="/trainer-dashboard";
+export const USER ="/user-account";
+export const ARIA ="/aria/:ariaName";

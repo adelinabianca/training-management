@@ -8,7 +8,7 @@ class Footer extends Component {
         return (
             <footer className={styles.wrapper}>
                 <div className={styles.content}>
-                    this is the footer
+                    
                 </div>
             </footer>
         )

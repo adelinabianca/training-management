@@ -21,6 +21,8 @@ import About from './MainPage/About/About';
 import PresentationalConference from './core/components/PresentationalPage/PresentationalConference';
 import PresentationalHackathon from './core/components/PresentationalPage/PresentationalHackathon';
 
+import * as ROUTES from './core/constants/routes';
+
 const stores = {
   userStore,
   sessionStore,
@@ -73,16 +75,16 @@ class App extends Component {
             <NavigationBar />
             <div className={styles.content}>
                 <Switch>
-                  <Redirect exact from="/" to="/main" />
-                  <Route exact path="/main" component={MainPage} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/about" component={About} />
-                  <Route exact path="/conference" component={PresentationalConference} />
-                  <Route exact path="/hackathon" component={PresentationalHackathon} />
-                  <PrivateAdminRoute path="/admin-dashboard" component={AdminDashboard} />
-                  <PrivateTrainerRoute path="/trainer-dashboard" component={TrainerDashboard} />
-                  <Route path="/user-account" component={ParticipantDashboard} />
-                  <Route exact path="/aria/:ariaName" component={Aria} />
+                  <Redirect exact from="/" to={ROUTES.MAIN} />
+                  <Route exact path={ROUTES.MAIN} component={MainPage} />
+                  <Route exact path={ROUTES.AUTH} component={Login} />
+                  <Route exact path={ROUTES.ABOUT} component={About} />
+                  <Route exact path={ROUTES.CONFERENCE} component={PresentationalConference} />
+                  <Route exact path={ROUTES.HACKATHON} component={PresentationalHackathon} />
+                  <PrivateAdminRoute path={ROUTES.ADMIN} component={AdminDashboard} />
+                  <PrivateTrainerRoute path={ROUTES.TRAINER} component={TrainerDashboard} />
+                  <Route path={ROUTES.USER} component={ParticipantDashboard} />
+                  <Route exact path={ROUTES.ARIA} component={Aria} />
                 </Switch>
             </div>
           </BrowserRouter>
