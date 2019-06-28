@@ -8,6 +8,7 @@ import {  Button, TextField, Dialog, DialogContent, withMobileDialog, DialogActi
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 import { withFirebase } from '../../../../Firebase';
 import PieChart from '../../../../core/components/PieChart/PieChart';
+import WordCloud from '../../../../core/components/WordCloud/WordCloud';
 
 class Attendance extends Component {
     attendeesRef;

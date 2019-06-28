@@ -1,7 +1,9 @@
+@import '../../../../styles/mixins';
 
 .container {
     display: flex;
-    margin: 10px 5px;
+    margin: 10px auto;
+    width: 90%;
     &.isOdd {
         flex-direction: row-reverse;
         .message {
@@ -16,5 +18,15 @@
         min-height: 50px;
         padding: 8px;
         border-radius: 5px;
+    }
+}
+
+.messagesContainer {
+    padding: 20px;
+}
+
+@include for-desktop() {
+    .container {
+        width: 60%;
     }
 }

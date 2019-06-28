@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import styles from './CourseFeedback.module.scss';
 import { withFirebase } from '../../../../Firebase';
+import WordCloud from '../../../../core/components/WordCloud/WordCloud';
 
 class CourseFeedback extends Component {
     courseFeedbackRef;
@@ -36,14 +37,19 @@ class CourseFeedback extends Component {
         if (!feedback.length) {
             return <div>Momentan nu s-a primit feedback</div>
         }
-        
+        const words = feedback.map(message => message.feedback);
         return (
             <div className={styles.wrapper}>
-                {feedback.map((message, index) => (
-                    <div className={[styles.container, index%2 ? styles.isOdd : ''].join(' ')} key={message.feedback+index}>
-                        <div className={styles.message}>{message.feedback}</div>
-                    </div>
-                ))}
+                <div className={styles.wordCloudContainer}>
+                    <WordCloud words={words} />
+                </div>
+                <div className={styles.messagesContainer}>
+                    {feedback.map((message, index) => (
+                        <div className={[styles.container, index % 2 ? styles.isOdd : ''].join(' ')} key={message.feedback+index}>
+                            <div className={styles.message}>{message.feedback}</div>
+                        </div>
+                    ))}
+                </div>
             </div>
         )
     }

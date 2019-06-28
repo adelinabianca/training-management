@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import styles from './PieChart.module.scss';
-import { thisExpression } from '@babel/types';
 
 class PieChart extends Component {
     constructor(props) {
