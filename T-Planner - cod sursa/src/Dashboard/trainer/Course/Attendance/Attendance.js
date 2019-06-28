@@ -7,6 +7,7 @@ import styles from './Attendance.module.scss';
 import {  Button, TextField, Dialog, DialogContent, withMobileDialog, DialogActions } from '@material-ui/core';
 import CustomButton from '../../../../core/components/CustomButton/CustomButton';
 import { withFirebase } from '../../../../Firebase';
+import PieChart from '../../../../core/components/PieChart/PieChart';
 
 class Attendance extends Component {
     attendeesRef;
@@ -99,6 +100,12 @@ class Attendance extends Component {
         closeSession(selectedSession);
     }
 
+    createSlices = (attendees) => {
+        const { course: { members } } = this.props;
+        const percent = attendees.length / members.length;
+        return [{ percent, value: 'Membri prezenți', color: '#29a8ab'}]
+    }
+
     render() {
         const { uniqueCode, openQR, newSessionName, newLimit, selectedSession, attendees } = this.state;
         const { course, fullScreen, activeSession } = this.props;
@@ -176,6 +183,7 @@ class Attendance extends Component {
                                     {selectedSession !== activeSession && selectedSession.attendees && selectedSession.attendees.map((attendee, index) => (
                                         <div key={attendee.uid}>{index+1}. {attendee.username}</div>
                                     ))}
+                                    <PieChart parentValue="Total membri" slices={selectedSession === activeSession && attendees ? this.createSlices(attendees) : this.createSlices(selectedSession.attendees || [])}/>
                                 </div>
                             </div>
                             {selectedSession.active && <CustomButton onClick={this.generateQrCode}>Mareste Qr code</CustomButton>}

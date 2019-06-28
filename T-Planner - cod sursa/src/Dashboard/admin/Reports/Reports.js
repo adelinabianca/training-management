@@ -6,6 +6,7 @@ import {  withStyles } from '@material-ui/core/styles';
 
 import styles from './Reports.module.scss';
 import AttendanceComplete from './AttendanceComplete/AttendanceComplete';
+import Statistics from './Statistics/Statistics';
 
 const CustomTabs = withStyles({
     root: {
@@ -67,7 +68,7 @@ class Reports extends Component {
                     </div>
                     <div className={styles.cardBody}>
                         {tabValue === 0 && (
-                            <AttendanceComplete />
+                            <Statistics />
                         )}
                         {tabValue === 1 && <AttendanceComplete />}
                     </div>
