@@ -72,7 +72,6 @@ class ParticipantCourse extends Component {
     };
 
     setUserPresent = async (user) => {
-        console.log(user);
         const { course, activeSession } = this.state;
         const updatedCourse = {...course};
         if (activeSession) {

@@ -55,7 +55,7 @@ class WordCloud extends Component {
         const frequenciesArray = Object.keys(frequencies)
             .sort((word1, word2) => frequencies[word1] - frequencies[word2])
             .map((word, index) => {
-            return { text: word, value: (index + 1) * CONSTANT }
+            return { text: word, value: (index + 1) }
         });
         return frequenciesArray
     }

@@ -61,16 +61,17 @@ class Reports extends Component {
                                 variant="scrollable"
                                 scrollButtons="auto"
                             >
-                                <CustomTab value={0} label="Statistici" />
-                                <CustomTab value={1} label="Prezente" />
+                                {/* <CustomTab value={0} label="Statistici" /> */}
+                                <CustomTab value={0} label="Prezente" />
                             </CustomTabs>
                         </AppBar>
                     </div>
                     <div className={styles.cardBody}>
-                        {tabValue === 0 && (
+                        {/* {tabValue === 0 && (
                             <Statistics />
-                        )}
-                        {tabValue === 1 && <AttendanceComplete />}
+                        )} */}
+                        {tabValue === 0 && <AttendanceComplete />}
+                        {/*test */}
                     </div>
                 </div>
             </div>
