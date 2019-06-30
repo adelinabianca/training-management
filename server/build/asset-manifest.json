@@ -1,18 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.367b76c3.chunk.css",
-    "main.js": "/static/js/main.5733ecf9.chunk.js",
-    "main.js.map": "/static/js/main.5733ecf9.chunk.js.map",
+    "main.css": "/static/css/main.a639801e.chunk.css",
+    "main.js": "/static/js/main.7091350e.chunk.js",
+    "main.js.map": "/static/js/main.7091350e.chunk.js.map",
     "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
     "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/js/2.2787165a.chunk.js": "/static/js/2.2787165a.chunk.js",
-    "static/js/2.2787165a.chunk.js.map": "/static/js/2.2787165a.chunk.js.map",
+    "static/js/2.592775bc.chunk.js": "/static/js/2.592775bc.chunk.js",
+    "static/js/2.592775bc.chunk.js.map": "/static/js/2.592775bc.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.cce49065db801c0875cde884d12df0a2.js": "/precache-manifest.cce49065db801c0875cde884d12df0a2.js",
+    "precache-manifest.81e08a85aa00b6be9eef8488d92c0881.js": "/precache-manifest.81e08a85aa00b6be9eef8488d92c0881.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.367b76c3.chunk.css.map": "/static/css/main.367b76c3.chunk.css.map",
-    "static/media/2llamas.jpg": "/static/media/2llamas.dbd8e434.jpg",
-    "static/media/aria1.jpg": "/static/media/aria1.42c4a341.jpg",
-    "static/media/logo-fii.png": "/static/media/logo-fii.6115a455.png"
+    "static/css/main.a639801e.chunk.css.map": "/static/css/main.a639801e.chunk.css.map"
   }
 }
