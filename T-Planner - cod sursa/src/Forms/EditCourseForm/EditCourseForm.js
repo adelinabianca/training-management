@@ -37,19 +37,12 @@ class EditCourseForm extends Component {
 
             this.setState({ allTrainers, formValues, isLoading: false })
         })
-
-        // firebase.users().on('value', snapshot => {
-        //     setUsers(snapshot.val());
-        //     this.setState({ isLoading: false });
-        // });
     }
 
     render() {
         const { onSubmit, isSubmitting } = this.props;
         const { allTrainers, formValues } = this.state;
 
-        // const trainers = userList.length ? userList.filter(user => user.roles.includes('trainer')) : [];
-        // const selectedTrainers = userList.length && formValues ? userList.filter(user => formValues.trainersIds.includes(user.uid)) : []
         return formValues && (
             <Formik
                 initialValues={formValues}
@@ -105,14 +98,6 @@ class EditCourseForm extends Component {
                                     </div>
                                 )}
                                 name='trainers'
-                                // MenuProps={{
-                                //     PaperProps: {
-                                //       style: {
-                                //         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                                //         width: 250,
-                                //       },
-                                //     },
-                                //   }}
                                 >
                                 {[...allTrainers].map(trainer => (
                                     <MenuItem key={trainer.uid} value={trainer} >
@@ -123,7 +108,7 @@ class EditCourseForm extends Component {
                             </FormControl>
                             
                             <div className={styles.buttonsContainer}>
-                                <CustomButton isLoading={isSubmitting} onClick={handleSubmit}>Save changes</CustomButton>
+                                <CustomButton isLoading={isSubmitting} onClick={handleSubmit}>Salveaza schimbarile</CustomButton>
                             </div>
                         </Card>
                     )}
